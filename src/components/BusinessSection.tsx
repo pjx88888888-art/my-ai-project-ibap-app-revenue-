@@ -4,7 +4,7 @@
  */
 
 import { BUSINESS_UNITS } from '../constants';
-import { TrendingUp, TrendingDown } from 'lucide-react';
+import { TrendingUp, TrendingDown, HelpCircle } from 'lucide-react';
 
 export default function BusinessSection() {
   const getUnit = (name: string) => {
@@ -16,8 +16,14 @@ export default function BusinessSection() {
 
   return (
     <div className="bg-white mx-3 mb-6 rounded-2xl p-4 shadow-xl relative z-10 border border-white/20">
-      <div className="text-sm font-bold text-gray-800 mb-4 pb-3 border-b-2 border-gray-50">
-        分业务板块
+      <div className="flex items-center justify-between mb-4 pb-3 border-b-2 border-gray-50">
+        <div className="flex items-center gap-2">
+          <div className="bg-blue-50 p-1 rounded-lg">
+            <TrendingUp size={16} className="text-[#1b63d6]" />
+          </div>
+          <span className="text-sm font-bold text-gray-800">业务板块</span>
+          <HelpCircle size={14} className="text-gray-300" />
+        </div>
       </div>
       
       <div className="flex flex-col gap-4">
