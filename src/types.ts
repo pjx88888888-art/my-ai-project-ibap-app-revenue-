@@ -1,0 +1,41 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+export type MainTab = 'income' | 'quality' | 'operation';
+export type SubTab = 'overview' | 'flow' | 'product' | 'customer';
+export type MetricType = 'income' | 'volume' | 'weight';
+
+export interface MetricData {
+  label: string;
+  date: string;
+  value: string;
+  unit: string;
+  yoy: string;
+  isUp: boolean;
+  status?: 'green' | 'yellow-green';
+}
+
+export interface BusinessMetric {
+  name: string;
+  daily: {
+    value: string;
+    yoy: string;
+    isUp: boolean;
+    ratio: string;
+  };
+  monthly: {
+    value: string;
+    yoy: string;
+    isUp: boolean;
+    ratio: string;
+  };
+}
+
+export interface BusinessUnit {
+  id: number;
+  name: string;
+  color: string;
+  metrics: BusinessMetric[];
+}
