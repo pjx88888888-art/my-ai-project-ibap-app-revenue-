@@ -43,7 +43,7 @@ export default function FlowThirdDetailView({
   showTrend = true,
   showTabs = true
 }: FlowThirdDetailViewProps) {
-  const [type] = useState<'cnob' | 'osob'>(initialType);
+  const [type, setType] = useState<'cnob' | 'osob'>(initialType);
   const [isTrendExpanded, setIsTrendExpanded] = useState(false);
   const [legendPage, setLegendPage] = useState(1);
 
@@ -274,10 +274,26 @@ export default function FlowThirdDetailView({
 
         {/* Business Structure Card */}
         <div className="bg-white rounded-2xl p-4 shadow-sm border border-white/50">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-1 h-4 bg-[#1b63d6] rounded-full" />
-            <span className="text-sm font-bold text-gray-800">业务结构</span>
-            <HelpCircle size={14} className="text-gray-300" />
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <div className="w-1 h-4 bg-[#1b63d6] rounded-full" />
+              <span className="text-sm font-bold text-gray-800">业务结构</span>
+              <HelpCircle size={14} className="text-gray-300" />
+            </div>
+            <div className="flex items-center bg-gray-100 rounded-lg p-0.5 text-[10px] font-bold">
+              <button
+                onClick={() => setType('cnob')}
+                className={`px-3 py-1 rounded-md transition-all ${type === 'cnob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
+              >
+                CNOB
+              </button>
+              <button
+                onClick={() => setType('osob')}
+                className={`px-3 py-1 rounded-md transition-all ${type === 'osob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
+              >
+                OSOB
+              </button>
+            </div>
           </div>
 
           <div className="p-3">

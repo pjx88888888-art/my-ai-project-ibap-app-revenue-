@@ -27,6 +27,7 @@ interface SubDetailViewProps {
 }
 
 export default function SubDetailView({ onBack, onClose, onSelectSegment, region, activeMetric, setActiveMetric }: SubDetailViewProps) {
+  const [type, setType] = useState<'cnob' | 'osob'>('cnob');
   const [isTrendExpanded, setIsTrendExpanded] = useState(false);
   const [legendPage, setLegendPage] = useState(1);
 
@@ -267,13 +268,29 @@ export default function SubDetailView({ onBack, onClose, onSelectSegment, region
 
         {/* Business Structure Section */}
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-white/50">
-          <div className="px-4 py-3 flex items-center gap-2 border-b border-gray-50">
-            <div className="bg-blue-50 p-1.5 rounded-lg">
-              <div className="w-4 h-4 border-2 border-[#1b63d6] rounded-sm flex items-center justify-center">
-                <div className="w-1.5 h-1.5 bg-[#1b63d6] rounded-full" />
+          <div className="px-4 py-3 flex items-center justify-between border-b border-gray-50">
+            <div className="flex items-center gap-2">
+              <div className="bg-blue-50 p-1.5 rounded-lg">
+                <div className="w-4 h-4 border-2 border-[#1b63d6] rounded-sm flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 bg-[#1b63d6] rounded-full" />
+                </div>
               </div>
+              <div className="text-sm font-bold text-gray-800">业务结构</div>
             </div>
-            <div className="text-sm font-bold text-gray-800">业务结构</div>
+            <div className="flex items-center bg-gray-100 rounded-lg p-0.5 text-[10px] font-bold">
+              <button
+                onClick={() => setType('cnob')}
+                className={`px-3 py-1 rounded-md transition-all ${type === 'cnob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
+              >
+                CNOB
+              </button>
+              <button
+                onClick={() => setType('osob')}
+                className={`px-3 py-1 rounded-md transition-all ${type === 'osob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
+              >
+                OSOB
+              </button>
+            </div>
           </div>
 
           <div className="p-3">
