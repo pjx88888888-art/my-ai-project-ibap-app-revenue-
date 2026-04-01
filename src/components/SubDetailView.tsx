@@ -27,7 +27,6 @@ interface SubDetailViewProps {
 }
 
 export default function SubDetailView({ onBack, onClose, onSelectSegment, region, activeMetric, setActiveMetric }: SubDetailViewProps) {
-  const [type, setType] = useState<'cnob' | 'osob'>('cnob');
   const [isTrendExpanded, setIsTrendExpanded] = useState(false);
   const [legendPage, setLegendPage] = useState(1);
 
@@ -274,20 +273,6 @@ export default function SubDetailView({ onBack, onClose, onSelectSegment, region
                 </div>
               </div>
               <div className="text-sm font-bold text-gray-800">业务结构</div>
-            </div>
-            <div className="flex items-center bg-gray-100 rounded-lg p-0.5 text-[10px] font-bold">
-              <button
-                onClick={() => setType('cnob')}
-                className={`px-3 py-1 rounded-md transition-all ${type === 'cnob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
-              >
-                CNOB
-              </button>
-              <button
-                onClick={() => setType('osob')}
-                className={`px-3 py-1 rounded-md transition-all ${type === 'osob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
-              >
-                OSOB
-              </button>
             </div>
           </div>
 
