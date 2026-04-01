@@ -38,17 +38,15 @@ export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: in
     '国际快递',
     '国际电商',
     '海外仓配',
-    '国际空运',
-    '国际供应链',
+    '本地运配',
     '国际运输',
     '国际航线',
-    '国际大宗',
-    '其他'
+    '国际大宗'
   ];
 
   const segmentColors = [
     '#1b63d6', '#f59e0b', '#3b82f6', '#06b6d4', '#94a3b8', 
-    '#6366f1', '#8b5cf6', '#ec4899', '#10b981'
+    '#6366f1', '#8b5cf6'
   ];
 
   const combinedTrendData = useMemo(() => {
@@ -71,9 +69,10 @@ export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: in
     { name: '国际快递', value: '1,234.5', yoy: '5.2%', isUp: true, achievement: '98.5%', perTicket: '2.15', dailyAvg: '41.15', discount: '12.5%' },
     { name: '国际电商', value: '982.3', yoy: '3.1%', isUp: true, achievement: '95.2%', perTicket: '1.95', dailyAvg: '32.74', discount: '10.2%' },
     { name: '海外仓配', value: '876.1', yoy: '-1.2%', isUp: false, achievement: '92.1%', perTicket: '2.45', dailyAvg: '29.20', discount: '15.8%' },
-    { name: '国际空运', value: '543.2', yoy: '2.4%', isUp: true, achievement: '102.4%', perTicket: '1.85', dailyAvg: '18.11', discount: '8.4%' },
-    { name: '国际供应链', value: '432.1', yoy: '0.0%', isUp: true, achievement: '100.0%', perTicket: '2.05', dailyAvg: '14.40', discount: '11.5%' },
-    { name: '其他', value: '123.4', yoy: '-2.5%', isUp: false, achievement: '88.5%', perTicket: '1.75', dailyAvg: '4.11', discount: '7.2%' },
+    { name: '本地运配', value: '543.2', yoy: '2.4%', isUp: true, achievement: '102.4%', perTicket: '1.85', dailyAvg: '18.11', discount: '8.4%' },
+    { name: '国际运输', value: '432.1', yoy: '0.0%', isUp: true, achievement: '100.0%', perTicket: '2.05', dailyAvg: '14.40', discount: '11.5%' },
+    { name: '国际航线', value: '321.0', yoy: '1.5%', isUp: true, achievement: '99.0%', perTicket: '2.20', dailyAvg: '10.50', discount: '9.0%' },
+    { name: '国际大宗', value: '123.4', yoy: '-2.5%', isUp: false, achievement: '88.5%', perTicket: '1.75', dailyAvg: '4.11', discount: '7.2%' },
   ];
 
   const getMetricLabel = () => {

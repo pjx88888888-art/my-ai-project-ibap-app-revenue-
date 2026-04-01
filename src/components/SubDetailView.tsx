@@ -47,17 +47,15 @@ export default function SubDetailView({ onBack, onClose, onSelectSegment, region
     '国际快递',
     '国际电商',
     '海外仓配',
-    '国际空运',
-    '国际供应链',
+    '本地运配',
     '国际运输',
     '国际航线',
-    '国际大宗',
-    '其他'
+    '国际大宗'
   ];
 
   const segmentColors = [
     '#1b63d6', '#f59e0b', '#3b82f6', '#06b6d4', '#94a3b8', 
-    '#6366f1', '#8b5cf6', '#ec4899', '#10b981'
+    '#6366f1', '#8b5cf6'
   ];
 
   // Combined trend data for multi-line chart
