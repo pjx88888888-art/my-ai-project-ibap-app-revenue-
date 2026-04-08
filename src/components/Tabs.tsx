@@ -18,7 +18,7 @@ export default function Tabs({ activeMain, setActiveMain, activeSub, setActiveSu
     <div className="relative z-10 mt-2">
       {/* Main Tabs */}
       <div className="flex justify-around px-2 py-3 text-white/80 font-medium">
-        {(['income', 'quality', 'operation'] as MainTab[]).map((tab) => (
+        {(['income', 'operation', 'quality'] as MainTab[]).map((tab) => (
           <div
             key={tab}
             onClick={() => setActiveMain(tab)}
@@ -26,7 +26,7 @@ export default function Tabs({ activeMain, setActiveMain, activeSub, setActiveSu
               activeMain === tab ? 'text-white font-bold scale-110' : 'hover:text-white/90'
             }`}
           >
-            {tab === 'income' ? '收入' : tab === 'quality' ? '质量' : '运营'}
+            {tab === 'income' ? '业务' : tab === 'quality' ? '质量' : '运营'}
             {activeMain === tab && (
               <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-white rounded-full" />
             )}
