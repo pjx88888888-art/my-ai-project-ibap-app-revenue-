@@ -30,6 +30,7 @@ export interface BusinessMetric {
     yoy: string;
     isUp: boolean;
     ratio: string;
+    status?: 'green' | 'red' | 'yellow';
   };
 }
 

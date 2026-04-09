@@ -15,22 +15,22 @@ interface OperatingOverviewCardProps {
 export default function OperatingOverviewCard({ activeMetric, onOpenDetail }: OperatingOverviewCardProps) {
   const data: Record<MetricType, {
     daily: { value: string; unit: string; yoy: string; isUp: boolean };
-    monthly: { value: string; unit: string; yoy: string; isUp: boolean; status: 'green' | 'yellow-green' | 'none' };
-    yearly: { value: string; unit: string; yoy: string; isUp: boolean; status: 'green' | 'yellow-green' | 'none' };
+    monthly: { value: string; unit: string; yoy: string; isUp: boolean; status: 'green' | 'yellow' | 'red' | 'none' };
+    yearly: { value: string; unit: string; yoy: string; isUp: boolean; status: 'green' | 'yellow' | 'red' | 'none' };
   }> = {
     income: {
       daily: { value: '1,234.56', unit: '万元', yoy: '+12.5%', isUp: true },
       monthly: { value: '287.56', unit: '亿元', yoy: '+8.3%', isUp: true, status: 'green' },
-      yearly: { value: '852.34', unit: '亿元', yoy: '+15.7%', isUp: true, status: 'yellow-green' },
+      yearly: { value: '852.34', unit: '亿元', yoy: '+15.7%', isUp: true, status: 'yellow' },
     },
     volume: {
       daily: { value: '567.89', unit: '万票', yoy: '-5.2%', isUp: false },
       monthly: { value: '152.35', unit: '亿票', yoy: '+6.8%', isUp: true, status: 'green' },
-      yearly: { value: '425.67', unit: '亿票', yoy: '+3.9%', isUp: true, status: 'yellow-green' },
+      yearly: { value: '425.67', unit: '亿票', yoy: '+3.9%', isUp: true, status: 'yellow' },
     },
     weight: {
       daily: { value: '234.56', unit: '吨', yoy: '+8.6%', isUp: true },
-      monthly: { value: '5,678.90', unit: '吨', yoy: '-2.1%', isUp: false, status: 'yellow-green' },
+      monthly: { value: '5,678.90', unit: '吨', yoy: '-2.1%', isUp: false, status: 'red' },
       yearly: { value: '12,345.67', unit: '吨', yoy: '+4.5%', isUp: true, status: 'green' },
     },
   };
@@ -72,13 +72,6 @@ export default function OperatingOverviewCard({ activeMetric, onOpenDetail }: Op
               <span className="text-2xl font-bold text-gray-900 tracking-tight">{currentData.daily.value}</span>
               <span className="text-xs text-gray-500 font-medium">{currentData.daily.unit}</span>
             </div>
-            <div className="text-[10px] text-gray-400 flex items-center gap-1">
-              同比: 
-              <span className={`flex items-center font-semibold ${currentData.daily.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                {currentData.daily.yoy}
-                {currentData.daily.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-              </span>
-            </div>
           </div>
 
           {/* Grid Metrics */}
@@ -99,8 +92,9 @@ export default function OperatingOverviewCard({ activeMetric, onOpenDetail }: Op
                 </span>
               </div>
               {currentData.monthly.status !== 'none' && (
-                <div className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full shadow-sm ${
-                  currentData.monthly.status === 'green' ? 'bg-[#22c55e] shadow-green-100' : 'bg-[#a3e635] shadow-lime-100'
+                <div className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full ${
+                  currentData.monthly.status === 'green' ? 'bg-green-500' : 
+                  currentData.monthly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
                 }`} />
               )}
             </div>
@@ -121,8 +115,9 @@ export default function OperatingOverviewCard({ activeMetric, onOpenDetail }: Op
                 </span>
               </div>
               {currentData.yearly.status !== 'none' && (
-                <div className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full shadow-sm ${
-                  currentData.yearly.status === 'green' ? 'bg-[#22c55e] shadow-green-100' : 'bg-[#a3e635] shadow-lime-100'
+                <div className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full ${
+                  currentData.yearly.status === 'green' ? 'bg-green-500' : 
+                  currentData.yearly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
                 }`} />
               )}
             </div>

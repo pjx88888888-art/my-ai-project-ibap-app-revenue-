@@ -30,6 +30,7 @@ interface DetailModalProps {
 
 export default function DetailModal({ onClose, activeMetric, setActiveMetric, onSelectRegion }: DetailModalProps) {
   const [isTrendExpanded, setIsTrendExpanded] = useState(false);
+  const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>('daily');
   const [activeFilter, setActiveFilter] = useState('domestic-sales');
   const [activeSubFilter, setActiveSubFilter] = useState('all');
 
@@ -68,21 +69,21 @@ export default function DetailModal({ onClose, activeMetric, setActiveMetric, on
 
   const orgData: Record<MetricType, any[]> = {
     income: [
-      { region: '深莞区', value: '1,234.56', perTicket: '2.18', rate: '103.5%', yoy: '12.5%', isUp: true },
-      { region: '广佛区', value: '1,095.23', perTicket: '2.12', rate: '98.3%', yoy: '8.9%', isUp: true },
-      { region: '福建区', value: '1,156.78', perTicket: '2.15', rate: '101.2%', yoy: '10.5%', isUp: true },
-      { region: '苏南区', value: '985.34', perTicket: '2.08', rate: '97.5%', yoy: '6.2%', isUp: true },
-      { region: '上海区', value: '852.12', perTicket: '2.25', rate: '105.7%', yoy: '2.1%', isUp: false },
+      { region: '深莞区', status: 'green', value: '1,234.56', perTicket: '2.18', rate: '103.5%', yoy: '12.5%', isUp: true },
+      { region: '广佛区', status: 'yellow', value: '1,095.23', perTicket: '2.12', rate: '98.3%', yoy: '8.9%', isUp: true },
+      { region: '福建区', status: 'red', value: '1,156.78', perTicket: '2.15', rate: '101.2%', yoy: '10.5%', isUp: true },
+      { region: '苏南区', status: 'green', value: '985.34', perTicket: '2.08', rate: '97.5%', yoy: '6.2%', isUp: true },
+      { region: '上海区', status: 'yellow', value: '852.12', perTicket: '2.25', rate: '105.7%', yoy: '2.1%', isUp: false },
     ],
     volume: [
-      { region: '深莞区', value: '567.89', rate: '102.1%', yoy: '8.3%', isUp: true },
-      { region: '广佛区', value: '489.23', rate: '99.5%', yoy: '2.1%', isUp: false },
-      { region: '福建区', value: '456.78', rate: '101.8%', yoy: '5.2%', isUp: true },
+      { region: '深莞区', status: 'green', value: '567.89', rate: '102.1%', yoy: '8.3%', isUp: true },
+      { region: '广佛区', status: 'yellow', value: '489.23', rate: '99.5%', yoy: '2.1%', isUp: false },
+      { region: '福建区', status: 'red', value: '456.78', rate: '101.8%', yoy: '5.2%', isUp: true },
     ],
     weight: [
-      { region: '深莞区', value: '234.56', rate: '105.3%', yoy: '12.1%', isUp: true },
-      { region: '广佛区', value: '195.67', rate: '101.2%', yoy: '3.8%', isUp: true },
-      { region: '福建区', value: '178.90', rate: '98.5%', yoy: '1.2%', isUp: false },
+      { region: '深莞区', status: 'green', value: '234.56', rate: '105.3%', yoy: '12.1%', isUp: true },
+      { region: '广佛区', status: 'yellow', value: '195.67', rate: '101.2%', yoy: '3.8%', isUp: true },
+      { region: '福建区', status: 'red', value: '178.90', rate: '98.5%', yoy: '1.2%', isUp: false },
     ],
   };
 
@@ -293,13 +294,24 @@ export default function DetailModal({ onClose, activeMetric, setActiveMetric, on
 
               {/* Organization Details Section */}
               <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-white/50">
-                <div className="px-4 py-3 flex items-center gap-2 border-b border-gray-50">
-                  <div className="bg-blue-50 p-1.5 rounded-lg">
-                    <div className="w-4 h-4 border-2 border-[#1b63d6] rounded-sm flex items-center justify-center">
-                      <div className="w-1.5 h-1.5 bg-[#1b63d6] rounded-full" />
+                <div className="px-4 py-3 flex items-center justify-between border-b border-gray-50">
+                  <div className="flex items-center gap-2">
+                    <div className="bg-blue-50 p-1.5 rounded-lg">
+                      <div className="w-4 h-4 border-2 border-[#1b63d6] rounded-sm flex items-center justify-center">
+                        <div className="w-1.5 h-1.5 bg-[#1b63d6] rounded-full" />
+                      </div>
                     </div>
+                    <div className="text-sm font-bold text-gray-800">组织详情</div>
                   </div>
-                  <div className="text-sm font-bold text-gray-800">组织详情</div>
+                  <div className="relative z-50">
+                    <button
+                      onClick={() => setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily')}
+                      className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
+                    >
+                      {activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'}
+                      <span className="text-[8px]">⇅</span>
+                    </button>
+                  </div>
                 </div>
 
                 <div className="p-3 space-y-3">
@@ -397,7 +409,13 @@ export default function DetailModal({ onClose, activeMetric, setActiveMetric, on
                               className="px-3 py-4 font-bold text-[#1b63d6] sticky left-0 bg-white z-10 cursor-pointer hover:underline"
                               onClick={() => onSelectRegion(row.region)}
                             >
-                              {row.region}
+                              <div className="flex items-center gap-2">
+                                {row.region}
+                                <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                                  row.status === 'green' ? 'bg-green-500' : 
+                                  row.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
+                                }`} />
+                              </div>
                             </td>
                             <td className="px-3 py-4 text-right">
                               <div className="font-bold text-gray-800">{row.value}</div>

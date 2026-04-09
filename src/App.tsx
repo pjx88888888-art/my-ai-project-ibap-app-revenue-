@@ -128,7 +128,9 @@ export default function App() {
                       activeMetric={activeMetric} 
                       onOpenDetail={handleOpenBusinessDetail}
                     />
-                    <KeyMetricsSection onOpenDetail={handleOpenKeyMetricsDetail} />
+                    {activeMetric === 'income' && (
+                      <KeyMetricsSection onOpenDetail={handleOpenKeyMetricsDetail} />
+                    )}
                   </>
                 ) : activeSub === 'flow' ? (
                   <FlowSection onOpenDetail={handleOpenFlowDetail} />

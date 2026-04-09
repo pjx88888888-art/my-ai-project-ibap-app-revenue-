@@ -16,6 +16,7 @@ interface OrgDetailViewProps {
 export default function OrgDetailView({ onBack, onClose, region }: OrgDetailViewProps) {
   const [activeTab, setActiveTab] = useState<'cn-sales' | 'cn-origin' | 'os-origin'>('cn-sales');
   const [activeSubFilter, setActiveSubFilter] = useState('all');
+  const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>('daily');
 
   const getMetrics = () => {
     if (activeTab === 'os-origin') {
@@ -35,16 +36,16 @@ export default function OrgDetailView({ onBack, onClose, region }: OrgDetailView
   const metrics = getMetrics();
 
   const data = [
-    { name: '深莞区', values: ['12.5%', '0.5%', '1.2%', '10.2%', '0.8%', '81.96', '6.94'] },
-    { name: '广佛区', values: ['10.2%', '0.2%', '0.8%', '8.5%', '0.5%', '82.45', '7.12'] },
-    { name: '上海区', values: ['8.5%', '0.1%', '0.5%', '6.2%', '0.3%', '79.32', '6.85'] },
-    { name: '福建区', values: ['6.2%', '0.3%', '0.2%', '4.1%', '0.1%', '75.12', '6.50'] },
-    { name: '北京区', values: ['5.5%', '0.2%', '0.4%', '3.8%', '0.2%', '72.10', '6.20'] },
-    { name: '苏南区', values: ['4.8%', '0.1%', '0.3%', '3.5%', '0.1%', '70.50', '6.10'] },
-    { name: '湖南区', values: ['4.2%', '0.2%', '0.2%', '3.2%', '0.1%', '68.20', '5.90'] },
-    { name: '浙北区', values: ['3.9%', '0.1%', '0.1%', '2.8%', '0.1%', '67.50', '5.80'] },
-    { name: '湖北区', values: ['3.5%', '0.1%', '0.1%', '2.5%', '0.1%', '66.10', '5.70'] },
-    { name: '浙南区', values: ['3.2%', '0.1%', '0.1%', '2.2%', '0.1%', '65.20', '5.60'] },
+    { name: '深莞区', status: 'green', values: ['12.5%', '0.5%', '1.2%', '10.2%', '0.8%', '81.96', '6.94'] },
+    { name: '广佛区', status: 'yellow', values: ['10.2%', '0.2%', '0.8%', '8.5%', '0.5%', '82.45', '7.12'] },
+    { name: '上海区', status: 'red', values: ['8.5%', '0.1%', '0.5%', '6.2%', '0.3%', '79.32', '6.85'] },
+    { name: '福建区', status: 'green', values: ['6.2%', '0.3%', '0.2%', '4.1%', '0.1%', '75.12', '6.50'] },
+    { name: '北京区', status: 'yellow', values: ['5.5%', '0.2%', '0.4%', '3.8%', '0.2%', '72.10', '6.20'] },
+    { name: '苏南区', status: 'red', values: ['4.8%', '0.1%', '0.3%', '3.5%', '0.1%', '70.50', '6.10'] },
+    { name: '湖南区', status: 'green', values: ['4.2%', '0.2%', '0.2%', '3.2%', '0.1%', '68.20', '5.90'] },
+    { name: '浙北区', status: 'yellow', values: ['3.9%', '0.1%', '0.1%', '2.8%', '0.1%', '67.50', '5.80'] },
+    { name: '湖北区', status: 'red', values: ['3.5%', '0.1%', '0.1%', '2.5%', '0.1%', '66.10', '5.70'] },
+    { name: '浙南区', status: 'green', values: ['3.2%', '0.1%', '0.1%', '2.2%', '0.1%', '65.20', '5.60'] },
   ];
 
   return (
@@ -105,9 +106,19 @@ export default function OrgDetailView({ onBack, onClose, region }: OrgDetailView
 
       <div className="flex-1 overflow-y-auto p-3 pt-0">
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-white/50">
-          <div className="px-4 py-3 border-b border-gray-50 text-sm font-bold text-gray-800 flex items-center gap-2">
-            <div className="w-1 h-4 bg-[#1b63d6] rounded-full" />
+          <div className="px-4 py-3 border-b border-gray-50 text-sm font-bold text-gray-800">
             组织详情
+          </div>
+          <div className="px-4 py-2 border-b border-gray-50">
+            <div className="relative z-50">
+              <button
+                onClick={() => setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily')}
+                className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold border border-red-500"
+              >
+                DEBUG: {activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'}
+                <span className="text-[8px]">⇅</span>
+              </button>
+            </div>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-[10px] table-auto">
@@ -122,7 +133,10 @@ export default function OrgDetailView({ onBack, onClose, region }: OrgDetailView
               <tbody className="divide-y divide-gray-50">
                 {data.map((row, idx) => (
                   <tr key={idx}>
-                    <td className="px-4 py-4 font-bold text-gray-700 sticky left-0 bg-white z-10 whitespace-nowrap">{row.name}</td>
+                    <td className="px-4 py-4 font-bold text-gray-700 sticky left-0 bg-white z-10 whitespace-nowrap">
+                      {row.name}
+                      <span className={`inline-block ml-2 w-4 h-4 rounded-full bg-blue-600 border border-black`}>DEBUG</span>
+                    </td>
                     {metrics.map((m, mIdx) => {
                       const metricIndex = [
                         '国际收入占全网国际收入比',

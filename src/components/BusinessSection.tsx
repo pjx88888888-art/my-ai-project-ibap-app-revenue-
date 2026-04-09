@@ -76,7 +76,7 @@ export default function BusinessSection({ activeMetric, onOpenDetail }: Business
                       </div>
                     </div>
 
-                    <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98]">
+                    <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98] relative">
                       <div className="text-[10px] text-gray-400 mb-0.5 font-medium">月累计</div>
                       <div className="flex items-baseline gap-0.5 mb-0.5">
                         <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metric.monthly.value}</div>
@@ -88,6 +88,12 @@ export default function BusinessSection({ activeMetric, onOpenDetail }: Business
                         </span>
                         <span className="opacity-60">占比 {metric.monthly.ratio}</span>
                       </div>
+                      {metric.monthly.status && (
+                        <div className={`absolute top-3 right-3 w-2 h-2 rounded-full ${
+                          metric.monthly.status === 'green' ? 'bg-green-500' : 
+                          metric.monthly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
+                        }`} />
+                      )}
                     </div>
                   </div>
                 </div>
