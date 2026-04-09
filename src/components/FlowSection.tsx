@@ -103,16 +103,16 @@ function FlowCard({ title, icon, unit, daily, monthly, yearly, onOpenDetail }: F
 
 function TopFlowsCard() {
   const flows = [
-    { from: '深莞区', to: '西欧', income: '1,234.56', incomeYoy: '5.2%', incomeUp: true, volume: '892.45', volumeYoy: '3.1%', volumeUp: true },
-    { from: '深莞区', to: '美洲', income: '982.34', incomeYoy: '1.8%', incomeUp: true, volume: '678.90', volumeYoy: '2.5%', volumeUp: true },
-    { from: '广佛区', to: '美洲', income: '876.12', incomeYoy: '4.2%', incomeUp: true, volume: '567.12', volumeYoy: '2.9%', volumeUp: true },
-    { from: '湖北区', to: '西欧', income: '754.32', incomeYoy: '3.5%', incomeUp: true, volume: '456.78', volumeYoy: '1.8%', volumeUp: true },
-    { from: '广佛区', to: '英国', income: '643.21', incomeYoy: '2.9%', incomeUp: true, volume: '345.67', volumeYoy: '2.1%', volumeUp: true },
-    { from: '新加坡', to: '海南区', income: '532.10', incomeYoy: '4.8%', incomeUp: true, volume: '234.56', volumeYoy: '3.2%', volumeUp: true },
-    { from: '福建区', to: '美洲', income: '421.98', incomeYoy: '1.5%', incomeUp: true, volume: '123.45', volumeYoy: '1.9%', volumeUp: true },
-    { from: '粤东区', to: '美洲', income: '310.87', incomeYoy: '2.2%', incomeUp: true, volume: '98.76', volumeYoy: '1.5%', volumeUp: true },
-    { from: '苏南区', to: '美洲', income: '209.76', incomeYoy: '3.1%', incomeUp: true, volume: '87.65', volumeYoy: '2.4%', volumeUp: true },
-    { from: '深莞区', to: '日本', income: '198.65', incomeYoy: '1.2%', incomeUp: true, volume: '76.54', volumeYoy: '1.1%', volumeUp: true },
+    { from: '深莞区', to: '西欧', income: '1,234.56', incomeYoy: '5.2%', incomeUp: true, volume: '892.45', volumeYoy: '3.1%', volumeUp: true, weight: '456.78', weightYoy: '2.5%', weightUp: true },
+    { from: '深莞区', to: '美洲', income: '982.34', incomeYoy: '1.8%', incomeUp: true, volume: '678.90', volumeYoy: '2.5%', volumeUp: true, weight: '345.67', weightYoy: '1.8%', weightUp: true },
+    { from: '广佛区', to: '美洲', income: '876.12', incomeYoy: '4.2%', incomeUp: true, volume: '567.12', volumeYoy: '2.9%', volumeUp: true, weight: '234.56', weightYoy: '1.5%', weightUp: true },
+    { from: '湖北区', to: '西欧', income: '754.32', incomeYoy: '3.5%', incomeUp: true, volume: '456.78', volumeYoy: '1.8%', volumeUp: true, weight: '123.45', weightYoy: '1.2%', weightUp: true },
+    { from: '广佛区', to: '英国', income: '643.21', incomeYoy: '2.9%', incomeUp: true, volume: '345.67', volumeYoy: '2.1%', volumeUp: true, weight: '98.76', weightYoy: '1.1%', weightUp: true },
+    { from: '新加坡', to: '海南区', income: '532.10', incomeYoy: '4.8%', incomeUp: true, volume: '234.56', volumeYoy: '3.2%', volumeUp: true, weight: '87.65', weightYoy: '1.5%', weightUp: true },
+    { from: '福建区', to: '美洲', income: '421.98', incomeYoy: '1.5%', incomeUp: true, volume: '123.45', volumeYoy: '1.9%', volumeUp: true, weight: '76.54', weightYoy: '1.1%', weightUp: true },
+    { from: '粤东区', to: '美洲', income: '310.87', incomeYoy: '2.2%', incomeUp: true, volume: '98.76', volumeYoy: '1.5%', volumeUp: true, weight: '65.43', weightYoy: '1.0%', weightUp: true },
+    { from: '苏南区', to: '美洲', income: '209.76', incomeYoy: '3.1%', incomeUp: true, volume: '87.65', volumeYoy: '2.4%', volumeUp: true, weight: '54.32', weightYoy: '0.9%', weightUp: true },
+    { from: '深莞区', to: '日本', income: '198.65', incomeYoy: '1.2%', incomeUp: true, volume: '76.54', volumeYoy: '1.1%', volumeUp: true, weight: '43.21', weightYoy: '0.8%', weightUp: true },
   ];
 
   return (
@@ -336,26 +336,6 @@ export default function FlowSection({ onOpenDetail }: { onOpenDetail: (type: 'cn
           </button>
         ))}
       </div>
-
-      <FlowCard 
-        title="收入"
-        icon={<CircleDollarSign size={16} />}
-        unit="万元"
-        daily={{ value: '1,245.82', yoy: '5.2%', isUp: true }}
-        monthly={{ value: '34,567.12', yoy: '4.8%', isUp: true }}
-        yearly={{ value: '102,456.34', yoy: '6.1%', isUp: true }}
-        onOpenDetail={() => onOpenDetail(flowType, 'income')}
-      />
-
-      <FlowCard 
-        title="件量"
-        icon={<Package size={16} />}
-        unit="万票"
-        daily={{ value: '892.45', yoy: '3.1%', isUp: true }}
-        monthly={{ value: '25,678.90', yoy: '2.9%', isUp: true }}
-        yearly={{ value: '78,901.23', yoy: '4.2%', isUp: true }}
-        onOpenDetail={() => onOpenDetail(flowType, 'volume')}
-      />
 
       <KeyFlowsCard type={flowType} />
       

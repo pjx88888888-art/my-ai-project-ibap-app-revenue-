@@ -4,22 +4,15 @@
  */
 
 import { MetricType } from '../types';
-import { ChevronRight, ChevronDown, TrendingUp, TrendingDown } from 'lucide-react';
+import { ChevronRight, TrendingUp, TrendingDown, HelpCircle, BarChart3 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
-interface MetricCardProps {
+interface OperatingOverviewCardProps {
   activeMetric: MetricType;
-  setActiveMetric: (metric: MetricType) => void;
   onOpenDetail: () => void;
 }
 
-export default function MetricCard({ activeMetric, setActiveMetric, onOpenDetail }: MetricCardProps) {
-  const metrics = [
-    { id: 'income', label: '收入' },
-    { id: 'volume', label: '件量' },
-    { id: 'weight', label: '重量' },
-  ] as { id: MetricType; label: string }[];
-
+export default function OperatingOverviewCard({ activeMetric, onOpenDetail }: OperatingOverviewCardProps) {
   const data: Record<MetricType, {
     daily: { value: string; unit: string; yoy: string; isUp: boolean };
     monthly: { value: string; unit: string; yoy: string; isUp: boolean; status: 'green' | 'yellow-green' | 'none' };
@@ -46,25 +39,13 @@ export default function MetricCard({ activeMetric, setActiveMetric, onOpenDetail
 
   return (
     <div className="bg-white mx-3 my-3 rounded-2xl p-4 shadow-xl relative z-10 overflow-hidden border border-white/20">
-      <div className="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
-        <div className="flex gap-6">
-          {metrics.map((m) => (
-            <div
-              key={m.id}
-              onClick={() => setActiveMetric(m.id)}
-              className={`text-sm cursor-pointer py-2 transition-all relative ${
-                activeMetric === m.id ? 'text-[#1b63d6] font-bold' : 'text-gray-500 font-medium hover:text-gray-700'
-              }`}
-            >
-              {m.label}
-              {activeMetric === m.id && (
-                <motion.div
-                  layoutId="metricUnderline"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1b63d6] rounded-full"
-                />
-              )}
-            </div>
-          ))}
+      <div className="flex items-center justify-between mb-4 pb-3 border-b-2 border-gray-50">
+        <div className="flex items-center gap-2">
+          <div className="bg-blue-50 p-1 rounded-lg">
+            <BarChart3 size={16} className="text-[#1b63d6]" />
+          </div>
+          <span className="text-sm font-bold text-gray-800">经营概览</span>
+          <HelpCircle size={14} className="text-gray-300" />
         </div>
         <div
           onClick={onOpenDetail}
@@ -148,10 +129,6 @@ export default function MetricCard({ activeMetric, setActiveMetric, onOpenDetail
           </div>
         </motion.div>
       </AnimatePresence>
-
-      <div className="flex justify-center items-center gap-1 text-[10px] text-gray-400 mt-4 cursor-pointer hover:text-[#1b63d6] transition-colors">
-        展开 <ChevronDown size={10} />
-      </div>
     </div>
   );
 }

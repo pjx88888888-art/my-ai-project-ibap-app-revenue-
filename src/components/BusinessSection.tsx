@@ -4,9 +4,15 @@
  */
 
 import { BUSINESS_UNITS } from '../constants';
-import { TrendingUp, TrendingDown, HelpCircle } from 'lucide-react';
+import { TrendingUp, HelpCircle, ChevronRight } from 'lucide-react';
+import { MetricType } from '../types';
 
-export default function BusinessSection() {
+interface BusinessSectionProps {
+  activeMetric: MetricType;
+  onOpenDetail: () => void;
+}
+
+export default function BusinessSection({ activeMetric, onOpenDetail }: BusinessSectionProps) {
   const getUnit = (name: string) => {
     if (name.includes('收入')) return '万元';
     if (name.includes('件量')) return '万票';
@@ -23,6 +29,12 @@ export default function BusinessSection() {
           </div>
           <span className="text-sm font-bold text-gray-800">业务板块</span>
           <HelpCircle size={14} className="text-gray-300" />
+        </div>
+        <div
+          onClick={onOpenDetail}
+          className="text-gray-400 text-[10px] flex items-center cursor-pointer hover:text-[#1b63d6] transition-colors"
+        >
+          详情 <ChevronRight size={10} className="ml-0.5" />
         </div>
       </div>
       
@@ -42,21 +54,21 @@ export default function BusinessSection() {
               </span>
             </div>
 
-            <div className="grid grid-cols-3 gap-2.5">
-              {unit.metrics.map((metric, idx) => (
+            <div className="grid grid-cols-1 gap-2.5">
+              {unit.metrics
+                .filter(m => (activeMetric === 'income' && m.name.includes('收入')) || 
+                             (activeMetric === 'volume' && m.name.includes('件量')) || 
+                             (activeMetric === 'weight' && m.name.includes('重量')))
+                .map((metric, idx) => (
                 <div key={idx} className="flex flex-col gap-2">
-                  <div className="text-[11px] font-bold text-gray-600 text-center mb-0.5">
-                    {metric.name}
-                  </div>
-                  
-                  <div className="bg-[#f8fbff] border border-blue-50/50 rounded-xl p-2 flex flex-col gap-2">
+                  <div className="grid grid-cols-2 gap-2">
                     <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98]">
-                      <div className="text-[8px] text-gray-400 mb-0.5 font-medium">当日</div>
+                      <div className="text-[10px] text-gray-400 mb-0.5 font-medium">当日</div>
                       <div className="flex items-baseline gap-0.5 mb-0.5">
-                        <div className="text-xs font-extrabold text-gray-800 tracking-tight">{metric.daily.value}</div>
-                        <div className="text-[7px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
+                        <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metric.daily.value}</div>
+                        <div className="text-[9px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
                       </div>
-                      <div className="flex justify-between items-center text-[7px] text-gray-500">
+                      <div className="flex justify-between items-center text-[9px] text-gray-500">
                         <span className={`flex items-center font-bold ${metric.daily.isUp ? 'text-green-500' : 'text-red-500'}`}>
                           {metric.daily.isUp ? '▲' : '▼'} {metric.daily.yoy}
                         </span>
@@ -65,12 +77,12 @@ export default function BusinessSection() {
                     </div>
 
                     <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98]">
-                      <div className="text-[8px] text-gray-400 mb-0.5 font-medium">月累计</div>
+                      <div className="text-[10px] text-gray-400 mb-0.5 font-medium">月累计</div>
                       <div className="flex items-baseline gap-0.5 mb-0.5">
-                        <div className="text-xs font-extrabold text-gray-800 tracking-tight">{metric.monthly.value}</div>
-                        <div className="text-[7px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
+                        <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metric.monthly.value}</div>
+                        <div className="text-[9px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
                       </div>
-                      <div className="flex justify-between items-center text-[7px] text-gray-500">
+                      <div className="flex justify-between items-center text-[9px] text-gray-500">
                         <span className={`flex items-center font-bold ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
                           {metric.monthly.isUp ? '▲' : '▼'} {metric.monthly.yoy}
                         </span>

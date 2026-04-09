@@ -9,7 +9,8 @@ import { MainTab, SubTab, MetricType } from './types';
 import Header from './components/Header';
 import Tabs from './components/Tabs';
 import DatePicker from './components/DatePicker';
-import MetricCard from './components/MetricCard';
+import MetricTabs from './components/MetricTabs';
+import OperatingOverviewCard from './components/OperatingOverviewCard';
 import BusinessSection from './components/BusinessSection';
 import KeyMetricsSection from './components/KeyMetricsSection';
 import FlowSection from './components/FlowSection';
@@ -20,6 +21,7 @@ import BottomNav from './components/BottomNav';
 import DetailModal from './components/DetailModal';
 import SubDetailView from './components/SubDetailView';
 import ThirdDetailView from './components/ThirdDetailView';
+import OrgDetailView from './components/OrgDetailView';
 import { Rocket } from 'lucide-react';
 
 export default function App() {
@@ -27,12 +29,21 @@ export default function App() {
   const [activeSub, setActiveSub] = useState<SubTab>('overview');
   const [activeMetric, setActiveMetric] = useState<MetricType>('income');
   const [selectedDate, setSelectedDate] = useState(29);
-  const [view, setView] = useState<'dashboard' | 'detail' | 'sub-detail' | 'third-detail' | 'flow-detail' | 'flow-third-detail' | 'flow-list-detail'>('dashboard');
+  const [view, setView] = useState<'dashboard' | 'detail' | 'sub-detail' | 'third-detail' | 'flow-detail' | 'flow-third-detail' | 'flow-list-detail' | 'org-detail'>('dashboard');
   const [selectedRegion, setSelectedRegion] = useState<string>('');
   const [selectedSegment, setSelectedSegment] = useState<string>('');
   const [flowDetailType, setFlowDetailType] = useState<'cnob' | 'osob'>('cnob');
 
   const [flowDetailSource, setFlowDetailSource] = useState<'segment' | 'flow'>('segment');
+
+  const handleOpenBusinessDetail = () => {
+    setSelectedRegion('本部');
+    setView('sub-detail');
+  };
+
+  const handleOpenKeyMetricsDetail = () => {
+    setView('org-detail');
+  };
 
   const handleSelectRegion = (region: string) => {
     setSelectedRegion(region);
@@ -105,13 +116,19 @@ export default function App() {
               <main className="pb-24">
                 {activeSub === 'overview' ? (
                   <>
-                    <MetricCard 
+                    <MetricTabs 
                       activeMetric={activeMetric} 
                       setActiveMetric={setActiveMetric}
+                    />
+                    <OperatingOverviewCard 
+                      activeMetric={activeMetric} 
                       onOpenDetail={() => setView('detail')}
                     />
-                    <BusinessSection />
-                    <KeyMetricsSection />
+                    <BusinessSection 
+                      activeMetric={activeMetric} 
+                      onOpenDetail={handleOpenBusinessDetail}
+                    />
+                    <KeyMetricsSection onOpenDetail={handleOpenKeyMetricsDetail} />
                   </>
                 ) : activeSub === 'flow' ? (
                   <FlowSection onOpenDetail={handleOpenFlowDetail} />
@@ -220,6 +237,21 @@ export default function App() {
               segment={selectedSegment}
               type={flowDetailType}
             />
+            </motion.div>
+          ) : view === 'org-detail' ? (
+            <motion.div
+              key="org-detail"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.3 }}
+              className="relative min-h-screen bg-[#f4f7fc]"
+            >
+              <OrgDetailView 
+                onBack={() => setView('dashboard')}
+                onClose={() => setView('dashboard')}
+                region="本部"
+              />
             </motion.div>
           ) : (
             <motion.div

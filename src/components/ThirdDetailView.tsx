@@ -293,8 +293,8 @@ export default function ThirdDetailView({ onBack, onClose, segment, activeMetric
                     </th>
                     {activeMetric === 'income' && (
                       <>
-                        <th className="px-3 py-2.5 text-gray-500 font-bold text-right">单票收入</th>
-                        <th className="px-3 py-2.5 text-gray-500 font-bold text-right">日均收入</th>
+                        <th className="px-3 py-2.5 text-gray-500 font-bold text-right">单票业务</th>
+                        <th className="px-3 py-2.5 text-gray-500 font-bold text-right">日均业务</th>
                         <th className="px-3 py-2.5 text-gray-500 font-bold text-right">折让率</th>
                       </>
                     )}
