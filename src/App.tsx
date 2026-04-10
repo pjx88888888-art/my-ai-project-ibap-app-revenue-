@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MainTab, SubTab, MetricType } from './types';
+import { MainTab, SubTab, MetricType, TimeDimension } from './types';
 import Header from './components/Header';
 import Tabs from './components/Tabs';
 import DatePicker from './components/DatePicker';
@@ -30,6 +30,7 @@ export default function App() {
   const [activeSub, setActiveSub] = useState<SubTab>('overview');
   const [activeMetric, setActiveMetric] = useState<MetricType>('income');
   const [selectedDate, setSelectedDate] = useState(29);
+  const [timeDimension, setTimeDimension] = useState<TimeDimension>('day');
   const [view, setView] = useState<'dashboard' | 'detail' | 'sub-detail' | 'third-detail' | 'flow-detail' | 'flow-third-detail' | 'flow-list-detail' | 'org-detail' | 'product-flow-detail'>('dashboard');
   const [selectedRegion, setSelectedRegion] = useState<string>('');
   const [selectedSegment, setSelectedSegment] = useState<string>('');
@@ -118,6 +119,8 @@ export default function App() {
               <DatePicker 
                 selectedDate={selectedDate} 
                 setSelectedDate={setSelectedDate} 
+                timeDimension={timeDimension}
+                setTimeDimension={setTimeDimension}
               />
 
               <main className="pb-24">
@@ -129,14 +132,19 @@ export default function App() {
                     />
                     <OperatingOverviewCard 
                       activeMetric={activeMetric} 
+                      timeDimension={timeDimension}
                       onOpenDetail={() => setView('detail')}
                     />
                     <BusinessSection 
                       activeMetric={activeMetric} 
+                      timeDimension={timeDimension}
                       onOpenDetail={handleOpenBusinessDetail}
                     />
                     {activeMetric === 'income' && (
-                      <KeyMetricsSection onOpenDetail={handleOpenKeyMetricsDetail} />
+                      <KeyMetricsSection 
+                        timeDimension={timeDimension}
+                        onOpenDetail={handleOpenKeyMetricsDetail} 
+                      />
                     )}
                   </>
                 ) : activeSub === 'flow' ? (
@@ -172,6 +180,7 @@ export default function App() {
                 activeMetric={activeMetric}
                 setActiveMetric={setActiveMetric}
                 onSelectRegion={handleSelectRegion}
+                timeDimension={timeDimension}
               />
             </motion.div>
           ) : view === 'sub-detail' ? (
@@ -190,6 +199,7 @@ export default function App() {
                 region={selectedRegion}
                 activeMetric={activeMetric}
                 setActiveMetric={setActiveMetric}
+                timeDimension={timeDimension}
               />
             </motion.div>
           ) : view === 'flow-detail' ? (
@@ -260,6 +270,7 @@ export default function App() {
                 onBack={() => setView('dashboard')}
                 onClose={() => setView('dashboard')}
                 region="本部"
+                timeDimension={timeDimension}
               />
             </motion.div>
           ) : view === 'third-detail' ? (
@@ -278,6 +289,7 @@ export default function App() {
                 segment={selectedSegment}
                 activeMetric={activeMetric}
                 setActiveMetric={setActiveMetric}
+                timeDimension={timeDimension}
               />
             </motion.div>
           ) : view === 'product-flow-detail' ? (
@@ -295,6 +307,7 @@ export default function App() {
                 product={selectedProduct}
                 activeMetric={activeMetric}
                 setActiveMetric={setActiveMetric}
+                timeDimension={timeDimension}
               />
             </motion.div>
           ) : null}

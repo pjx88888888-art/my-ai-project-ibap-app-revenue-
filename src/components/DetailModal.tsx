@@ -5,8 +5,8 @@
 
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ChevronLeft, ChevronDown, TrendingUp, TrendingDown, MoreHorizontal, Bell } from 'lucide-react';
-import { MetricType } from '../types';
-import { useState } from 'react';
+import { MetricType, TimeDimension } from '../types';
+import { useState, useEffect } from 'react';
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -26,13 +26,22 @@ interface DetailModalProps {
   activeMetric: MetricType;
   setActiveMetric: (metric: MetricType) => void;
   onSelectRegion: (region: string) => void;
+  timeDimension: TimeDimension;
 }
 
-export default function DetailModal({ onClose, activeMetric, setActiveMetric, onSelectRegion }: DetailModalProps) {
+export default function DetailModal({ onClose, activeMetric, setActiveMetric, onSelectRegion, timeDimension }: DetailModalProps) {
   const [isTrendExpanded, setIsTrendExpanded] = useState(false);
   const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>('daily');
   const [activeFilter, setActiveFilter] = useState('domestic-sales');
   const [activeSubFilter, setActiveSubFilter] = useState('all');
+
+  useEffect(() => {
+    if (timeDimension === 'month') {
+      setActivePeriod('monthly');
+    } else {
+      setActivePeriod('daily');
+    }
+  }, [timeDimension]);
 
   const tabs = [
     { id: 'income', label: '收入' },
@@ -142,11 +151,13 @@ export default function DetailModal({ onClose, activeMetric, setActiveMetric, on
               
               {/* Trend Details Section */}
               <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-white/50">
-                <div className="px-4 py-3 flex items-center gap-2 border-b border-gray-50">
-                  <div className="bg-blue-50 p-1.5 rounded-lg">
-                    <TrendingUp size={16} className="text-[#1b63d6]" />
+                <div className="px-4 py-3 flex items-center justify-between border-b border-gray-50">
+                  <div className="flex items-center gap-2">
+                    <div className="bg-blue-50 p-1.5 rounded-lg">
+                      <TrendingUp size={16} className="text-[#1b63d6]" />
+                    </div>
+                    <div className="text-sm font-bold text-gray-800">趋势详情</div>
                   </div>
-                  <div className="text-sm font-bold text-gray-800">趋势详情</div>
                 </div>
 
                 <div className="p-3">
@@ -305,10 +316,20 @@ export default function DetailModal({ onClose, activeMetric, setActiveMetric, on
                   </div>
                   <div className="relative z-50">
                     <button
-                      onClick={() => setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily')}
+                      onClick={() => {
+                        if (timeDimension === 'day') {
+                          setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
+                        } else {
+                          setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
+                        }
+                      }}
                       className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
                     >
-                      {activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'}
+                      {timeDimension === 'day' ? (
+                        activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
+                      ) : (
+                        activePeriod === 'monthly' ? '月-当月' : '月-年累计'
+                      )}
                       <span className="text-[8px]">⇅</span>
                     </button>
                   </div>

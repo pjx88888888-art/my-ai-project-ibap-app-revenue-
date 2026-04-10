@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ChevronLeft, X, MoreHorizontal, TrendingUp, TrendingDown, MoveRight } from 'lucide-react';
-import { MetricType } from '../types';
+import { MetricType, TimeDimension } from '../types';
 
 interface ProductFlowDetailViewProps {
   onBack: () => void;
@@ -14,10 +14,20 @@ interface ProductFlowDetailViewProps {
   product: string;
   activeMetric: MetricType;
   setActiveMetric: (metric: MetricType) => void;
+  timeDimension: TimeDimension;
 }
 
-export default function ProductFlowDetailView({ onBack, onClose, product: initialProduct, activeMetric, setActiveMetric }: ProductFlowDetailViewProps) {
+export default function ProductFlowDetailView({ onBack, onClose, product: initialProduct, activeMetric, setActiveMetric, timeDimension }: ProductFlowDetailViewProps) {
   const [activeProduct, setActiveProduct] = useState(initialProduct);
+  const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>('daily');
+
+  useEffect(() => {
+    if (timeDimension === 'month') {
+      setActivePeriod('monthly');
+    } else {
+      setActivePeriod('daily');
+    }
+  }, [timeDimension]);
 
   const products = [
     '国际特快',
@@ -88,6 +98,20 @@ export default function ProductFlowDetailView({ onBack, onClose, product: initia
       {/* Content */}
       <div className="flex-1 overflow-y-auto p-3">
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-white/50">
+          <div className="px-4 py-3 flex items-center justify-between border-b border-gray-50">
+            <div className="text-sm font-bold text-gray-800">流向明细</div>
+            {timeDimension === 'month' && (
+              <div className="relative z-50">
+                <button
+                  onClick={() => setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly')}
+                  className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
+                >
+                  {activePeriod === 'monthly' ? '月-当月' : '月-年累计'}
+                  <span className="text-[8px]">⇅</span>
+                </button>
+              </div>
+            )}
+          </div>
           <div className="overflow-x-auto no-scrollbar">
             <table className="w-full text-left text-xs border-separate border-spacing-0">
               <thead>

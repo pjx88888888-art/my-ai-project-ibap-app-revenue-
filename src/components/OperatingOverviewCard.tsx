@@ -3,16 +3,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { MetricType } from '../types';
+import { MetricType, TimeDimension } from '../types';
 import { ChevronRight, TrendingUp, TrendingDown, HelpCircle, BarChart3 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface OperatingOverviewCardProps {
   activeMetric: MetricType;
+  timeDimension: TimeDimension;
   onOpenDetail: () => void;
 }
 
-export default function OperatingOverviewCard({ activeMetric, onOpenDetail }: OperatingOverviewCardProps) {
+export default function OperatingOverviewCard({ activeMetric, timeDimension, onOpenDetail }: OperatingOverviewCardProps) {
   const data: Record<MetricType, {
     daily: { value: string; unit: string; yoy: string; isUp: boolean };
     monthly: { value: string; unit: string; yoy: string; isUp: boolean; status: 'green' | 'yellow' | 'red' | 'none' };
@@ -57,71 +58,113 @@ export default function OperatingOverviewCard({ activeMetric, onOpenDetail }: Op
 
       <AnimatePresence mode="wait">
         <motion.div
-          key={activeMetric}
+          key={`${activeMetric}-${timeDimension}`}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.2 }}
         >
-          {/* Daily Metric */}
-          <div className="bg-[#f8fbff] p-4 rounded-xl mb-3 border border-blue-50/50">
-            <div className="text-xs text-gray-700 mb-2 flex items-center font-medium">
-              当日 <span className="text-[10px] text-gray-400 ml-1.5 font-normal">3月29日</span>
-            </div>
-            <div className="flex items-baseline gap-1 mb-2">
-              <span className="text-2xl font-bold text-gray-900 tracking-tight">{currentData.daily.value}</span>
-              <span className="text-xs text-gray-500 font-medium">{currentData.daily.unit}</span>
-            </div>
-          </div>
+          {timeDimension === 'day' ? (
+            <>
+              {/* Daily Metric */}
+              <div className="bg-[#f8fbff] p-4 rounded-xl mb-3 border border-blue-50/50">
+                <div className="text-xs text-gray-700 mb-2 flex items-center font-medium">
+                  当日 <span className="text-[10px] text-gray-400 ml-1.5 font-normal">3月29日</span>
+                </div>
+                <div className="flex items-baseline gap-1 mb-2">
+                  <span className="text-2xl font-bold text-gray-900 tracking-tight">{currentData.daily.value}</span>
+                  <span className="text-xs text-gray-500 font-medium">{currentData.daily.unit}</span>
+                </div>
+              </div>
 
-          {/* Grid Metrics */}
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-[#f8fbff] p-3 rounded-xl relative border border-blue-50/50">
-              <div className="text-[11px] text-gray-700 mb-2 font-medium">
-                月累计 <span className="text-[9px] text-gray-400 ml-1 font-normal">3.1-29日</span>
-              </div>
-              <div className="flex items-baseline gap-1 mb-1.5">
-                <span className="text-lg font-bold text-gray-900 tracking-tight">{currentData.monthly.value}</span>
-                <span className="text-[10px] text-gray-500 font-medium">{currentData.monthly.unit}</span>
-              </div>
-              <div className="text-[9px] text-gray-400 flex items-center gap-1">
-                同比: 
-                <span className={`flex items-center font-semibold ${currentData.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                  {currentData.monthly.yoy}
-                  {currentData.monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
-                </span>
-              </div>
-              {currentData.monthly.status !== 'none' && (
-                <div className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full ${
-                  currentData.monthly.status === 'green' ? 'bg-green-500' : 
-                  currentData.monthly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
-                }`} />
-              )}
-            </div>
+              {/* Grid Metrics */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-[#f8fbff] p-3 rounded-xl relative border border-blue-50/50">
+                  <div className="text-[11px] text-gray-700 mb-2 font-medium">
+                    月累计 <span className="text-[9px] text-gray-400 ml-1 font-normal">3.1-29日</span>
+                  </div>
+                  <div className="flex items-baseline gap-1 mb-1.5">
+                    <span className="text-lg font-bold text-gray-900 tracking-tight">{currentData.monthly.value}</span>
+                    <span className="text-[10px] text-gray-500 font-medium">{currentData.monthly.unit}</span>
+                  </div>
+                  <div className="text-[9px] text-gray-400 flex items-center gap-1">
+                    同比: 
+                    <span className={`flex items-center font-semibold ${currentData.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                      {currentData.monthly.yoy}
+                      {currentData.monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                    </span>
+                  </div>
+                  {currentData.monthly.status !== 'none' && (
+                    <div className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full ${
+                      currentData.monthly.status === 'green' ? 'bg-green-500' : 
+                      currentData.monthly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
+                    }`} />
+                  )}
+                </div>
 
-            <div className="bg-[#f8fbff] p-3 rounded-xl relative border border-blue-50/50">
-              <div className="text-[11px] text-gray-700 mb-2 font-medium">
-                年累计 <span className="text-[9px] text-gray-400 ml-1 font-normal">1-3.29日</span>
+                <div className="bg-[#f8fbff] p-3 rounded-xl relative border border-blue-50/50">
+                  <div className="text-[11px] text-gray-700 mb-2 font-medium">
+                    年累计 <span className="text-[9px] text-gray-400 ml-1 font-normal">1-3.29日</span>
+                  </div>
+                  <div className="flex items-baseline gap-1 mb-1.5">
+                    <span className="text-lg font-bold text-gray-900 tracking-tight">{currentData.yearly.value}</span>
+                    <span className="text-[10px] text-gray-500 font-medium">{currentData.yearly.unit}</span>
+                  </div>
+                  <div className="text-[9px] text-gray-400 flex items-center gap-1">
+                    同比: 
+                    <span className={`flex items-center font-semibold ${currentData.yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                      {currentData.yearly.yoy}
+                      {currentData.yearly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                    </span>
+                  </div>
+                  {currentData.yearly.status !== 'none' && (
+                    <div className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full ${
+                      currentData.yearly.status === 'green' ? 'bg-green-500' : 
+                      currentData.yearly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
+                    }`} />
+                  )}
+                </div>
               </div>
-              <div className="flex items-baseline gap-1 mb-1.5">
-                <span className="text-lg font-bold text-gray-900 tracking-tight">{currentData.yearly.value}</span>
-                <span className="text-[10px] text-gray-500 font-medium">{currentData.yearly.unit}</span>
+            </>
+          ) : (
+            <div className="grid grid-cols-2 gap-3">
+              {/* Monthly Metric */}
+              <div className="bg-[#f8fbff] p-3 rounded-xl border border-blue-50/50">
+                <div className="text-[11px] text-gray-700 mb-2 flex items-center font-medium">
+                  当月 <span className="text-[9px] text-gray-400 ml-1 font-normal">3月</span>
+                </div>
+                <div className="flex items-baseline gap-1 mb-1.5">
+                  <span className="text-lg font-bold text-gray-900 tracking-tight">{currentData.monthly.value}</span>
+                  <span className="text-[10px] text-gray-500 font-medium">{currentData.monthly.unit}</span>
+                </div>
+                <div className="text-[9px] text-gray-400 flex items-center gap-1">
+                  同比: 
+                  <span className={`flex items-center font-semibold ${currentData.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                    {currentData.monthly.yoy}
+                    {currentData.monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                  </span>
+                </div>
               </div>
-              <div className="text-[9px] text-gray-400 flex items-center gap-1">
-                同比: 
-                <span className={`flex items-center font-semibold ${currentData.yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                  {currentData.yearly.yoy}
-                  {currentData.yearly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
-                </span>
+
+              {/* Yearly Metric for Month Dimension */}
+              <div className="bg-[#f8fbff] p-3 rounded-xl relative border border-blue-50/50">
+                <div className="text-[11px] text-gray-700 mb-2 font-medium">
+                  年累计 <span className="text-[9px] text-gray-400 ml-1 font-normal">1-3月</span>
+                </div>
+                <div className="flex items-baseline gap-1 mb-1.5">
+                  <span className="text-lg font-bold text-gray-900 tracking-tight">{currentData.yearly.value}</span>
+                  <span className="text-[10px] text-gray-500 font-medium">{currentData.yearly.unit}</span>
+                </div>
+                <div className="text-[9px] text-gray-400 flex items-center gap-1">
+                  同比: 
+                  <span className={`flex items-center font-semibold ${currentData.yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                    {currentData.yearly.yoy}
+                    {currentData.yearly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                  </span>
+                </div>
               </div>
-              {currentData.yearly.status !== 'none' && (
-                <div className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full ${
-                  currentData.yearly.status === 'green' ? 'bg-green-500' : 
-                  currentData.yearly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
-                }`} />
-              )}
             </div>
-          </div>
+          )}
         </motion.div>
       </AnimatePresence>
     </div>

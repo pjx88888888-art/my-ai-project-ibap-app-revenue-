@@ -6,6 +6,7 @@
 export type MainTab = 'income' | 'quality' | 'operation';
 export type SubTab = 'overview' | 'flow' | 'product' | 'customer';
 export type MetricType = 'income' | 'volume' | 'weight';
+export type TimeDimension = 'day' | 'month';
 
 export interface MetricData {
   label: string;

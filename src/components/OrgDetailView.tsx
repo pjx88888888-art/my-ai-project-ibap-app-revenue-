@@ -3,19 +3,30 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ChevronLeft, X, MoreHorizontal } from 'lucide-react';
+import { TimeDimension } from '../types';
 
 interface OrgDetailViewProps {
   onBack: () => void;
   onClose: () => void;
   region: string;
+  timeDimension: TimeDimension;
 }
 
-export default function OrgDetailView({ onBack, onClose, region }: OrgDetailViewProps) {
+export default function OrgDetailView({ onBack, onClose, region, timeDimension }: OrgDetailViewProps) {
   const [activeTab, setActiveTab] = useState<'cn-sales' | 'cn-origin' | 'os-origin'>('cn-sales');
   const [activeSubFilter, setActiveSubFilter] = useState('all');
+  const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>('daily');
+
+  useEffect(() => {
+    if (timeDimension === 'month') {
+      setActivePeriod('monthly');
+    } else {
+      setActivePeriod('daily');
+    }
+  }, [timeDimension]);
 
   const getMetrics = () => {
     if (activeTab === 'os-origin') {
@@ -105,8 +116,19 @@ export default function OrgDetailView({ onBack, onClose, region }: OrgDetailView
 
       <div className="flex-1 overflow-y-auto p-3 pt-0">
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-white/50">
-          <div className="px-4 py-3 border-b border-gray-50 text-sm font-bold text-gray-800">
-            组织详情
+          <div className="px-4 py-3 border-b border-gray-50 flex items-center justify-between">
+            <div className="text-sm font-bold text-gray-800">组织详情</div>
+            {timeDimension === 'month' && (
+              <div className="relative z-50">
+                <button
+                  onClick={() => setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly')}
+                  className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
+                >
+                  {activePeriod === 'monthly' ? '月-当月' : '月-年累计'}
+                  <span className="text-[8px]">⇅</span>
+                </button>
+              </div>
+            )}
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-[10px] table-auto">

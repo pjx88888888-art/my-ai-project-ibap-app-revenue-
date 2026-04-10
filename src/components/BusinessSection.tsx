@@ -5,14 +5,15 @@
 
 import { BUSINESS_UNITS } from '../constants';
 import { TrendingUp, HelpCircle, ChevronRight } from 'lucide-react';
-import { MetricType } from '../types';
+import { MetricType, TimeDimension } from '../types';
 
 interface BusinessSectionProps {
   activeMetric: MetricType;
+  timeDimension: TimeDimension;
   onOpenDetail: () => void;
 }
 
-export default function BusinessSection({ activeMetric, onOpenDetail }: BusinessSectionProps) {
+export default function BusinessSection({ activeMetric, timeDimension, onOpenDetail }: BusinessSectionProps) {
   const getUnit = (name: string) => {
     if (name.includes('收入')) return '万元';
     if (name.includes('件量')) return '万票';
@@ -62,39 +63,73 @@ export default function BusinessSection({ activeMetric, onOpenDetail }: Business
                 .map((metric, idx) => (
                 <div key={idx} className="flex flex-col gap-2">
                   <div className="grid grid-cols-2 gap-2">
-                    <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98]">
-                      <div className="text-[10px] text-gray-400 mb-0.5 font-medium">当日</div>
-                      <div className="flex items-baseline gap-0.5 mb-0.5">
-                        <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metric.daily.value}</div>
-                        <div className="text-[9px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
-                      </div>
-                      <div className="flex justify-between items-center text-[9px] text-gray-500">
-                        <span className={`flex items-center font-bold ${metric.daily.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                          {metric.daily.isUp ? '▲' : '▼'} {metric.daily.yoy}
-                        </span>
-                        <span className="opacity-60">占比 {metric.daily.ratio}</span>
-                      </div>
-                    </div>
+                    {timeDimension === 'day' ? (
+                      <>
+                        <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98]">
+                          <div className="text-[10px] text-gray-400 mb-0.5 font-medium">当日</div>
+                          <div className="flex items-baseline gap-0.5 mb-0.5">
+                            <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metric.daily.value}</div>
+                            <div className="text-[9px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
+                          </div>
+                          <div className="flex justify-between items-center text-[9px] text-gray-500">
+                            <span className={`flex items-center font-bold ${metric.daily.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                              {metric.daily.isUp ? '▲' : '▼'} {metric.daily.yoy}
+                            </span>
+                            <span className="opacity-60">占比 {metric.daily.ratio}</span>
+                          </div>
+                        </div>
 
-                    <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98] relative">
-                      <div className="text-[10px] text-gray-400 mb-0.5 font-medium">月累计</div>
-                      <div className="flex items-baseline gap-0.5 mb-0.5">
-                        <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metric.monthly.value}</div>
-                        <div className="text-[9px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
-                      </div>
-                      <div className="flex justify-between items-center text-[9px] text-gray-500">
-                        <span className={`flex items-center font-bold ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                          {metric.monthly.isUp ? '▲' : '▼'} {metric.monthly.yoy}
-                        </span>
-                        <span className="opacity-60">占比 {metric.monthly.ratio}</span>
-                      </div>
-                      {metric.monthly.status && (
-                        <div className={`absolute top-3 right-3 w-2 h-2 rounded-full ${
-                          metric.monthly.status === 'green' ? 'bg-green-500' : 
-                          metric.monthly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
-                        }`} />
-                      )}
-                    </div>
+                        <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98] relative">
+                          <div className="text-[10px] text-gray-400 mb-0.5 font-medium">月累计</div>
+                          <div className="flex items-baseline gap-0.5 mb-0.5">
+                            <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metric.monthly.value}</div>
+                            <div className="text-[9px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
+                          </div>
+                          <div className="flex justify-between items-center text-[9px] text-gray-500">
+                            <span className={`flex items-center font-bold ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                              {metric.monthly.isUp ? '▲' : '▼'} {metric.monthly.yoy}
+                            </span>
+                            <span className="opacity-60">占比 {metric.monthly.ratio}</span>
+                          </div>
+                          {metric.monthly.status && (
+                            <div className={`absolute top-3 right-3 w-2 h-2 rounded-full ${
+                              metric.monthly.status === 'green' ? 'bg-green-500' : 
+                              metric.monthly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
+                            }`} />
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98]">
+                          <div className="text-[10px] text-gray-400 mb-0.5 font-medium">当月</div>
+                          <div className="flex items-baseline gap-0.5 mb-0.5">
+                            <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metric.monthly.value}</div>
+                            <div className="text-[9px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
+                          </div>
+                          <div className="flex justify-between items-center text-[9px] text-gray-500">
+                            <span className={`flex items-center font-bold ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                              {metric.monthly.isUp ? '▲' : '▼'} {metric.monthly.yoy}
+                            </span>
+                            <span className="opacity-60">占比 {metric.monthly.ratio}</span>
+                          </div>
+                        </div>
+
+                        <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98] relative">
+                          <div className="text-[10px] text-gray-400 mb-0.5 font-medium">年累计</div>
+                          <div className="flex items-baseline gap-0.5 mb-0.5">
+                            <div className="text-sm font-extrabold text-gray-800 tracking-tight">{(parseFloat(metric.monthly.value.replace(/,/g, '')) * 3.5).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                            <div className="text-[9px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
+                          </div>
+                          <div className="flex justify-between items-center text-[9px] text-gray-500">
+                            <span className={`flex items-center font-bold ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                              {metric.monthly.isUp ? '▲' : '▼'} {metric.monthly.yoy}
+                            </span>
+                            <span className="opacity-60">占比 {metric.monthly.ratio}</span>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               ))}

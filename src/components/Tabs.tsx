@@ -50,11 +50,6 @@ export default function Tabs({ activeMain, setActiveMain, activeSub, setActiveSu
           </div>
         ))}
       </div>
-
-      {/* Time Dimension */}
-      <div className="flex items-center px-4 text-white/70 text-[10px] mt-2 uppercase tracking-widest font-semibold">
-        日维度 <ChevronDown size={10} className="ml-1" />
-      </div>
     </div>
   );
 }

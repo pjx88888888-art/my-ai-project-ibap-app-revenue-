@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, X, MoreHorizontal, TrendingUp, TrendingDown, Bell, ChevronDown, ChevronRight } from 'lucide-react';
-import { MetricType } from '../types';
+import { MetricType, TimeDimension } from '../types';
 import {
   ResponsiveContainer,
   LineChart,
@@ -24,11 +24,21 @@ interface SubDetailViewProps {
   region: string;
   activeMetric: MetricType;
   setActiveMetric: (metric: MetricType) => void;
+  timeDimension: TimeDimension;
 }
 
-export default function SubDetailView({ onBack, onClose, onSelectSegment, region, activeMetric, setActiveMetric }: SubDetailViewProps) {
+export default function SubDetailView({ onBack, onClose, onSelectSegment, region, activeMetric, setActiveMetric, timeDimension }: SubDetailViewProps) {
   const [isTrendExpanded, setIsTrendExpanded] = useState(false);
   const [legendPage, setLegendPage] = useState(1);
+  const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>('daily');
+
+  useEffect(() => {
+    if (timeDimension === 'month') {
+      setActivePeriod('monthly');
+    } else {
+      setActivePeriod('daily');
+    }
+  }, [timeDimension]);
 
   const tabs = [
     { id: 'income', label: '收入' },
@@ -263,7 +273,7 @@ export default function SubDetailView({ onBack, onClose, onSelectSegment, region
           </div>
         </div>
 
-        {/* Business Structure Section */}
+          {/* Business Structure Section */}
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-white/50">
           <div className="px-4 py-3 flex items-center justify-between border-b border-gray-50">
             <div className="flex items-center gap-2">
@@ -274,6 +284,17 @@ export default function SubDetailView({ onBack, onClose, onSelectSegment, region
               </div>
               <div className="text-sm font-bold text-gray-800">业务结构</div>
             </div>
+            {timeDimension === 'month' && (
+              <div className="relative z-50">
+                <button
+                  onClick={() => setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly')}
+                  className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
+                >
+                  {activePeriod === 'monthly' ? '月-当月' : '月-年累计'}
+                  <span className="text-[8px]">⇅</span>
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="p-3">

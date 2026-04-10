@@ -5,6 +5,7 @@
 
 import { TrendingUp, TrendingDown, HelpCircle, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
+import { TimeDimension } from '../types';
 
 interface MetricRow {
   name: string;
@@ -79,10 +80,11 @@ const KEY_METRICS: MetricRow[] = [
 ];
 
 interface KeyMetricsSectionProps {
+  timeDimension: TimeDimension;
   onOpenDetail: () => void;
 }
 
-export default function KeyMetricsSection({ onOpenDetail }: KeyMetricsSectionProps) {
+export default function KeyMetricsSection({ timeDimension, onOpenDetail }: KeyMetricsSectionProps) {
   const [activeTab, setActiveTab] = useState<'all' | 'cn' | 'os'>('all');
 
   const filteredMetrics = KEY_METRICS.filter(metric => {
@@ -151,18 +153,33 @@ export default function KeyMetricsSection({ onOpenDetail }: KeyMetricsSectionPro
           <thead>
             <tr className="text-[10px] text-gray-400 font-medium">
               <th className="text-left pb-3 font-medium bg-[#f8f9fb] px-2 py-1.5 rounded-l-lg">指标项</th>
-              <th className="text-center pb-3 font-medium bg-[#f8f9fb] py-1.5">
-                <div>当日</div>
-                <div className="text-[8px] opacity-60">3月30日</div>
-              </th>
-              <th className="text-center pb-3 font-medium bg-[#f8f9fb] py-1.5">
-                <div>月累计</div>
-                <div className="text-[8px] opacity-60">3月1-30日</div>
-              </th>
-              <th className="text-center pb-3 font-medium bg-[#f8f9fb] py-1.5 rounded-r-lg">
-                <div>年累计</div>
-                <div className="text-[8px] opacity-60">1-3月</div>
-              </th>
+              {timeDimension === 'day' ? (
+                <>
+                  <th className="text-center pb-3 font-medium bg-[#f8f9fb] py-1.5">
+                    <div>当日</div>
+                    <div className="text-[8px] opacity-60">3月30日</div>
+                  </th>
+                  <th className="text-center pb-3 font-medium bg-[#f8f9fb] py-1.5">
+                    <div>月累计</div>
+                    <div className="text-[8px] opacity-60">3月1-30日</div>
+                  </th>
+                  <th className="text-center pb-3 font-medium bg-[#f8f9fb] py-1.5 rounded-r-lg">
+                    <div>年累计</div>
+                    <div className="text-[8px] opacity-60">1-3月</div>
+                  </th>
+                </>
+              ) : (
+                <>
+                  <th className="text-center pb-3 font-medium bg-[#f8f9fb] py-1.5">
+                    <div>当月</div>
+                    <div className="text-[8px] opacity-60">3月</div>
+                  </th>
+                  <th className="text-center pb-3 font-medium bg-[#f8f9fb] py-1.5 rounded-r-lg">
+                    <div>年累计</div>
+                    <div className="text-[8px] opacity-60">1-3月</div>
+                  </th>
+                </>
+              )}
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
@@ -171,32 +188,59 @@ export default function KeyMetricsSection({ onOpenDetail }: KeyMetricsSectionPro
                 <td className="py-4 px-2">
                   <div className="text-[11px] font-bold text-gray-700 leading-tight">{metric.name}</div>
                 </td>
-                <td className="py-4 text-center">
-                  <div className="flex items-baseline justify-center gap-0.5">
-                    <span className="text-xs font-extrabold text-gray-800">{metric.daily.value}</span>
-                    <span className="text-[8px] text-gray-400 font-medium">{metric.unit}</span>
-                  </div>
-                </td>
-                <td className="py-4 text-center">
-                  <div className="flex items-baseline justify-center gap-0.5 mb-0.5">
-                    <span className="text-xs font-extrabold text-gray-800">{metric.monthly.value}</span>
-                    <span className="text-[8px] text-gray-400 font-medium">{metric.unit}</span>
-                  </div>
-                  <div className={`text-[8px] font-bold flex items-center justify-center gap-0.5 ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                    {metric.monthly.yoy}
-                    {metric.monthly.isUp ? <TrendingUp size={8} /> : <TrendingDown size={8} />}
-                  </div>
-                </td>
-                <td className="py-4 text-center">
-                  <div className="flex items-baseline justify-center gap-0.5 mb-0.5">
-                    <span className="text-xs font-extrabold text-gray-800">{metric.yearly.value}</span>
-                    <span className="text-[8px] text-gray-400 font-medium">{metric.unit}</span>
-                  </div>
-                  <div className={`text-[8px] font-bold flex items-center justify-center gap-0.5 ${metric.yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                    {metric.yearly.yoy}
-                    {metric.yearly.isUp ? <TrendingUp size={8} /> : <TrendingDown size={8} />}
-                  </div>
-                </td>
+                {timeDimension === 'day' ? (
+                  <>
+                    <td className="py-4 text-center">
+                      <div className="flex items-baseline justify-center gap-0.5">
+                        <span className="text-xs font-extrabold text-gray-800">{metric.daily.value}</span>
+                        <span className="text-[8px] text-gray-400 font-medium">{metric.unit}</span>
+                      </div>
+                    </td>
+                    <td className="py-4 text-center">
+                      <div className="flex items-baseline justify-center gap-0.5 mb-0.5">
+                        <span className="text-xs font-extrabold text-gray-800">{metric.monthly.value}</span>
+                        <span className="text-[8px] text-gray-400 font-medium">{metric.unit}</span>
+                      </div>
+                      <div className={`text-[8px] font-bold flex items-center justify-center gap-0.5 ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                        {metric.monthly.yoy}
+                        {metric.monthly.isUp ? <TrendingUp size={8} /> : <TrendingDown size={8} />}
+                      </div>
+                    </td>
+                    <td className="py-4 text-center">
+                      <div className="flex items-baseline justify-center gap-0.5 mb-0.5">
+                        <span className="text-xs font-extrabold text-gray-800">{metric.yearly.value}</span>
+                        <span className="text-[8px] text-gray-400 font-medium">{metric.unit}</span>
+                      </div>
+                      <div className={`text-[8px] font-bold flex items-center justify-center gap-0.5 ${metric.yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                        {metric.yearly.yoy}
+                        {metric.yearly.isUp ? <TrendingUp size={8} /> : <TrendingDown size={8} />}
+                      </div>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td className="py-4 text-center">
+                      <div className="flex items-baseline justify-center gap-0.5 mb-0.5">
+                        <span className="text-xs font-extrabold text-gray-800">{metric.monthly.value}</span>
+                        <span className="text-[8px] text-gray-400 font-medium">{metric.unit}</span>
+                      </div>
+                      <div className={`text-[8px] font-bold flex items-center justify-center gap-0.5 ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                        {metric.monthly.yoy}
+                        {metric.monthly.isUp ? <TrendingUp size={8} /> : <TrendingDown size={8} />}
+                      </div>
+                    </td>
+                    <td className="py-4 text-center">
+                      <div className="flex items-baseline justify-center gap-0.5 mb-0.5">
+                        <span className="text-xs font-extrabold text-gray-800">{metric.yearly.value}</span>
+                        <span className="text-[8px] text-gray-400 font-medium">{metric.unit}</span>
+                      </div>
+                      <div className={`text-[8px] font-bold flex items-center justify-center gap-0.5 ${metric.yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                        {metric.yearly.yoy}
+                        {metric.yearly.isUp ? <TrendingUp size={8} /> : <TrendingDown size={8} />}
+                      </div>
+                    </td>
+                  </>
+                )}
               </tr>
             ))}
           </tbody>
