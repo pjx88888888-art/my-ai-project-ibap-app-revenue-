@@ -5,7 +5,8 @@
 
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { TrendingUp, TrendingDown, HelpCircle, ChevronRight, ChevronDown, CircleDollarSign, Package, Target, Trophy, ArrowRightLeft, MoveRight } from 'lucide-react';
+import { TrendingUp, TrendingDown, HelpCircle, ChevronRight, ChevronDown, CircleDollarSign, Package, Target, Trophy, ArrowRightLeft, MoveRight, ArrowRight } from 'lucide-react';
+import { TimeDimension } from '../types';
 
 interface FlowCardProps {
   title: string;
@@ -14,10 +15,11 @@ interface FlowCardProps {
   daily: { value: string; yoy: string; isUp: boolean };
   monthly: { value: string; yoy: string; isUp: boolean };
   yearly: { value: string; yoy: string; isUp: boolean };
+  timeDimension: TimeDimension;
   onOpenDetail?: () => void;
 }
 
-function FlowCard({ title, icon, unit, daily, monthly, yearly, onOpenDetail }: FlowCardProps) {
+function FlowCard({ title, icon, unit, daily, monthly, yearly, timeDimension, onOpenDetail }: FlowCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -39,53 +41,91 @@ function FlowCard({ title, icon, unit, daily, monthly, yearly, onOpenDetail }: F
       </div>
 
       <div className="grid grid-cols-1 gap-3">
-        {/* Daily */}
-        <div className="bg-[#f8fbff] rounded-xl p-3">
-          <div className="text-[10px] text-gray-400 mb-1 flex items-center gap-1">
-            <span className="font-bold text-gray-600">当日</span>
-            <span className="opacity-60">3月30日</span>
-          </div>
-          <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-black text-gray-800 tracking-tight">{daily.value}</span>
-            <span className="text-[10px] text-gray-400 font-medium">{unit}</span>
-            <div className={`flex items-center text-[10px] font-bold ml-auto ${daily.isUp ? 'text-green-500' : 'text-red-500'}`}>
-              同比:{daily.yoy}
-              {daily.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+        {timeDimension === 'day' ? (
+          <>
+            {/* Daily */}
+            <div className="bg-[#f8fbff] rounded-xl p-3">
+              <div className="text-[10px] text-gray-400 mb-1 flex items-center gap-1">
+                <span className="font-bold text-gray-600">当日</span>
+                <span className="opacity-60">3月30日</span>
+              </div>
+              <div className="flex items-baseline gap-1">
+                <span className="text-2xl font-black text-gray-800 tracking-tight">{daily.value}</span>
+                <span className="text-[10px] text-gray-400 font-medium">{unit}</span>
+                <div className={`flex items-center text-[10px] font-bold ml-auto ${daily.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                  同比:{daily.yoy}
+                  {daily.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Monthly & Yearly */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-[#f8fbff] rounded-xl p-3">
-            <div className="text-[10px] text-gray-400 mb-1 flex items-center gap-1">
-              <span className="font-bold text-gray-600">月累计</span>
-              <span className="opacity-60 text-[8px]">3月1-30日</span>
+            {/* Monthly & Yearly */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-[#f8fbff] rounded-xl p-3">
+                <div className="text-[10px] text-gray-400 mb-1 flex items-center gap-1">
+                  <span className="font-bold text-gray-600">月累计</span>
+                  <span className="opacity-60 text-[8px]">3月1-30日</span>
+                </div>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-lg font-black text-gray-800">{monthly.value}</span>
+                  <span className="text-[8px] text-gray-400">{unit}</span>
+                </div>
+                <div className={`flex items-center text-[9px] font-bold mt-1 ${monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                  同比:{monthly.yoy}
+                  {monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                </div>
+              </div>
+              <div className="bg-[#f8fbff] rounded-xl p-3">
+                <div className="text-[10px] text-gray-400 mb-1 flex items-center gap-1">
+                  <span className="font-bold text-gray-600">年累计</span>
+                  <span className="opacity-60 text-[8px]">1-3月30日</span>
+                </div>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-lg font-black text-gray-800">{yearly.value}</span>
+                  <span className="text-[8px] text-gray-400">{unit}</span>
+                </div>
+                <div className={`flex items-center text-[9px] font-bold mt-1 ${yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                  同比:{yearly.yoy}
+                  {yearly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                </div>
+              </div>
             </div>
-            <div className="flex items-baseline gap-1">
-              <span className="text-lg font-black text-gray-800">{monthly.value}</span>
-              <span className="text-[8px] text-gray-400">{unit}</span>
+          </>
+        ) : (
+          <div className="grid grid-cols-2 gap-3">
+            {/* Monthly */}
+            <div className="bg-[#f8fbff] rounded-xl p-3">
+              <div className="text-[10px] text-gray-400 mb-1 flex items-center gap-1">
+                <span className="font-bold text-gray-600">当月</span>
+                <span className="opacity-60">3月</span>
+              </div>
+              <div className="flex items-baseline gap-1">
+                <span className="text-xl font-black text-gray-800 tracking-tight">{monthly.value}</span>
+                <span className="text-[10px] text-gray-400 font-medium">{unit}</span>
+              </div>
+              <div className={`flex items-center text-[10px] font-bold mt-1 ${monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                同比:{monthly.yoy}
+                {monthly.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+              </div>
             </div>
-            <div className={`flex items-center text-[9px] font-bold mt-1 ${monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
-              同比:{monthly.yoy}
-              {monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+
+            {/* Yearly */}
+            <div className="bg-[#f8fbff] rounded-xl p-3">
+              <div className="text-[10px] text-gray-400 mb-1 flex items-center gap-1">
+                <span className="font-bold text-gray-600">年累计</span>
+                <span className="opacity-60 text-[8px]">1-3月</span>
+              </div>
+              <div className="flex items-baseline gap-1">
+                <span className="text-xl font-black text-gray-800">{yearly.value}</span>
+                <span className="text-[8px] text-gray-400">{unit}</span>
+              </div>
+              <div className={`flex items-center text-[10px] font-bold mt-1 ${yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                同比:{yearly.yoy}
+                {yearly.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+              </div>
             </div>
           </div>
-          <div className="bg-[#f8fbff] rounded-xl p-3">
-            <div className="text-[10px] text-gray-400 mb-1 flex items-center gap-1">
-              <span className="font-bold text-gray-600">年累计</span>
-              <span className="opacity-60 text-[8px]">1-3月30日</span>
-            </div>
-            <div className="flex items-baseline gap-1">
-              <span className="text-lg font-black text-gray-800">{yearly.value}</span>
-              <span className="text-[8px] text-gray-400">{unit}</span>
-            </div>
-            <div className={`flex items-center text-[9px] font-bold mt-1 ${yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
-              同比:{yearly.yoy}
-              {yearly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
-            </div>
-          </div>
-        </div>
+        )}
       </div>
 
       <div className="flex justify-center mt-3">
@@ -101,12 +141,19 @@ function FlowCard({ title, icon, unit, daily, monthly, yearly, onOpenDetail }: F
 }
 
 
-export default function FlowSection({ onOpenDetail }: { onOpenDetail: (type: 'cnob' | 'osob', metric: 'income' | 'volume' | 'weight') => void }) {
+export default function FlowSection({ 
+  timeDimension,
+  onOpenDetail 
+}: { 
+  timeDimension: TimeDimension;
+  onOpenDetail: (type: 'cnob' | 'osob', metric: 'income' | 'volume' | 'weight') => void 
+}) {
   const [flowType, setFlowType] = useState<'cnob' | 'osob'>('cnob');
+  const [activePeriod, setActivePeriod] = useState<'current' | 'accumulated'>('current');
 
   const flowData = {
     income: {
-      title: '流向收入',
+      title: '收入',
       icon: <CircleDollarSign size={16} />,
       unit: '万元',
       daily: { value: '892.45', yoy: '+5.2%', isUp: true },
@@ -114,7 +161,7 @@ export default function FlowSection({ onOpenDetail }: { onOpenDetail: (type: 'cn
       yearly: { value: '8.56', yoy: '+4.2%', isUp: true },
     },
     volume: {
-      title: '流向件量',
+      title: '件量',
       icon: <Package size={16} />,
       unit: '万票',
       daily: { value: '456.12', yoy: '+4.8%', isUp: true },
@@ -122,6 +169,24 @@ export default function FlowSection({ onOpenDetail }: { onOpenDetail: (type: 'cn
       yearly: { value: '4.12', yoy: '+3.8%', isUp: true },
     }
   };
+
+  const cnobKeyFlows = [
+    { name: '中→英', income: '456.2', incomeYoy: '5.2%', incomeMom: '1.2%', incomeRatio: '12.4%', volume: '34.5', volumeYoy: '3.1%', volumeMom: '0.8%', volumeRatio: '11.8%', weight: '123.4', weightYoy: '4.2%', weightMom: '1.5%', weightRatio: '13.1%' },
+    { name: '中→日', income: '389.4', incomeYoy: '2.1%', incomeMom: '1.2%', incomeRatio: '10.2%', volume: '28.9', volumeYoy: '1.5%', volumeMom: '0.8%', volumeRatio: '9.5%', weight: '98.2', weightYoy: '2.4%', weightMom: '1.5%', weightRatio: '10.5%' },
+    { name: '中→法', income: '312.8', incomeYoy: '4.2%', incomeMom: '1.2%', incomeRatio: '8.5%', volume: '22.4', volumeYoy: '2.9%', volumeMom: '0.8%', volumeRatio: '7.8%', weight: '87.6', weightYoy: '3.8%', weightMom: '1.5%', weightRatio: '9.2%' },
+    { name: '中→美', income: '289.5', incomeYoy: '1.8%', incomeMom: '1.2%', incomeRatio: '7.2%', volume: '18.2', volumeYoy: '2.5%', volumeMom: '0.8%', volumeRatio: '6.5%', weight: '76.4', weightYoy: '2.1%', weightMom: '1.5%', weightRatio: '8.1%' },
+  ];
+
+  const osobKeyFlows = [
+    { name: '中国大陆', income: '892.4', incomeYoy: '6.2%', incomeMom: '1.2%', incomeRatio: '22.4%', volume: '64.5', volumeYoy: '4.1%', volumeMom: '0.8%', volumeRatio: '21.8%', weight: '223.4', weightYoy: '5.2%', weightMom: '1.5%', weightRatio: '23.1%' },
+    { name: '中国港澳台', income: '456.2', incomeYoy: '3.1%', incomeMom: '1.2%', incomeRatio: '12.4%', volume: '34.5', volumeYoy: '2.5%', volumeMom: '0.8%', volumeRatio: '11.8%', weight: '123.4', weightYoy: '3.4%', weightMom: '1.5%', weightRatio: '13.1%' },
+    { name: '亚太', income: '789.4', incomeYoy: '5.2%', incomeMom: '1.2%', incomeRatio: '18.5%', volume: '52.4', volumeYoy: '3.9%', volumeMom: '0.8%', volumeRatio: '17.8%', weight: '187.6', weightYoy: '4.8%', weightMom: '1.5%', weightRatio: '19.2%' },
+    { name: '欧洲', income: '678.5', incomeYoy: '4.8%', incomeMom: '1.2%', incomeRatio: '16.2%', volume: '48.2', volumeYoy: '3.5%', volumeMom: '0.8%', volumeRatio: '15.5%', weight: '176.4', weightYoy: '4.1%', weightMom: '1.5%', weightRatio: '17.1%' },
+    { name: '美洲', income: '567.8', incomeYoy: '4.2%', incomeMom: '1.2%', incomeRatio: '14.5%', volume: '38.2', volumeYoy: '3.1%', volumeMom: '0.8%', volumeRatio: '13.8%', weight: '156.4', weightYoy: '3.8%', weightMom: '1.5%', weightRatio: '15.1%' },
+    { name: '新兴区域', income: '432.1', incomeYoy: '3.8%', incomeMom: '1.2%', incomeRatio: '11.2%', volume: '28.2', volumeYoy: '2.8%', volumeMom: '0.8%', volumeRatio: '10.5%', weight: '132.4', weightYoy: '3.2%', weightMom: '1.5%', weightRatio: '12.1%' },
+  ];
+
+  const currentFlows = flowType === 'cnob' ? cnobKeyFlows : osobKeyFlows;
 
   return (
     <motion.div 
@@ -148,13 +213,166 @@ export default function FlowSection({ onOpenDetail }: { onOpenDetail: (type: 'cn
 
       <FlowCard 
         {...flowData.income}
+        timeDimension={timeDimension}
         onOpenDetail={() => onOpenDetail(flowType, 'income')}
       />
 
       <FlowCard 
         {...flowData.volume}
+        timeDimension={timeDimension}
         onOpenDetail={() => onOpenDetail(flowType, 'volume')}
       />
+
+      {/* Key Flows Section */}
+      <div className="bg-white rounded-2xl p-4 shadow-sm border border-white/50 mb-4">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <div className="bg-blue-50 p-1.5 rounded-lg text-[#1b63d6]">
+              <ArrowRightLeft size={16} />
+            </div>
+            <span className="text-sm font-bold text-gray-800">重点流向</span>
+            <HelpCircle size={14} className="text-gray-300" />
+          </div>
+        </div>
+
+        <div className="overflow-x-auto -mx-4 px-4">
+          <table className="w-full text-left text-[11px]">
+            <thead>
+              <tr className="bg-[#f8f9fb]">
+                <th className="px-2 py-2 text-gray-400 font-bold">流向</th>
+                <th className="px-2 py-2 text-gray-400 font-bold text-center">收入</th>
+                <th className="px-2 py-2 text-gray-400 font-bold text-center">件量</th>
+                <th className="px-2 py-2 text-gray-400 font-bold text-center">重量</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {currentFlows.map((flow, i) => (
+                <tr key={i}>
+                  <td className="px-2 py-4 font-bold text-gray-800 whitespace-nowrap">{flow.name}</td>
+                  <td className="px-2 py-4">
+                    <div className="text-center">
+                      <div className="font-black text-gray-800 mb-1">{flow.income}</div>
+                      <div className="flex flex-col items-center gap-0.5">
+                        <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
+                          <span className="text-[9px]">同:</span>
+                          <span>{flow.incomeYoy}</span>
+                          <TrendingUp size={8} />
+                        </div>
+                        {timeDimension === 'month' && (
+                          <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
+                            <span className="text-[9px]">环:</span>
+                            <span>{flow.incomeMom}</span>
+                            <TrendingUp size={8} />
+                          </div>
+                        )}
+                        <div className="text-gray-400 scale-90">
+                          <span className="text-[9px]">占:</span>
+                          <span>{flow.incomeRatio}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-2 py-4">
+                    <div className="text-center">
+                      <div className="font-black text-gray-800 mb-1">{flow.volume}</div>
+                      <div className="flex flex-col items-center gap-0.5">
+                        <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
+                          <span className="text-[9px]">同:</span>
+                          <span>{flow.volumeYoy}</span>
+                          <TrendingUp size={8} />
+                        </div>
+                        {timeDimension === 'month' && (
+                          <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
+                            <span className="text-[9px]">环:</span>
+                            <span>{flow.volumeMom}</span>
+                            <TrendingUp size={8} />
+                          </div>
+                        )}
+                        <div className="text-gray-400 scale-90">
+                          <span className="text-[9px]">占:</span>
+                          <span>{flow.volumeRatio}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-2 py-4">
+                    <div className="text-center">
+                      <div className="font-black text-gray-800 mb-1">{flow.weight}</div>
+                      <div className="flex flex-col items-center gap-0.5">
+                        <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
+                          <span className="text-[9px]">同:</span>
+                          <span>{flow.weightYoy}</span>
+                          <TrendingUp size={8} />
+                        </div>
+                        {timeDimension === 'month' && (
+                          <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
+                            <span className="text-[9px]">环:</span>
+                            <span>{flow.weightMom}</span>
+                            <TrendingUp size={8} />
+                          </div>
+                        )}
+                        <div className="text-gray-400 scale-90">
+                          <span className="text-[9px]">占:</span>
+                          <span>{flow.weightRatio}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* TOP10 Flows Section */}
+      <div className="bg-white rounded-2xl p-4 shadow-sm border border-white/50 mb-6">
+        <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-50">
+          <div className="flex items-center gap-2">
+            <div className="bg-yellow-50 p-1.5 rounded-lg text-[#f59e0b]">
+              <Trophy size={16} />
+            </div>
+            <span className="text-sm font-bold text-gray-800">TOP10流向</span>
+            <HelpCircle size={14} className="text-gray-300" />
+          </div>
+          <button className="text-[10px] text-gray-400 hover:text-[#1b63d6] transition-colors">
+            详情 <ChevronRight size={12} />
+          </button>
+        </div>
+
+        <div className="space-y-2">
+          {[
+            { rank: 1, from: '深莞区', to: '西欧', value: '1,234.5', unit: '万元', isUp: true },
+            { rank: 2, from: '深莞区', to: '美洲', value: '982.3', unit: '万元', isUp: true },
+            { rank: 3, from: '深莞区', to: '英国', value: '876.1', unit: '万元', isUp: false },
+            { rank: 4, from: '深莞区', to: '非洲', value: '543.2', unit: '万元', isUp: true },
+            { rank: 5, from: '深莞区', to: '马来西亚', value: '432.1', unit: '万元', isUp: true },
+          ].map((item, i) => (
+            <div key={i} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+              <div className="flex items-center gap-3">
+                <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                  item.rank <= 3 ? 'bg-orange-100 text-orange-600' : 'bg-gray-100 text-gray-400'
+                }`}>
+                  {item.rank}
+                </div>
+                <div className="flex items-center gap-1 text-[11px] font-bold text-gray-700">
+                  <span>{item.from}</span>
+                  <MoveRight size={10} className="text-gray-300 mx-0.5" />
+                  <span>{item.to}</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="text-[11px] font-black text-gray-800">
+                  {item.value}<span className="text-[9px] text-gray-400 ml-0.5 font-normal">{item.unit}</span>
+                </div>
+                <div className={`text-[9px] font-bold ${item.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                  {item.isUp ? '▲' : '▼'}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </motion.div>
   );
 }

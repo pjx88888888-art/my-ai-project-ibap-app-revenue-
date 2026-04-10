@@ -155,7 +155,10 @@ export default function App() {
                     )}
                   </>
                 ) : activeSub === 'flow' ? (
-                  <FlowSection onOpenDetail={handleOpenFlowDetail} />
+                  <FlowSection 
+                    timeDimension={timeDimension}
+                    onOpenDetail={handleOpenFlowDetail} 
+                  />
                 ) : (
                   <div className="flex flex-col items-center justify-center h-[400px] text-white/50">
                     <div className="text-sm font-bold">暂无数据</div>
