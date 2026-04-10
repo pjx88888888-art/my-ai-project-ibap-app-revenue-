@@ -62,8 +62,8 @@ export default function App() {
     setView('org-detail');
   };
 
-  const handleOpenProductDetail = (product: string) => {
-    setSelectedProduct(product);
+  const handleOpenProductDetail = (segment: string) => {
+    setSelectedSegment(segment);
     setView('product-detail');
   };
 
@@ -363,7 +363,7 @@ export default function App() {
                 onBack={() => setView('dashboard')}
                 onClose={() => setView('dashboard')}
                 onSelectFlow={handleSelectProductFlow}
-                product={selectedProduct}
+                segment={selectedSegment}
                 activeMetric={activeMetric}
                 setActiveMetric={setActiveMetric}
                 timeDimension={timeDimension}

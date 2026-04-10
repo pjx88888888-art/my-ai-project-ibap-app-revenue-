@@ -10,7 +10,7 @@ import { TimeDimension } from '../types';
 
 interface ProductSectionProps {
   timeDimension: TimeDimension;
-  onOpenDetail: (product: string) => void;
+  onOpenDetail: (segment: string) => void;
 }
 
 export default function ProductSection({ timeDimension, onOpenDetail }: ProductSectionProps) {
@@ -23,46 +23,14 @@ export default function ProductSection({ timeDimension, onOpenDetail }: ProductS
   const [monthPeriod, setMonthPeriod] = useState<'current' | 'yearAccum'>('current');
 
   const products = [
-    { 
-      name: '国际特快', 
-      income: '456.7', incomeYoy: '+5.2%', incomeMom: '+1.2%',
-      volume: '23.4', volumeYoy: '+3.1%', volumeMom: '+0.8%',
-      weight: '123.5', weightYoy: '+4.2%', weightMom: '+1.5%',
-      perTicketIncome: '82.45', perTicketIncomeYoy: '+2.1%', perTicketIncomeMom: '+0.5%',
-      dailyAvgIncome: '15.23', dailyAvgIncomeYoy: '+3.4%', dailyAvgIncomeMom: '+1.1%',
-      discountRate: '12.5%', discountRateYoyDiff: '-0.5%', discountRateMomDiff: '-0.2%',
-      perTicketWeight: '5.28', perTicketWeightYoy: '+1.5%'
-    },
-    { 
-      name: '国际标快', 
-      income: '389.2', incomeYoy: '+3.1%', incomeMom: '-0.5%',
-      volume: '18.9', volumeYoy: '+2.5%', volumeMom: '-0.2%',
-      weight: '98.4', weightYoy: '+2.4%', weightMom: '-0.8%',
-      perTicketIncome: '79.32', perTicketIncomeYoy: '+1.8%', perTicketIncomeMom: '+0.3%',
-      dailyAvgIncome: '12.97', dailyAvgIncomeYoy: '+2.1%', dailyAvgIncomeMom: '+0.5%',
-      discountRate: '11.8%', discountRateYoyDiff: '-0.3%', discountRateMomDiff: '-0.1%',
-      perTicketWeight: '5.21', perTicketWeightYoy: '+1.2%'
-    },
-    { 
-      name: '国际标快+', 
-      income: '245.6', incomeYoy: '+8.4%', incomeMom: '+2.1%',
-      volume: '12.4', volumeYoy: '+6.2%', volumeMom: '+1.5%',
-      weight: '65.2', weightYoy: '+5.8%', weightMom: '+2.4%',
-      perTicketIncome: '85.67', perTicketIncomeYoy: '+4.2%', perTicketIncomeMom: '+1.2%',
-      dailyAvgIncome: '8.19', dailyAvgIncomeYoy: '+5.6%', dailyAvgIncomeMom: '+2.1%',
-      discountRate: '13.2%', discountRateYoyDiff: '-0.8%', discountRateMomDiff: '-0.4%',
-      perTicketWeight: '5.26', perTicketWeightYoy: '+2.1%'
-    },
-    { 
-      name: '国际特惠', 
-      income: '189.3', incomeYoy: '-2.1%', incomeMom: '-1.5%',
-      volume: '34.5', volumeYoy: '+4.2%', volumeMom: '+1.2%',
-      weight: '156.7', weightYoy: '+3.8%', weightMom: '+1.5%',
-      perTicketIncome: '54.87', perTicketIncomeYoy: '-1.2%', perTicketIncomeMom: '-0.8%',
-      dailyAvgIncome: '6.31', dailyAvgIncomeYoy: '+2.4%', dailyAvgIncomeMom: '+0.8%',
-      discountRate: '10.5%', discountRateYoyDiff: '-0.2%', discountRateMomDiff: '-0.1%',
-      perTicketWeight: '4.54', perTicketWeightYoy: '+0.8%'
-    },
+    { name: '国际特快', income: '456.7', incomeYoy: '+5.2%', incomeMom: '+1.2%', volume: '23.4', volumeYoy: '+3.1%', volumeMom: '+0.8%', weight: '123.5', weightYoy: '+4.2%', weightMom: '+1.5%', perTicketIncome: '82.45', perTicketIncomeYoy: '+2.1%', perTicketIncomeMom: '+0.5%', dailyAvgIncome: '15.23', dailyAvgIncomeYoy: '+3.4%', dailyAvgIncomeMom: '+1.1%', discountRate: '12.5%', discountRateYoyDiff: '-0.5%', discountRateMomDiff: '-0.2%', perTicketWeight: '5.28', perTicketWeightYoy: '+1.5%' },
+    { name: '国际标快', income: '389.2', incomeYoy: '+3.1%', incomeMom: '-0.5%', volume: '18.9', volumeYoy: '+2.5%', volumeMom: '-0.2%', weight: '98.4', weightYoy: '+2.4%', weightMom: '-0.8%', perTicketIncome: '79.32', perTicketIncomeYoy: '+1.8%', perTicketIncomeMom: '+0.3%', dailyAvgIncome: '12.97', dailyAvgIncomeYoy: '+2.1%', dailyAvgIncomeMom: '+0.5%', discountRate: '11.8%', discountRateYoyDiff: '-0.3%', discountRateMomDiff: '-0.1%', perTicketWeight: '5.21', perTicketWeightYoy: '+1.2%' },
+    { name: '国际标快+', income: '245.6', incomeYoy: '+8.4%', incomeMom: '+2.1%', volume: '12.4', volumeYoy: '+6.2%', volumeMom: '+1.5%', weight: '65.2', weightYoy: '+5.8%', weightMom: '+2.4%', perTicketIncome: '85.67', perTicketIncomeYoy: '+4.2%', perTicketIncomeMom: '+1.2%', dailyAvgIncome: '8.19', dailyAvgIncomeYoy: '+5.6%', dailyAvgIncomeMom: '+2.1%', discountRate: '13.2%', discountRateYoyDiff: '-0.8%', discountRateMomDiff: '-0.4%', perTicketWeight: '5.26', perTicketWeightYoy: '+2.1%' },
+    { name: '国际特惠', income: '189.3', incomeYoy: '-2.1%', incomeMom: '-1.5%', volume: '34.5', volumeYoy: '+4.2%', volumeMom: '+1.2%', weight: '156.7', weightYoy: '+3.8%', weightMom: '+1.5%', perTicketIncome: '54.87', perTicketIncomeYoy: '-1.2%', perTicketIncomeMom: '-0.8%', dailyAvgIncome: '6.31', dailyAvgIncomeYoy: '+2.4%', dailyAvgIncomeMom: '+0.8%', discountRate: '10.5%', discountRateYoyDiff: '-0.2%', discountRateMomDiff: '-0.1%', perTicketWeight: '4.54', perTicketWeightYoy: '+0.8%' },
+    { name: '国际大件', income: '156.4', incomeYoy: '+4.5%', incomeMom: '+0.8%', volume: '8.2', volumeYoy: '+2.1%', volumeMom: '+0.4%', weight: '245.6', weightYoy: '+6.2%', weightMom: '+1.2%', perTicketIncome: '190.73', perTicketIncomeYoy: '+2.4%', perTicketIncomeMom: '+0.6%', dailyAvgIncome: '5.21', dailyAvgIncomeYoy: '+3.1%', dailyAvgIncomeMom: '+0.9%', discountRate: '14.2%', discountRateYoyDiff: '-0.4%', discountRateMomDiff: '-0.2%', perTicketWeight: '29.95', perTicketWeightYoy: '+4.1%' },
+    { name: '国际集运', income: '123.8', incomeYoy: '+12.4%', incomeMom: '+3.5%', volume: '45.6', volumeYoy: '+8.2%', volumeMom: '+2.1%', weight: '89.4', weightYoy: '+5.5%', weightMom: '+1.8%', perTicketIncome: '27.15', perTicketIncomeYoy: '+3.8%', perTicketIncomeMom: '+1.2%', dailyAvgIncome: '4.12', dailyAvgIncomeYoy: '+6.4%', dailyAvgIncomeMom: '+2.5%', discountRate: '9.8%', discountRateYoyDiff: '-0.6%', discountRateMomDiff: '-0.3%', perTicketWeight: '1.96', perTicketWeightYoy: '+2.4%' },
+    { name: '医药跨境', income: '89.5', incomeYoy: '+15.2%', incomeMom: '+4.1%', volume: '2.1', volumeYoy: '+10.5%', volumeMom: '+2.8%', weight: '12.4', weightYoy: '+8.4%', weightMom: '+2.2%', perTicketIncome: '426.19', perTicketIncomeYoy: '+4.5%', perTicketIncomeMom: '+1.5%', dailyAvgIncome: '2.98', dailyAvgIncomeYoy: '+12.1%', dailyAvgIncomeMom: '+3.8%', discountRate: '15.5%', discountRateYoyDiff: '-0.8%', discountRateMomDiff: '-0.4%', perTicketWeight: '5.90', perTicketWeightYoy: '+3.2%' },
+    { name: '其他', income: '45.2', incomeYoy: '+2.1%', incomeMom: '+0.5%', volume: '12.4', volumeYoy: '+1.2%', volumeMom: '+0.3%', weight: '34.5', weightYoy: '+1.5%', weightMom: '+0.4%', perTicketIncome: '36.45', perTicketIncomeYoy: '+0.8%', perTicketIncomeMom: '+0.2%', dailyAvgIncome: '1.51', dailyAvgIncomeYoy: '+1.2%', dailyAvgIncomeMom: '+0.4%', discountRate: '10.2%', discountRateYoyDiff: '-0.1%', discountRateMomDiff: '-0.1%', perTicketWeight: '2.78', perTicketWeightYoy: '+0.5%' },
   ];
 
   const showComparison = !(timeDimension === 'day' && dayPeriod === 'current');
@@ -108,45 +76,55 @@ export default function ProductSection({ timeDimension, onOpenDetail }: ProductS
               <HelpCircle size={14} className="text-gray-300" />
             </div>
             
-            {/* Period Switcher */}
-            <div className="flex items-center bg-gray-100 rounded-lg p-0.5 text-[9px] font-bold">
-              {timeDimension === 'day' ? (
-                <>
-                  <button
-                    onClick={() => setDayPeriod('current')}
-                    className={`px-2 py-1 rounded-md transition-all ${dayPeriod === 'current' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}
-                  >
-                    当日
-                  </button>
-                  <button
-                    onClick={() => setDayPeriod('monthAccum')}
-                    className={`px-2 py-1 rounded-md transition-all ${dayPeriod === 'monthAccum' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}
-                  >
-                    月累计
-                  </button>
-                  <button
-                    onClick={() => setDayPeriod('yearAccum')}
-                    className={`px-2 py-1 rounded-md transition-all ${dayPeriod === 'yearAccum' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}
-                  >
-                    年累计
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    onClick={() => setMonthPeriod('current')}
-                    className={`px-3 py-1 rounded-md transition-all ${monthPeriod === 'current' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}
-                  >
-                    当月
-                  </button>
-                  <button
-                    onClick={() => setMonthPeriod('yearAccum')}
-                    className={`px-3 py-1 rounded-md transition-all ${monthPeriod === 'yearAccum' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}
-                  >
-                    年累计
-                  </button>
-                </>
-              )}
+            <div className="flex items-center gap-3">
+              {/* Period Switcher */}
+              <div className="flex items-center bg-gray-100 rounded-lg p-0.5 text-[9px] font-bold">
+                {timeDimension === 'day' ? (
+                  <>
+                    <button
+                      onClick={() => setDayPeriod('current')}
+                      className={`px-2 py-1 rounded-md transition-all ${dayPeriod === 'current' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}
+                    >
+                      当日
+                    </button>
+                    <button
+                      onClick={() => setDayPeriod('monthAccum')}
+                      className={`px-2 py-1 rounded-md transition-all ${dayPeriod === 'monthAccum' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}
+                    >
+                      月累计
+                    </button>
+                    <button
+                      onClick={() => setDayPeriod('yearAccum')}
+                      className={`px-2 py-1 rounded-md transition-all ${dayPeriod === 'yearAccum' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}
+                    >
+                      年累计
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => setMonthPeriod('current')}
+                      className={`px-3 py-1 rounded-md transition-all ${monthPeriod === 'current' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}
+                    >
+                      当月
+                    </button>
+                    <button
+                      onClick={() => setMonthPeriod('yearAccum')}
+                      className={`px-3 py-1 rounded-md transition-all ${monthPeriod === 'yearAccum' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}
+                    >
+                      年累计
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {/* Detail Button */}
+              <div 
+                onClick={() => onOpenDetail(activeSegment)}
+                className="text-gray-400 text-[10px] flex items-center cursor-pointer hover:text-[#1b63d6] transition-colors"
+              >
+                详情 <ChevronRight size={10} className="ml-0.5" />
+              </div>
             </div>
           </div>
 
@@ -158,7 +136,6 @@ export default function ProductSection({ timeDimension, onOpenDetail }: ProductS
                 product={product} 
                 idx={idx} 
                 showComparison={showComparison}
-                onOpenDetail={() => onOpenDetail(product.name)}
               />
             ))}
           </div>
@@ -172,11 +149,10 @@ interface ProductCardProps {
   product: any;
   idx: number;
   showComparison: boolean;
-  onOpenDetail: () => void;
   key?: React.Key;
 }
 
-function ProductCard({ product, idx, showComparison, onOpenDetail }: ProductCardProps) {
+function ProductCard({ product, idx, showComparison }: ProductCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -192,12 +168,6 @@ function ProductCard({ product, idx, showComparison, onOpenDetail }: ProductCard
           <span className="text-[10px] font-bold text-white bg-[#1b63d6] px-2 py-0.5 rounded shadow-sm">
             {product.name}
           </span>
-        </div>
-        <div 
-          onClick={onOpenDetail}
-          className="text-[10px] text-gray-400 flex items-center cursor-pointer hover:text-[#1b63d6] transition-colors"
-        >
-          详情 <ChevronRight size={10} className="ml-0.5 opacity-50" />
         </div>
       </div>
 
@@ -263,60 +233,60 @@ function ProductCard({ product, idx, showComparison, onOpenDetail }: ProductCard
                   <span className="text-[11px] font-bold text-gray-700">关键指标</span>
                 </div>
                 <div className="bg-white rounded-lg p-2 space-y-2 border border-blue-50/50">
-                  <div className="flex items-center justify-between text-[10px]">
-                    <span className="text-gray-500">单票收入</span>
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold text-gray-800">{product.perTicketIncome}元</span>
+                  <div className="flex items-center text-[10px]">
+                    <span className="text-gray-500 w-16">单票收入</span>
+                    <div className="flex-1 flex items-center gap-3 ml-4">
+                      <span className="font-bold text-gray-800 w-16">{product.perTicketIncome}元</span>
                       {showComparison && (
                         <>
-                          <span className={`flex items-center gap-0.5 font-bold ${product.perTicketIncomeYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                          <span className={`flex items-center gap-0.5 font-bold w-16 ${product.perTicketIncomeYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
                             同 {product.perTicketIncomeYoy} {product.perTicketIncomeYoy.startsWith('+') ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
                           </span>
-                          <span className={`flex items-center gap-0.5 font-bold ${product.perTicketIncomeMom.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                          <span className={`flex items-center gap-0.5 font-bold w-16 ${product.perTicketIncomeMom.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
                             环 {product.perTicketIncomeMom} {product.perTicketIncomeMom.startsWith('+') ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
                           </span>
                         </>
                       )}
                     </div>
                   </div>
-                  <div className="flex items-center justify-between text-[10px]">
-                    <span className="text-gray-500">日均收入</span>
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold text-gray-800">{product.dailyAvgIncome}万</span>
+                  <div className="flex items-center text-[10px]">
+                    <span className="text-gray-500 w-16">日均收入</span>
+                    <div className="flex-1 flex items-center gap-3 ml-4">
+                      <span className="font-bold text-gray-800 w-16">{product.dailyAvgIncome}万</span>
                       {showComparison && (
                         <>
-                          <span className={`flex items-center gap-0.5 font-bold ${product.dailyAvgIncomeYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                          <span className={`flex items-center gap-0.5 font-bold w-16 ${product.dailyAvgIncomeYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
                             同 {product.dailyAvgIncomeYoy} {product.dailyAvgIncomeYoy.startsWith('+') ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
                           </span>
-                          <span className={`flex items-center gap-0.5 font-bold ${product.dailyAvgIncomeMom.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                          <span className={`flex items-center gap-0.5 font-bold w-16 ${product.dailyAvgIncomeMom.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
                             环 {product.dailyAvgIncomeMom} {product.dailyAvgIncomeMom.startsWith('+') ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
                           </span>
                         </>
                       )}
                     </div>
                   </div>
-                  <div className="flex items-center justify-between text-[10px]">
-                    <span className="text-gray-500">折让率</span>
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold text-gray-800">{product.discountRate}</span>
+                  <div className="flex items-center text-[10px]">
+                    <span className="text-gray-500 w-16">折让率</span>
+                    <div className="flex-1 flex items-center gap-3 ml-4">
+                      <span className="font-bold text-gray-800 w-16">{product.discountRate}</span>
                       {showComparison && (
                         <>
-                          <span className={`flex items-center gap-0.5 font-bold ${product.discountRateYoyDiff.startsWith('+') ? 'text-red-500' : 'text-green-500'}`}>
+                          <span className={`flex items-center gap-0.5 font-bold w-16 ${product.discountRateYoyDiff.startsWith('+') ? 'text-red-500' : 'text-green-500'}`}>
                             同差 {product.discountRateYoyDiff}
                           </span>
-                          <span className={`flex items-center gap-0.5 font-bold ${product.discountRateMomDiff.startsWith('+') ? 'text-red-500' : 'text-green-500'}`}>
+                          <span className={`flex items-center gap-0.5 font-bold w-16 ${product.discountRateMomDiff.startsWith('+') ? 'text-red-500' : 'text-green-500'}`}>
                             环差 {product.discountRateMomDiff}
                           </span>
                         </>
                       )}
                     </div>
                   </div>
-                  <div className="flex items-center justify-between text-[10px] pt-1 border-t border-gray-50">
-                    <span className="text-gray-500">单票重量</span>
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold text-gray-800">{product.perTicketWeight}kg</span>
+                  <div className="flex items-center text-[10px] pt-1 border-t border-gray-50">
+                    <span className="text-gray-500 w-16">单票重量</span>
+                    <div className="flex-1 flex items-center gap-3 ml-4">
+                      <span className="font-bold text-gray-800 w-16">{product.perTicketWeight}kg</span>
                       {showComparison && (
-                        <span className={`flex items-center gap-0.5 font-bold ${product.perTicketWeightYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                        <span className={`flex items-center gap-0.5 font-bold w-16 ${product.perTicketWeightYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
                           同 {product.perTicketWeightYoy} {product.perTicketWeightYoy.startsWith('+') ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
                         </span>
                       )}

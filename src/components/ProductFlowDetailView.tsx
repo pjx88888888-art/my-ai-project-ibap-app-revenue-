@@ -109,25 +109,6 @@ export default function ProductFlowDetailView({
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-white/50">
           <div className="px-4 py-3 flex items-center justify-between border-b border-gray-50">
             <div className="text-sm font-bold text-gray-800">流向明细</div>
-            <div className="relative z-50">
-              <button
-                onClick={() => {
-                  if (timeDimension === 'day') {
-                    setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
-                  } else {
-                    setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
-                  }
-                }}
-                className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
-              >
-                {timeDimension === 'day' ? (
-                  activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
-                ) : (
-                  activePeriod === 'monthly' ? '月-当月' : '月-年统计'
-                )}
-                <span className="text-[8px]">⇅</span>
-              </button>
-            </div>
           </div>
           <div className="overflow-x-auto no-scrollbar">
             <table className="w-full text-left text-xs border-separate border-spacing-0">
