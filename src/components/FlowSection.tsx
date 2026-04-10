@@ -146,9 +146,10 @@ export default function FlowSection({
   onOpenDetail 
 }: { 
   timeDimension: TimeDimension;
-  onOpenDetail: (type: 'cnob' | 'osob', metric: 'income' | 'volume' | 'weight') => void 
+  onOpenDetail: (type: 'cnob' | 'osob', metric: 'income' | 'volume' | 'weight', hideFlow?: boolean) => void 
 }) {
   const [flowType, setFlowType] = useState<'cnob' | 'osob'>('cnob');
+  const [top10Dimension, setTop10Dimension] = useState<'country' | 'region'>('country');
   const [activePeriod, setActivePeriod] = useState<'current' | 'accumulated'>('current');
 
   const flowData = {
@@ -180,9 +181,9 @@ export default function FlowSection({
   const osobKeyFlows = [
     { name: '中国大陆', income: '892.4', incomeYoy: '6.2%', incomeMom: '1.2%', incomeRatio: '22.4%', volume: '64.5', volumeYoy: '4.1%', volumeMom: '0.8%', volumeRatio: '21.8%', weight: '223.4', weightYoy: '5.2%', weightMom: '1.5%', weightRatio: '23.1%' },
     { name: '中国港澳台', income: '456.2', incomeYoy: '3.1%', incomeMom: '1.2%', incomeRatio: '12.4%', volume: '34.5', volumeYoy: '2.5%', volumeMom: '0.8%', volumeRatio: '11.8%', weight: '123.4', weightYoy: '3.4%', weightMom: '1.5%', weightRatio: '13.1%' },
-    { name: '亚太', income: '789.4', incomeYoy: '5.2%', incomeMom: '1.2%', incomeRatio: '18.5%', volume: '52.4', volumeYoy: '3.9%', volumeMom: '0.8%', volumeRatio: '17.8%', weight: '187.6', weightYoy: '4.8%', weightMom: '1.5%', weightRatio: '19.2%' },
-    { name: '欧洲', income: '678.5', incomeYoy: '4.8%', incomeMom: '1.2%', incomeRatio: '16.2%', volume: '48.2', volumeYoy: '3.5%', volumeMom: '0.8%', volumeRatio: '15.5%', weight: '176.4', weightYoy: '4.1%', weightMom: '1.5%', weightRatio: '17.1%' },
-    { name: '美洲', income: '567.8', incomeYoy: '4.2%', incomeMom: '1.2%', incomeRatio: '14.5%', volume: '38.2', volumeYoy: '3.1%', volumeMom: '0.8%', volumeRatio: '13.8%', weight: '156.4', weightYoy: '3.8%', weightMom: '1.5%', weightRatio: '15.1%' },
+    { name: '亚太区域', income: '789.4', incomeYoy: '5.2%', incomeMom: '1.2%', incomeRatio: '18.5%', volume: '52.4', volumeYoy: '3.9%', volumeMom: '0.8%', volumeRatio: '17.8%', weight: '187.6', weightYoy: '4.8%', weightMom: '1.5%', weightRatio: '19.2%' },
+    { name: '欧洲区域', income: '678.5', incomeYoy: '4.8%', incomeMom: '1.2%', incomeRatio: '16.2%', volume: '48.2', volumeYoy: '3.5%', volumeMom: '0.8%', volumeRatio: '15.5%', weight: '176.4', weightYoy: '4.1%', weightMom: '1.5%', weightRatio: '17.1%' },
+    { name: '美洲区域', income: '567.8', incomeYoy: '4.2%', incomeMom: '1.2%', incomeRatio: '14.5%', volume: '38.2', volumeYoy: '3.1%', volumeMom: '0.8%', volumeRatio: '13.8%', weight: '156.4', weightYoy: '3.8%', weightMom: '1.5%', weightRatio: '15.1%' },
     { name: '新兴区域', income: '432.1', incomeYoy: '3.8%', incomeMom: '1.2%', incomeRatio: '11.2%', volume: '28.2', volumeYoy: '2.8%', volumeMom: '0.8%', volumeRatio: '10.5%', weight: '132.4', weightYoy: '3.2%', weightMom: '1.5%', weightRatio: '12.1%' },
   ];
 
@@ -327,7 +328,7 @@ export default function FlowSection({
 
       {/* TOP10 Flows Section */}
       <div className="bg-white rounded-2xl p-4 shadow-sm border border-white/50 mb-6">
-        <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-50">
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <div className="bg-yellow-50 p-1.5 rounded-lg text-[#f59e0b]">
               <Trophy size={16} />
@@ -335,42 +336,86 @@ export default function FlowSection({
             <span className="text-sm font-bold text-gray-800">TOP10流向</span>
             <HelpCircle size={14} className="text-gray-300" />
           </div>
-          <button className="text-[10px] text-gray-400 hover:text-[#1b63d6] transition-colors">
-            详情 <ChevronRight size={12} />
+          <button 
+            onClick={() => setTop10Dimension(top10Dimension === 'country' ? 'region' : 'country')}
+            className="flex items-center gap-1 bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm active:scale-95 transition-transform"
+          >
+            <span>{top10Dimension === 'country' ? '国家/地区' : '地区/国家'}</span>
+            <ArrowRightLeft size={10} />
           </button>
         </div>
 
-        <div className="space-y-2">
-          {[
-            { rank: 1, from: '深莞区', to: '西欧', value: '1,234.5', unit: '万元', isUp: true },
-            { rank: 2, from: '深莞区', to: '美洲', value: '982.3', unit: '万元', isUp: true },
-            { rank: 3, from: '深莞区', to: '英国', value: '876.1', unit: '万元', isUp: false },
-            { rank: 4, from: '深莞区', to: '非洲', value: '543.2', unit: '万元', isUp: true },
-            { rank: 5, from: '深莞区', to: '马来西亚', value: '432.1', unit: '万元', isUp: true },
-          ].map((item, i) => (
-            <div key={i} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
-              <div className="flex items-center gap-3">
-                <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                  item.rank <= 3 ? 'bg-orange-100 text-orange-600' : 'bg-gray-100 text-gray-400'
-                }`}>
-                  {item.rank}
-                </div>
-                <div className="flex items-center gap-1 text-[11px] font-bold text-gray-700">
-                  <span>{item.from}</span>
-                  <MoveRight size={10} className="text-gray-300 mx-0.5" />
-                  <span>{item.to}</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="text-[11px] font-black text-gray-800">
-                  {item.value}<span className="text-[9px] text-gray-400 ml-0.5 font-normal">{item.unit}</span>
-                </div>
-                <div className={`text-[9px] font-bold ${item.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                  {item.isUp ? '▲' : '▼'}
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="overflow-x-auto -mx-4 px-4">
+          <table className="w-full text-left text-[11px]">
+            <thead>
+              <tr className="bg-[#f8f9fb]">
+                <th className="px-2 py-2 text-gray-400 font-bold">流向</th>
+                <th className="px-2 py-2 text-gray-400 font-bold text-center">收入</th>
+                <th className="px-2 py-2 text-gray-400 font-bold text-center">件量</th>
+                <th className="px-2 py-2 text-gray-400 font-bold text-center">重量</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {(top10Dimension === 'country' ? [
+                { from: 'China', to: 'America', income: '1,234.5', incomeYoy: '5.2%', volume: '456.1', volumeYoy: '4.8%', weight: '2,345.6', weightYoy: '6.1%' },
+                { from: 'China', to: 'West Europe', income: '982.3', incomeYoy: '3.1%', volume: '345.2', volumeYoy: '2.5%', weight: '1,876.4', weightYoy: '4.2%' },
+                { from: 'China', to: 'Great Britain', income: '876.1', incomeYoy: '5.1%', volume: '312.4', volumeYoy: '5.2%', weight: '1,654.2', weightYoy: '5.8%' },
+                { from: 'China', to: 'Cross border_America', income: '543.2', incomeYoy: '2.4%', volume: '234.5', volumeYoy: '3.1%', weight: '1,234.5', weightYoy: '3.4%' },
+                { from: 'West Europe', to: 'West Europe', income: '432.1', incomeYoy: '1.2%', volume: '187.6', volumeYoy: '1.5%', weight: '987.6', weightYoy: '2.1%' },
+                { from: 'China', to: 'South Asia', income: '321.0', incomeYoy: '1.5%', volume: '154.2', volumeYoy: '1.8%', weight: '765.4', weightYoy: '2.5%' },
+              ] : [
+                { from: '深莞区', to: '西欧', income: '1,234.5', incomeYoy: '5.2%', volume: '456.1', volumeYoy: '4.8%', weight: '2,345.6', weightYoy: '6.1%' },
+                { from: '深莞区', to: '美洲', income: '982.3', incomeYoy: '3.1%', volume: '345.2', volumeYoy: '2.5%', weight: '1,876.4', weightYoy: '4.2%' },
+                { from: '西欧', to: '西欧', income: '876.1', incomeYoy: '5.1%', volume: '312.4', volumeYoy: '5.2%', weight: '1,654.2', weightYoy: '5.8%' },
+                { from: '上海区', to: '美洲', income: '543.2', incomeYoy: '2.4%', volume: '234.5', volumeYoy: '3.1%', weight: '1,234.5', weightYoy: '3.4%' },
+                { from: '福建区', to: '美洲', income: '432.1', incomeYoy: '1.2%', volume: '187.6', volumeYoy: '1.5%', weight: '987.6', weightYoy: '2.1%' },
+                { from: '广佛区', to: '英国', income: '321.0', incomeYoy: '1.5%', volume: '154.2', volumeYoy: '1.8%', weight: '765.4', weightYoy: '2.5%' },
+              ]).map((item, i) => (
+                <tr key={i}>
+                  <td className="px-2 py-4">
+                    <button 
+                      onClick={() => onOpenDetail(flowType, 'income', true)}
+                      className="flex flex-col items-start gap-0.5 text-[#1b63d6] font-bold hover:underline"
+                    >
+                      <span>{item.from}</span>
+                      <ArrowRight size={10} className="text-gray-300" />
+                      <span>{item.to}</span>
+                    </button>
+                  </td>
+                  <td className="px-2 py-4">
+                    <div className="text-center">
+                      <div className="font-black text-gray-800 mb-1">{item.income}</div>
+                      <div className="flex items-center justify-center gap-0.5 text-green-500 font-bold scale-90">
+                        <span className="text-[9px]">同:</span>
+                        <span>{item.incomeYoy}</span>
+                        <TrendingUp size={8} />
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-2 py-4">
+                    <div className="text-center">
+                      <div className="font-black text-gray-800 mb-1">{item.volume}</div>
+                      <div className="flex items-center justify-center gap-0.5 text-green-500 font-bold scale-90">
+                        <span className="text-[9px]">同:</span>
+                        <span>{item.volumeYoy}</span>
+                        <TrendingUp size={8} />
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-2 py-4">
+                    <div className="text-center">
+                      <div className="font-black text-gray-800 mb-1">{item.weight}</div>
+                      <div className="flex items-center justify-center gap-0.5 text-green-500 font-bold scale-90">
+                        <span className="text-[9px]">同:</span>
+                        <span>{item.weightYoy}</span>
+                        <TrendingUp size={8} />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </motion.div>

@@ -27,9 +27,10 @@ interface FlowDetailViewProps {
   type: 'cnob' | 'osob';
   activeMetric: 'income' | 'volume' | 'weight';
   setActiveMetric: (metric: 'income' | 'volume' | 'weight') => void;
+  hideFlowColumn?: boolean;
 }
 
-export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: initialType, activeMetric, setActiveMetric }: FlowDetailViewProps) {
+export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: initialType, activeMetric, setActiveMetric, hideFlowColumn = false }: FlowDetailViewProps) {
   const [type, setType] = useState<'cnob' | 'osob'>(initialType);
   const [isTrendExpanded, setIsTrendExpanded] = useState(false);
   const [legendPage, setLegendPage] = useState(1);
@@ -282,7 +283,9 @@ export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: in
                   <thead>
                     <tr className="bg-[#f8f9fb]">
                       <th className={`px-3 py-2.5 text-gray-500 font-bold sticky left-0 bg-[#f8f9fb] z-20 w-24 ${activeMetric === 'income' ? 'z-20' : ''}`}>业务板块</th>
-                      <th className={`px-3 py-2.5 text-gray-500 font-bold text-center ${activeMetric === 'income' ? 'sticky left-24 bg-[#f8f9fb] z-20 w-16' : ''}`}>流向</th>
+                      {!hideFlowColumn && (
+                        <th className={`px-3 py-2.5 text-gray-500 font-bold text-center ${activeMetric === 'income' ? 'sticky left-24 bg-[#f8f9fb] z-20 w-16' : ''}`}>流向</th>
+                      )}
                       <th className="px-3 py-2.5 text-gray-500 font-bold text-right">
                         <div className="flex items-center justify-end gap-1">
                           {getMetricLabel()}
@@ -319,16 +322,18 @@ export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: in
                         >
                           {row.name}
                         </td>
-                        <td className={`px-3 py-4 text-center bg-white ${activeMetric === 'income' ? 'sticky left-24 z-10' : ''}`}>
-                          <div className="flex justify-center">
-                            <button 
-                              onClick={() => onSelectFlow(row.name, 'flow')}
-                              className="w-5 h-5 rounded-md border border-blue-200 flex items-center justify-center bg-blue-50/50 text-[#1b63d6] hover:scale-110 transition-transform"
-                            >
-                              <ArrowRightLeft size={12} />
-                            </button>
-                          </div>
-                        </td>
+                        {!hideFlowColumn && (
+                          <td className={`px-3 py-4 text-center bg-white ${activeMetric === 'income' ? 'sticky left-24 z-10' : ''}`}>
+                            <div className="flex justify-center">
+                              <button 
+                                onClick={() => onSelectFlow(row.name, 'flow')}
+                                className="w-5 h-5 rounded-md border border-blue-200 flex items-center justify-center bg-blue-50/50 text-[#1b63d6] hover:scale-110 transition-transform"
+                              >
+                                <ArrowRightLeft size={12} />
+                              </button>
+                            </div>
+                          </td>
+                        )}
                         <td className="px-3 py-4 text-right">
                           <div className="font-bold text-gray-800">
                             {row.value}

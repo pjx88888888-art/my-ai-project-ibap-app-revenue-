@@ -30,6 +30,7 @@ interface FlowThirdDetailViewProps {
   setActiveMetric: (metric: 'income' | 'volume' | 'weight') => void;
   showTrend?: boolean;
   showTabs?: boolean;
+  hideFlowColumn?: boolean;
 }
 
 export default function FlowThirdDetailView({ 
@@ -41,7 +42,8 @@ export default function FlowThirdDetailView({
   activeMetric, 
   setActiveMetric,
   showTrend = true,
-  showTabs = true
+  showTabs = true,
+  hideFlowColumn = false
 }: FlowThirdDetailViewProps) {
   const [type, setType] = useState<'cnob' | 'osob'>(initialType);
   const [isTrendExpanded, setIsTrendExpanded] = useState(false);
@@ -302,7 +304,9 @@ export default function FlowThirdDetailView({
                 <thead>
                   <tr className="bg-[#f8f9fb]">
                     <th className="px-3 py-2.5 text-gray-500 font-bold sticky left-0 bg-[#f8f9fb] z-10 w-24">业务板块</th>
-                    <th className="px-3 py-2.5 text-gray-500 font-bold text-center">流向</th>
+                    {!hideFlowColumn && (
+                      <th className="px-3 py-2.5 text-gray-500 font-bold text-center">流向</th>
+                    )}
                     <th className="px-3 py-2.5 text-gray-500 font-bold text-right">
                       <div className="flex items-center justify-end gap-1">
                         {getMetricLabel()}
@@ -339,16 +343,18 @@ export default function FlowThirdDetailView({
                       >
                         {row.name}
                       </td>
-                      <td className="px-3 py-4 text-center">
-                        <div className="flex justify-center">
-                          <button 
-                            onClick={() => onSelectFlow(row.name)}
-                            className="w-5 h-5 rounded-md border border-blue-200 flex items-center justify-center bg-blue-50/50 text-[#1b63d6] hover:scale-110 transition-transform"
-                          >
-                            <ArrowRightLeft size={12} />
-                          </button>
-                        </div>
-                      </td>
+                      {!hideFlowColumn && (
+                        <td className="px-3 py-4 text-center">
+                          <div className="flex justify-center">
+                            <button 
+                              onClick={() => onSelectFlow(row.name)}
+                              className="w-5 h-5 rounded-md border border-blue-200 flex items-center justify-center bg-blue-50/50 text-[#1b63d6] hover:scale-110 transition-transform"
+                            >
+                              <ArrowRightLeft size={12} />
+                            </button>
+                          </div>
+                        </td>
+                      )}
                       <td className="px-3 py-4 text-right">
                         <div className="font-bold text-gray-800">{row.value}</div>
                         <div className="flex items-center justify-end gap-1 mt-1">

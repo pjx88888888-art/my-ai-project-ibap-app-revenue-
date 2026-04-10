@@ -37,6 +37,7 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState<string>('');
   const [flowDetailType, setFlowDetailType] = useState<'cnob' | 'osob'>('cnob');
   const [flowDetailSource, setFlowDetailSource] = useState<'segment' | 'flow'>('segment');
+  const [hideFlowColumn, setHideFlowColumn] = useState(false);
   const [detailSource, setDetailSource] = useState<'overview' | 'business' | 'key-metrics'>('overview');
 
   const handleOpenOperatingDetail = () => {
@@ -70,9 +71,10 @@ export default function App() {
     setView('product-flow-detail');
   };
 
-  const handleOpenFlowDetail = (type: 'cnob' | 'osob', metric: MetricType) => {
+  const handleOpenFlowDetail = (type: 'cnob' | 'osob', metric: MetricType, hideFlow?: boolean) => {
     setFlowDetailType(type);
     setActiveMetric(metric);
+    setHideFlowColumn(!!hideFlow);
     setView('flow-detail');
   };
 
@@ -230,6 +232,7 @@ export default function App() {
                 type={flowDetailType}
                 activeMetric={activeMetric as any}
                 setActiveMetric={setActiveMetric as any}
+                hideFlowColumn={hideFlowColumn}
               />
             </motion.div>
           ) : view === 'flow-third-detail' ? (
@@ -251,6 +254,7 @@ export default function App() {
                 setActiveMetric={setActiveMetric as any}
                 showTrend={flowDetailSource === 'segment'}
                 showTabs={flowDetailSource === 'segment'}
+                hideFlowColumn={hideFlowColumn}
               />
             </motion.div>
           ) : view === 'flow-list-detail' ? (
