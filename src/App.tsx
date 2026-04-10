@@ -38,7 +38,11 @@ export default function App() {
   const [flowDetailType, setFlowDetailType] = useState<'cnob' | 'osob'>('cnob');
   const [flowDetailSource, setFlowDetailSource] = useState<'segment' | 'flow'>('segment');
   const [hideFlowColumn, setHideFlowColumn] = useState(false);
+  const [activeFlowListTab, setActiveFlowListTab] = useState<string>('');
   const [detailSource, setDetailSource] = useState<'overview' | 'business' | 'key-metrics'>('overview');
+
+  const businessSegments = ['国际快递', '国际电商', '海外仓配', '本地运配', '国际运输', '国际航线', '国际大宗'];
+  const productNames = ['国际标快', '国际标快+', '国际特惠', '国际大件', '医药跨境', '生鲜跨境', '电子跨境', '服装跨境', '其他'];
 
   const handleOpenOperatingDetail = () => {
     setDetailSource('overview');
@@ -82,6 +86,7 @@ export default function App() {
     setSelectedSegment(segment);
     setFlowDetailSource(source);
     if (source === 'flow') {
+      setActiveFlowListTab(segment);
       setView('flow-list-detail');
     } else {
       setView('flow-third-detail');
@@ -90,6 +95,7 @@ export default function App() {
 
   const handleSelectFlowList = (segment: string) => {
     setSelectedSegment(segment);
+    setActiveFlowListTab(segment);
     setView('flow-list-detail');
   };
 
@@ -271,6 +277,9 @@ export default function App() {
               onClose={() => setView('dashboard')}
               segment={selectedSegment}
               type={flowDetailType}
+              tabs={flowDetailSource === 'flow' ? businessSegments : productNames}
+              activeTab={activeFlowListTab}
+              onTabChange={setActiveFlowListTab}
             />
             </motion.div>
           ) : view === 'org-detail' ? (

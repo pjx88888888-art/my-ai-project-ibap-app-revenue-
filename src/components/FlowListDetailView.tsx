@@ -3,17 +3,29 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ChevronLeft, X, TrendingUp, TrendingDown, ArrowRightLeft, MoreHorizontal } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface FlowListDetailViewProps {
   onBack: () => void;
   onClose: () => void;
   type: 'cnob' | 'osob';
   segment: string;
+  tabs?: string[];
+  activeTab?: string;
+  onTabChange?: (tab: string) => void;
 }
 
-export default function FlowListDetailView({ onBack, onClose, type: initialType, segment }: FlowListDetailViewProps) {
+export default function FlowListDetailView({ 
+  onBack, 
+  onClose, 
+  type: initialType, 
+  segment,
+  tabs = [],
+  activeTab,
+  onTabChange
+}: FlowListDetailViewProps) {
   const flows = [
     { from: '深莞区', to: '美洲', income: '1,234.5', incomeYoy: '5.2%', volume: '567', volumeYoy: '3.1%', weight: '12.5', weightYoy: '1.2%', isUp: true },
     { from: '深莞区', to: '西欧', income: '982.3', incomeYoy: '3.1%', volume: '489', volumeYoy: '2.1%', weight: '10.2', weightYoy: '0.8%', isUp: true },
@@ -28,16 +40,16 @@ export default function FlowListDetailView({ onBack, onClose, type: initialType,
     <div className="flex flex-col h-screen bg-[#f4f7fc]">
       {/* Header */}
       <div className="bg-gradient-to-r from-[#104fb1] to-[#1c66d8] pt-12 pb-6 px-4 text-white relative">
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <button onClick={onBack} className="p-1 hover:bg-white/10 rounded-full transition-colors">
               <ChevronLeft size={24} />
             </button>
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <span className="text-lg font-bold">流向明细-{segment}</span>
+                <span className="text-lg font-bold">指标详情</span>
                 <div className="bg-white/20 px-2 py-0.5 rounded text-[10px] font-medium">
-                  深莞区
+                  本部
                 </div>
               </div>
             </div>
@@ -49,6 +61,31 @@ export default function FlowListDetailView({ onBack, onClose, type: initialType,
             </button>
           </div>
         </div>
+
+        {/* Horizontal Tabs */}
+        {tabs.length > 0 && (
+          <div className="overflow-x-auto -mx-4 px-4 no-scrollbar">
+            <div className="flex items-center gap-6 min-w-max">
+              {tabs.map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => onTabChange?.(tab)}
+                  className={`pb-2 text-sm font-bold transition-all relative whitespace-nowrap ${
+                    activeTab === tab ? 'text-white' : 'text-white/60'
+                  }`}
+                >
+                  {tab}
+                  {activeTab === tab && (
+                    <motion.div 
+                      layoutId="activeTabUnderlineFlowList"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-white rounded-full" 
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Content */}
