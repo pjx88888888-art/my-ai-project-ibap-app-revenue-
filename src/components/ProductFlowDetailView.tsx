@@ -31,12 +31,12 @@ export default function ProductFlowDetailView({
   const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>('daily');
 
   useEffect(() => {
-    if (timeDimension === 'month' || (timeDimension === 'day' && detailSource === 'business')) {
+    if (timeDimension === 'month') {
       setActivePeriod('monthly');
     } else {
       setActivePeriod('daily');
     }
-  }, [timeDimension, detailSource]);
+  }, [timeDimension]);
 
   const products = [
     '国际特快',
@@ -112,7 +112,7 @@ export default function ProductFlowDetailView({
             <div className="relative z-50">
               <button
                 onClick={() => {
-                  if (timeDimension === 'day' && detailSource !== 'business') {
+                  if (timeDimension === 'day') {
                     setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
                   } else {
                     setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
@@ -120,7 +120,7 @@ export default function ProductFlowDetailView({
                 }}
                 className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
               >
-                {timeDimension === 'day' && detailSource !== 'business' ? (
+                {timeDimension === 'day' ? (
                   activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
                 ) : (
                   activePeriod === 'monthly' ? '月-当月' : '月-年统计'

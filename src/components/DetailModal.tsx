@@ -44,12 +44,12 @@ export default function DetailModal({
   const [activeSubFilter, setActiveSubFilter] = useState('all');
 
   useEffect(() => {
-    if (timeDimension === 'month' || (timeDimension === 'day' && detailSource === 'business')) {
+    if (timeDimension === 'month') {
       setActivePeriod('monthly');
     } else {
       setActivePeriod('daily');
     }
-  }, [timeDimension, detailSource]);
+  }, [timeDimension]);
 
   const tabs = [
     { id: 'income', label: '收入' },
@@ -185,14 +185,14 @@ export default function DetailModal({
                       </div>
                       <div className="flex-1 pl-4 space-y-2">
                         <div className="flex justify-between items-center">
-                          <span className="text-xs text-gray-400">{activeMetric === 'income' ? '业务' : activeMetric === 'volume' ? '件量' : '重量'}</span>
+                          <span className="text-xs text-gray-400">{activeMetric === 'income' ? '收入' : activeMetric === 'volume' ? '件量' : '重量'}</span>
                           <span className="text-sm font-bold text-gray-800">
                             {latestTrend.value.toLocaleString()} {activeMetric === 'income' ? '万元' : activeMetric === 'volume' ? '万票' : '吨'}
                           </span>
                         </div>
                         {activeMetric === 'income' && (
                           <div className="flex justify-between items-center">
-                            <span className="text-xs text-gray-400">单票业务</span>
+                            <span className="text-xs text-gray-400">单票收入</span>
                             <span className="text-sm font-bold text-gray-800">{latestTrend.perTicket} 元</span>
                           </div>
                         )}
@@ -245,7 +245,7 @@ export default function DetailModal({
                                   <Bar 
                                     yAxisId="left" 
                                     dataKey="value" 
-                                    name="业务(万元)" 
+                                    name="收入(万元)" 
                                     fill="#1b63d6" 
                                     radius={[4, 4, 0, 0]} 
                                     barSize={20} 
@@ -254,7 +254,7 @@ export default function DetailModal({
                                     yAxisId="right" 
                                     type="monotone" 
                                     dataKey="perTicket" 
-                                    name="单票业务(元)" 
+                                    name="单票收入(元)" 
                                     stroke="#f59e0b" 
                                     strokeWidth={2} 
                                     dot={{ r: 3, fill: '#f59e0b' }} 
@@ -325,7 +325,7 @@ export default function DetailModal({
                   <div className="relative z-50">
                     <button
                       onClick={() => {
-                        if (timeDimension === 'day' && detailSource !== 'business') {
+                        if (timeDimension === 'day') {
                           setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
                         } else {
                           setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
@@ -333,7 +333,7 @@ export default function DetailModal({
                       }}
                       className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
                     >
-                      {timeDimension === 'day' && detailSource !== 'business' ? (
+                      {timeDimension === 'day' ? (
                         activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
                       ) : (
                         activePeriod === 'monthly' ? '月-当月' : '月-年统计'
@@ -389,7 +389,7 @@ export default function DetailModal({
                           <th className="px-3 py-2.5 text-gray-500 font-bold sticky left-0 bg-[#f8f9fb] z-10 w-24">组织</th>
                           <th className="px-3 py-2.5 text-gray-500 font-bold text-right">
                             <div className="flex items-center justify-end gap-1">
-                              {activeMetric === 'income' ? '业务' : activeMetric === 'volume' ? '件量' : '重量'}
+                              {activeMetric === 'income' ? '收入' : activeMetric === 'volume' ? '件量' : '重量'}
                               <div className="flex flex-col -space-y-1 opacity-30">
                                 <ChevronDown size={8} className="rotate-180" />
                                 <ChevronDown size={8} />
@@ -400,7 +400,7 @@ export default function DetailModal({
                             <>
                               <th className="px-3 py-2.5 text-gray-500 font-bold text-right">
                                 <div className="flex items-center justify-end gap-1">
-                                  单票业务
+                                  单票收入
                                   <div className="flex flex-col -space-y-1 opacity-30">
                                     <ChevronDown size={8} className="rotate-180" />
                                     <ChevronDown size={8} />
@@ -409,7 +409,7 @@ export default function DetailModal({
                               </th>
                               <th className="px-3 py-2.5 text-gray-500 font-bold text-right">
                                 <div className="flex items-center justify-end gap-1">
-                                  业务达成率
+                                  收入达成率
                                   <div className="flex flex-col -space-y-1 opacity-30">
                                     <ChevronDown size={8} className="rotate-180" />
                                     <ChevronDown size={8} />

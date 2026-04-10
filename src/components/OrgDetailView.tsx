@@ -28,12 +28,12 @@ export default function OrgDetailView({
   const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>('daily');
 
   useEffect(() => {
-    if (timeDimension === 'month' || (timeDimension === 'day' && detailSource === 'business')) {
+    if (timeDimension === 'month') {
       setActivePeriod('monthly');
     } else {
       setActivePeriod('daily');
     }
-  }, [timeDimension, detailSource]);
+  }, [timeDimension]);
 
   const getMetrics = () => {
     if (activeTab === 'os-origin') {
@@ -43,8 +43,8 @@ export default function OrgDetailView({
       '国际收入占全网国际收入比',
       '国际收入占全网国际收入占比差',
       '国际标品收入同比',
-      '国际供应链收入占地区国际业务比',
-      '国际供应链收入占地区国际业务占比差',
+      '国际供应链收入占地区国际收入比',
+      '国际供应链收入占地区国际收入占比差',
       '单票收入',
       '单票重量'
     ];
@@ -128,7 +128,7 @@ export default function OrgDetailView({
             <div className="relative z-50">
               <button
                 onClick={() => {
-                  if (timeDimension === 'day' && detailSource !== 'business') {
+                  if (timeDimension === 'day') {
                     setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
                   } else {
                     setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
@@ -136,7 +136,7 @@ export default function OrgDetailView({
                 }}
                 className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
               >
-                {timeDimension === 'day' && detailSource !== 'business' ? (
+                {timeDimension === 'day' ? (
                   activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
                 ) : (
                   activePeriod === 'monthly' ? '月-当月' : '月-年统计'
@@ -166,8 +166,8 @@ export default function OrgDetailView({
                         '国际收入占全网国际收入比',
                         '国际收入占全网国际收入占比差',
                         '国际标品收入同比',
-                        '国际供应链收入占地区国际业务比',
-                        '国际供应链收入占地区国际业务占比差',
+                        '国际供应链收入占地区国际收入比',
+                        '国际供应链收入占地区国际收入占比差',
                         '单票收入',
                         '单票重量'
                       ].indexOf(m);

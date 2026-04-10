@@ -43,12 +43,12 @@ export default function ThirdDetailView({
   const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>('daily');
 
   useEffect(() => {
-    if (timeDimension === 'month' || (timeDimension === 'day' && detailSource === 'business')) {
+    if (timeDimension === 'month') {
       setActivePeriod('monthly');
     } else {
       setActivePeriod('daily');
     }
-  }, [timeDimension, detailSource]);
+  }, [timeDimension]);
 
   const tabs = [
     { id: 'income', label: '收入' },
@@ -299,7 +299,7 @@ export default function ThirdDetailView({
             <div className="relative z-50">
               <button
                 onClick={() => {
-                  if (timeDimension === 'day' && detailSource !== 'business') {
+                  if (timeDimension === 'day') {
                     setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
                   } else {
                     setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
@@ -307,7 +307,7 @@ export default function ThirdDetailView({
                 }}
                 className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
               >
-                {timeDimension === 'day' && detailSource !== 'business' ? (
+                {timeDimension === 'day' ? (
                   activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
                 ) : (
                   activePeriod === 'monthly' ? '月-当月' : '月-年统计'
@@ -335,8 +335,8 @@ export default function ThirdDetailView({
                     </th>
                     {activeMetric === 'income' && (
                       <>
-                        <th className="px-3 py-2.5 text-gray-500 font-bold text-right whitespace-nowrap border-b border-gray-100">单票业务</th>
-                        <th className="px-3 py-2.5 text-gray-500 font-bold text-right whitespace-nowrap border-b border-gray-100">日均业务</th>
+                        <th className="px-3 py-2.5 text-gray-500 font-bold text-right whitespace-nowrap border-b border-gray-100">单票收入</th>
+                        <th className="px-3 py-2.5 text-gray-500 font-bold text-right whitespace-nowrap border-b border-gray-100">日均收入</th>
                         <th className="px-3 py-2.5 text-gray-500 font-bold text-right whitespace-nowrap border-b border-gray-100">折让率</th>
                       </>
                     )}

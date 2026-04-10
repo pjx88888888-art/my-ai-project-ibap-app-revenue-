@@ -43,12 +43,12 @@ export default function SubDetailView({
   const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>('daily');
 
   useEffect(() => {
-    if (timeDimension === 'month' || (timeDimension === 'day' && detailSource === 'business')) {
+    if (timeDimension === 'month') {
       setActivePeriod('monthly');
     } else {
       setActivePeriod('daily');
     }
-  }, [timeDimension, detailSource]);
+  }, [timeDimension]);
 
   const tabs = [
     { id: 'income', label: '收入' },
@@ -294,38 +294,25 @@ export default function SubDetailView({
               </div>
               <div className="text-sm font-bold text-gray-800">业务结构</div>
             </div>
-            {(timeDimension === 'month' || (timeDimension === 'day' && detailSource === 'business')) && (
-              <div className="relative z-50">
-                <button
-                  onClick={() => {
-                    if (timeDimension === 'day' && detailSource !== 'business') {
-                      setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
-                    } else {
-                      setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
-                    }
-                  }}
-                  className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
-                >
-                  {timeDimension === 'day' && detailSource !== 'business' ? (
-                    activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
-                  ) : (
-                    activePeriod === 'monthly' ? '月-当月' : '月-年统计'
-                  )}
-                  <span className="text-[8px]">⇅</span>
-                </button>
-              </div>
-            )}
-            {timeDimension === 'day' && detailSource !== 'business' && (
-              <div className="relative z-50">
-                <button
-                  onClick={() => setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily')}
-                  className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
-                >
-                  {activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'}
-                  <span className="text-[8px]">⇅</span>
-                </button>
-              </div>
-            )}
+            <div className="relative z-50">
+              <button
+                onClick={() => {
+                  if (timeDimension === 'day') {
+                    setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
+                  } else {
+                    setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
+                  }
+                }}
+                className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
+              >
+                {timeDimension === 'day' ? (
+                  activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
+                ) : (
+                  activePeriod === 'monthly' ? '月-当月' : '月-年统计'
+                )}
+                <span className="text-[8px]">⇅</span>
+              </button>
+            </div>
           </div>
 
           <div className="p-3">
