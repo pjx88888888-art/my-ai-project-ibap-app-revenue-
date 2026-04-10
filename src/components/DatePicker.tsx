@@ -34,13 +34,12 @@ export default function DatePicker({ selectedDate, setSelectedDate, timeDimensio
     { day: '1月', num: 1 },
     { day: '2月', num: 2 },
     { day: '3月', num: 3 },
-    { day: '4月', num: 4 },
   ];
 
   const currentItems = timeDimension === 'day' ? dates : months;
 
   return (
-    <div className="px-4 py-2 relative z-20">
+    <div className="px-4 pt-2 pb-1 relative z-20">
       {/* Dimension Switcher */}
       <div className="relative mb-2">
         <button 
@@ -66,7 +65,7 @@ export default function DatePicker({ selectedDate, setSelectedDate, timeDimensio
             <button 
               onClick={() => { 
                 setTimeDimension('month'); 
-                setSelectedDate(4);
+                setSelectedDate(3);
                 setShowDimMenu(false); 
               }}
               className={`w-full text-left px-3 py-2 text-xs hover:bg-blue-50 transition-colors ${timeDimension === 'month' ? 'text-[#1b63d6] font-bold' : 'text-gray-600'}`}
@@ -89,7 +88,7 @@ export default function DatePicker({ selectedDate, setSelectedDate, timeDimensio
                 : 'hover:bg-white/10 rounded-lg'
             }`}
           >
-            <div className="text-[10px] opacity-70 mb-0.5 min-h-[12px]">{timeDimension === 'day' ? item.day : '2024'}</div>
+            <div className="text-[10px] opacity-70 mb-0.5 min-h-[12px]">{timeDimension === 'day' ? item.day : '2026'}</div>
             <div className="text-sm font-semibold">{timeDimension === 'day' ? item.num : item.day}</div>
           </div>
         ))}

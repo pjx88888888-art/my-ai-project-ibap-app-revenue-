@@ -17,12 +17,14 @@ import FlowSection from './components/FlowSection';
 import FlowDetailView from './components/FlowDetailView';
 import FlowThirdDetailView from './components/FlowThirdDetailView';
 import FlowListDetailView from './components/FlowListDetailView';
+import ProductSection from './components/ProductSection';
 import BottomNav from './components/BottomNav';
 import DetailModal from './components/DetailModal';
 import SubDetailView from './components/SubDetailView';
 import ThirdDetailView from './components/ThirdDetailView';
 import OrgDetailView from './components/OrgDetailView';
 import ProductFlowDetailView from './components/ProductFlowDetailView';
+import ProductDetailView from './components/ProductDetailView';
 import { Rocket } from 'lucide-react';
 
 export default function App() {
@@ -31,7 +33,7 @@ export default function App() {
   const [activeMetric, setActiveMetric] = useState<MetricType>('income');
   const [selectedDate, setSelectedDate] = useState(29);
   const [timeDimension, setTimeDimension] = useState<TimeDimension>('day');
-  const [view, setView] = useState<'dashboard' | 'detail' | 'sub-detail' | 'third-detail' | 'flow-detail' | 'flow-third-detail' | 'flow-list-detail' | 'org-detail' | 'product-flow-detail'>('dashboard');
+  const [view, setView] = useState<'dashboard' | 'detail' | 'sub-detail' | 'third-detail' | 'flow-detail' | 'flow-third-detail' | 'flow-list-detail' | 'org-detail' | 'product-flow-detail' | 'product-detail'>('dashboard');
   const [selectedRegion, setSelectedRegion] = useState<string>('');
   const [selectedSegment, setSelectedSegment] = useState<string>('');
   const [selectedProduct, setSelectedProduct] = useState<string>('');
@@ -58,6 +60,11 @@ export default function App() {
   const handleOpenKeyMetricsDetail = () => {
     setDetailSource('key-metrics');
     setView('org-detail');
+  };
+
+  const handleOpenProductDetail = (product: string) => {
+    setSelectedProduct(product);
+    setView('product-detail');
   };
 
   const handleSelectRegion = (region: string) => {
@@ -138,7 +145,7 @@ export default function App() {
                 setTimeDimension={setTimeDimension}
               />
 
-              <main className="pb-24">
+              <main className={`pb-24 ${activeSub === 'product' ? 'pt-0' : ''}`}>
                 {activeSub === 'overview' ? (
                   <>
                     <MetricTabs 
@@ -166,6 +173,11 @@ export default function App() {
                   <FlowSection 
                     timeDimension={timeDimension}
                     onOpenDetail={handleOpenFlowDetail} 
+                  />
+                ) : activeSub === 'product' ? (
+                  <ProductSection 
+                    timeDimension={timeDimension} 
+                    onOpenDetail={handleOpenProductDetail}
                   />
                 ) : (
                   <div className="flex flex-col items-center justify-center h-[400px] text-white/50">
@@ -329,13 +341,32 @@ export default function App() {
               className="relative min-h-screen bg-[#f4f7fc]"
             >
               <ProductFlowDetailView 
-                onBack={() => setView('third-detail')}
+                onBack={() => setView('product-detail')}
                 onClose={() => setView('dashboard')}
                 product={selectedProduct}
                 activeMetric={activeMetric}
                 setActiveMetric={setActiveMetric}
                 timeDimension={timeDimension}
                 detailSource={detailSource}
+              />
+            </motion.div>
+          ) : view === 'product-detail' ? (
+            <motion.div
+              key="product-detail"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.3 }}
+              className="relative min-h-screen bg-[#f4f7fc]"
+            >
+              <ProductDetailView 
+                onBack={() => setView('dashboard')}
+                onClose={() => setView('dashboard')}
+                onSelectFlow={handleSelectProductFlow}
+                product={selectedProduct}
+                activeMetric={activeMetric}
+                setActiveMetric={setActiveMetric}
+                timeDimension={timeDimension}
               />
             </motion.div>
           ) : null}
