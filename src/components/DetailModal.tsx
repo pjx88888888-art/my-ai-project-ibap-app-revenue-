@@ -27,21 +27,29 @@ interface DetailModalProps {
   setActiveMetric: (metric: MetricType) => void;
   onSelectRegion: (region: string) => void;
   timeDimension: TimeDimension;
+  detailSource?: 'overview' | 'business' | 'key-metrics';
 }
 
-export default function DetailModal({ onClose, activeMetric, setActiveMetric, onSelectRegion, timeDimension }: DetailModalProps) {
+export default function DetailModal({ 
+  onClose, 
+  activeMetric, 
+  setActiveMetric, 
+  onSelectRegion, 
+  timeDimension,
+  detailSource = 'overview'
+}: DetailModalProps) {
   const [isTrendExpanded, setIsTrendExpanded] = useState(false);
   const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>('daily');
   const [activeFilter, setActiveFilter] = useState('domestic-sales');
   const [activeSubFilter, setActiveSubFilter] = useState('all');
 
   useEffect(() => {
-    if (timeDimension === 'month') {
+    if (timeDimension === 'month' || (timeDimension === 'day' && detailSource === 'business')) {
       setActivePeriod('monthly');
     } else {
       setActivePeriod('daily');
     }
-  }, [timeDimension]);
+  }, [timeDimension, detailSource]);
 
   const tabs = [
     { id: 'income', label: '收入' },
@@ -317,7 +325,7 @@ export default function DetailModal({ onClose, activeMetric, setActiveMetric, on
                   <div className="relative z-50">
                     <button
                       onClick={() => {
-                        if (timeDimension === 'day') {
+                        if (timeDimension === 'day' && detailSource !== 'business') {
                           setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
                         } else {
                           setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
@@ -325,10 +333,10 @@ export default function DetailModal({ onClose, activeMetric, setActiveMetric, on
                       }}
                       className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
                     >
-                      {timeDimension === 'day' ? (
+                      {timeDimension === 'day' && detailSource !== 'business' ? (
                         activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
                       ) : (
-                        activePeriod === 'monthly' ? '月-当月' : '月-年累计'
+                        activePeriod === 'monthly' ? '月-当月' : '月-年统计'
                       )}
                       <span className="text-[8px]">⇅</span>
                     </button>

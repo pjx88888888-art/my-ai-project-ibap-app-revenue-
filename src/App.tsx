@@ -36,15 +36,22 @@ export default function App() {
   const [selectedSegment, setSelectedSegment] = useState<string>('');
   const [selectedProduct, setSelectedProduct] = useState<string>('');
   const [flowDetailType, setFlowDetailType] = useState<'cnob' | 'osob'>('cnob');
-
   const [flowDetailSource, setFlowDetailSource] = useState<'segment' | 'flow'>('segment');
+  const [detailSource, setDetailSource] = useState<'overview' | 'business' | 'key-metrics'>('overview');
+
+  const handleOpenOperatingDetail = () => {
+    setDetailSource('overview');
+    setView('detail');
+  };
 
   const handleOpenBusinessDetail = () => {
+    setDetailSource('business');
     setSelectedRegion('本部');
     setView('sub-detail');
   };
 
   const handleOpenKeyMetricsDetail = () => {
+    setDetailSource('key-metrics');
     setView('org-detail');
   };
 
@@ -133,7 +140,7 @@ export default function App() {
                     <OperatingOverviewCard 
                       activeMetric={activeMetric} 
                       timeDimension={timeDimension}
-                      onOpenDetail={() => setView('detail')}
+                      onOpenDetail={handleOpenOperatingDetail}
                     />
                     <BusinessSection 
                       activeMetric={activeMetric} 
@@ -181,6 +188,7 @@ export default function App() {
                 setActiveMetric={setActiveMetric}
                 onSelectRegion={handleSelectRegion}
                 timeDimension={timeDimension}
+                detailSource={detailSource}
               />
             </motion.div>
           ) : view === 'sub-detail' ? (
@@ -193,13 +201,14 @@ export default function App() {
               className="relative min-h-screen bg-[#f4f7fc]"
             >
               <SubDetailView 
-                onBack={() => setView('detail')}
+                onBack={() => setView(detailSource === 'business' ? 'dashboard' : 'detail')}
                 onClose={() => setView('dashboard')}
                 onSelectSegment={handleSelectSegment}
                 region={selectedRegion}
                 activeMetric={activeMetric}
                 setActiveMetric={setActiveMetric}
                 timeDimension={timeDimension}
+                detailSource={detailSource}
               />
             </motion.div>
           ) : view === 'flow-detail' ? (
@@ -267,10 +276,11 @@ export default function App() {
               className="relative min-h-screen bg-[#f4f7fc]"
             >
               <OrgDetailView 
-                onBack={() => setView('dashboard')}
+                onBack={() => setView(detailSource === 'key-metrics' ? 'dashboard' : 'detail')}
                 onClose={() => setView('dashboard')}
                 region="本部"
                 timeDimension={timeDimension}
+                detailSource={detailSource}
               />
             </motion.div>
           ) : view === 'third-detail' ? (
@@ -290,6 +300,7 @@ export default function App() {
                 activeMetric={activeMetric}
                 setActiveMetric={setActiveMetric}
                 timeDimension={timeDimension}
+                detailSource={detailSource}
               />
             </motion.div>
           ) : view === 'product-flow-detail' ? (
@@ -308,6 +319,7 @@ export default function App() {
                 activeMetric={activeMetric}
                 setActiveMetric={setActiveMetric}
                 timeDimension={timeDimension}
+                detailSource={detailSource}
               />
             </motion.div>
           ) : null}

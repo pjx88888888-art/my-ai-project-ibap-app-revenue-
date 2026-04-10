@@ -54,13 +54,21 @@ export default function DatePicker({ selectedDate, setSelectedDate, timeDimensio
         {showDimMenu && (
           <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-xl overflow-hidden min-w-[80px] py-1 animate-in fade-in slide-in-from-top-1 duration-200">
             <button 
-              onClick={() => { setTimeDimension('day'); setShowDimMenu(false); }}
+              onClick={() => { 
+                setTimeDimension('day'); 
+                setSelectedDate(29);
+                setShowDimMenu(false); 
+              }}
               className={`w-full text-left px-3 py-2 text-xs hover:bg-blue-50 transition-colors ${timeDimension === 'day' ? 'text-[#1b63d6] font-bold' : 'text-gray-600'}`}
             >
               日维度
             </button>
             <button 
-              onClick={() => { setTimeDimension('month'); setShowDimMenu(false); }}
+              onClick={() => { 
+                setTimeDimension('month'); 
+                setSelectedDate(4);
+                setShowDimMenu(false); 
+              }}
               className={`w-full text-left px-3 py-2 text-xs hover:bg-blue-50 transition-colors ${timeDimension === 'month' ? 'text-[#1b63d6] font-bold' : 'text-gray-600'}`}
             >
               月维度
@@ -75,13 +83,13 @@ export default function DatePicker({ selectedDate, setSelectedDate, timeDimensio
           <div
             key={item.num}
             onClick={() => setSelectedDate(item.num)}
-            className={`flex-1 text-center py-1.5 transition-all duration-300 cursor-pointer ${
+            className={`flex-1 text-center py-1.5 transition-all duration-300 cursor-pointer flex flex-col justify-center min-h-[48px] ${
               selectedDate === item.num
                 ? 'bg-white text-[#1b63d6] rounded-lg shadow-md font-bold scale-105'
                 : 'hover:bg-white/10 rounded-lg'
             }`}
           >
-            <div className="text-[10px] opacity-70 mb-0.5">{timeDimension === 'day' ? item.day : ''}</div>
+            <div className="text-[10px] opacity-70 mb-0.5 min-h-[12px]">{timeDimension === 'day' ? item.day : '2024'}</div>
             <div className="text-sm font-semibold">{timeDimension === 'day' ? item.num : item.day}</div>
           </div>
         ))}

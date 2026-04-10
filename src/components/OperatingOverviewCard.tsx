@@ -94,7 +94,7 @@ export default function OperatingOverviewCard({ activeMetric, timeDimension, onO
                       {currentData.monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
                     </span>
                   </div>
-                  {currentData.monthly.status !== 'none' && (
+                  {currentData.monthly.status !== 'none' && activeMetric === 'income' && (
                     <div className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full ${
                       currentData.monthly.status === 'green' ? 'bg-green-500' : 
                       currentData.monthly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
@@ -117,7 +117,7 @@ export default function OperatingOverviewCard({ activeMetric, timeDimension, onO
                       {currentData.yearly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
                     </span>
                   </div>
-                  {currentData.yearly.status !== 'none' && (
+                  {currentData.yearly.status !== 'none' && activeMetric === 'income' && (
                     <div className={`absolute top-3 right-3 w-2.5 h-2.5 rounded-full ${
                       currentData.yearly.status === 'green' ? 'bg-green-500' : 
                       currentData.yearly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'

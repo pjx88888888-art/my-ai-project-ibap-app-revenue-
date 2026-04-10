@@ -13,20 +13,27 @@ interface OrgDetailViewProps {
   onClose: () => void;
   region: string;
   timeDimension: TimeDimension;
+  detailSource?: 'overview' | 'business' | 'key-metrics';
 }
 
-export default function OrgDetailView({ onBack, onClose, region, timeDimension }: OrgDetailViewProps) {
+export default function OrgDetailView({ 
+  onBack, 
+  onClose, 
+  region, 
+  timeDimension,
+  detailSource = 'overview'
+}: OrgDetailViewProps) {
   const [activeTab, setActiveTab] = useState<'cn-sales' | 'cn-origin' | 'os-origin'>('cn-sales');
   const [activeSubFilter, setActiveSubFilter] = useState('all');
   const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>('daily');
 
   useEffect(() => {
-    if (timeDimension === 'month') {
+    if (timeDimension === 'month' || (timeDimension === 'day' && detailSource === 'business')) {
       setActivePeriod('monthly');
     } else {
       setActivePeriod('daily');
     }
-  }, [timeDimension]);
+  }, [timeDimension, detailSource]);
 
   const getMetrics = () => {
     if (activeTab === 'os-origin') {
@@ -118,17 +125,25 @@ export default function OrgDetailView({ onBack, onClose, region, timeDimension }
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-white/50">
           <div className="px-4 py-3 border-b border-gray-50 flex items-center justify-between">
             <div className="text-sm font-bold text-gray-800">组织详情</div>
-            {timeDimension === 'month' && (
-              <div className="relative z-50">
-                <button
-                  onClick={() => setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly')}
-                  className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
-                >
-                  {activePeriod === 'monthly' ? '月-当月' : '月-年累计'}
-                  <span className="text-[8px]">⇅</span>
-                </button>
-              </div>
-            )}
+            <div className="relative z-50">
+              <button
+                onClick={() => {
+                  if (timeDimension === 'day' && detailSource !== 'business') {
+                    setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
+                  } else {
+                    setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
+                  }
+                }}
+                className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
+              >
+                {timeDimension === 'day' && detailSource !== 'business' ? (
+                  activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
+                ) : (
+                  activePeriod === 'monthly' ? '月-当月' : '月-年统计'
+                )}
+                <span className="text-[8px]">⇅</span>
+              </button>
+            </div>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-[10px] table-auto">

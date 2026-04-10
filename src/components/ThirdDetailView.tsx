@@ -25,20 +25,30 @@ interface ThirdDetailViewProps {
   activeMetric: MetricType;
   setActiveMetric: (metric: MetricType) => void;
   timeDimension: TimeDimension;
+  detailSource?: 'overview' | 'business' | 'key-metrics';
 }
 
-export default function ThirdDetailView({ onBack, onClose, onSelectProductFlow, segment, activeMetric, setActiveMetric, timeDimension }: ThirdDetailViewProps) {
+export default function ThirdDetailView({ 
+  onBack, 
+  onClose, 
+  onSelectProductFlow, 
+  segment, 
+  activeMetric, 
+  setActiveMetric, 
+  timeDimension,
+  detailSource = 'overview'
+}: ThirdDetailViewProps) {
   const [isTrendExpanded, setIsTrendExpanded] = useState(false);
   const [legendPage, setLegendPage] = useState(1);
   const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>('daily');
 
   useEffect(() => {
-    if (timeDimension === 'month') {
+    if (timeDimension === 'month' || (timeDimension === 'day' && detailSource === 'business')) {
       setActivePeriod('monthly');
     } else {
       setActivePeriod('daily');
     }
-  }, [timeDimension]);
+  }, [timeDimension, detailSource]);
 
   const tabs = [
     { id: 'income', label: '收入' },
@@ -286,17 +296,25 @@ export default function ThirdDetailView({ onBack, onClose, onSelectProductFlow, 
               </div>
               <div className="text-sm font-bold text-gray-800">产品结构</div>
             </div>
-            {timeDimension === 'month' && (
-              <div className="relative z-50">
-                <button
-                  onClick={() => setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly')}
-                  className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
-                >
-                  {activePeriod === 'monthly' ? '月-当月' : '月-年累计'}
-                  <span className="text-[8px]">⇅</span>
-                </button>
-              </div>
-            )}
+            <div className="relative z-50">
+              <button
+                onClick={() => {
+                  if (timeDimension === 'day' && detailSource !== 'business') {
+                    setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
+                  } else {
+                    setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
+                  }
+                }}
+                className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
+              >
+                {timeDimension === 'day' && detailSource !== 'business' ? (
+                  activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
+                ) : (
+                  activePeriod === 'monthly' ? '月-当月' : '月-年统计'
+                )}
+                <span className="text-[8px]">⇅</span>
+              </button>
+            </div>
           </div>
 
           <div className="p-3">

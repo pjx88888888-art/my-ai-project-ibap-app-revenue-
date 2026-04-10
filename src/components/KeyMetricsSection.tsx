@@ -88,6 +88,9 @@ export default function KeyMetricsSection({ timeDimension, onOpenDetail }: KeyMe
   const [activeTab, setActiveTab] = useState<'all' | 'cn' | 'os'>('all');
 
   const filteredMetrics = KEY_METRICS.filter(metric => {
+    if (timeDimension === 'day') {
+      return ['单票收入', '单票重量'].includes(metric.name);
+    }
     if (activeTab === 'all') {
       return [
         '国际收入占全网国际收入比',
@@ -128,23 +131,27 @@ export default function KeyMetricsSection({ timeDimension, onOpenDetail }: KeyMe
           <HelpCircle size={14} className="text-gray-300" />
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex bg-gray-100 rounded-lg p-0.5 text-[10px] font-bold">
-            {(['all', 'cn', 'os'] as const).map((tab) => (
-              <button 
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-3 py-1 rounded-md transition-all ${activeTab === tab ? 'bg-white text-[#1b63d6] shadow-sm' : 'text-gray-500'}`}
+          {timeDimension !== 'day' && (
+            <>
+              <div className="flex bg-gray-100 rounded-lg p-0.5 text-[10px] font-bold">
+                {(['all', 'cn', 'os'] as const).map((tab) => (
+                  <button 
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    className={`px-3 py-1 rounded-md transition-all ${activeTab === tab ? 'bg-white text-[#1b63d6] shadow-sm' : 'text-gray-500'}`}
+                  >
+                    {tab === 'all' ? '全部' : tab === 'cn' ? '国内地区' : '海外地区'}
+                  </button>
+                ))}
+              </div>
+              <div
+                onClick={onOpenDetail}
+                className="text-gray-400 text-[10px] flex items-center cursor-pointer hover:text-[#1b63d6] transition-colors"
               >
-                {tab === 'all' ? '全部' : tab === 'cn' ? '国内地区' : '海外地区'}
-              </button>
-            ))}
-          </div>
-          <div
-            onClick={onOpenDetail}
-            className="text-gray-400 text-[10px] flex items-center cursor-pointer hover:text-[#1b63d6] transition-colors"
-          >
-            详情 <ChevronRight size={10} className="ml-0.5" />
-          </div>
+                详情 <ChevronRight size={10} className="ml-0.5" />
+              </div>
+            </>
+          )}
         </div>
       </div>
 
