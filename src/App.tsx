@@ -22,6 +22,7 @@ import DetailModal from './components/DetailModal';
 import SubDetailView from './components/SubDetailView';
 import ThirdDetailView from './components/ThirdDetailView';
 import OrgDetailView from './components/OrgDetailView';
+import ProductFlowDetailView from './components/ProductFlowDetailView';
 import { Rocket } from 'lucide-react';
 
 export default function App() {
@@ -29,9 +30,10 @@ export default function App() {
   const [activeSub, setActiveSub] = useState<SubTab>('overview');
   const [activeMetric, setActiveMetric] = useState<MetricType>('income');
   const [selectedDate, setSelectedDate] = useState(29);
-  const [view, setView] = useState<'dashboard' | 'detail' | 'sub-detail' | 'third-detail' | 'flow-detail' | 'flow-third-detail' | 'flow-list-detail' | 'org-detail'>('dashboard');
+  const [view, setView] = useState<'dashboard' | 'detail' | 'sub-detail' | 'third-detail' | 'flow-detail' | 'flow-third-detail' | 'flow-list-detail' | 'org-detail' | 'product-flow-detail'>('dashboard');
   const [selectedRegion, setSelectedRegion] = useState<string>('');
   const [selectedSegment, setSelectedSegment] = useState<string>('');
+  const [selectedProduct, setSelectedProduct] = useState<string>('');
   const [flowDetailType, setFlowDetailType] = useState<'cnob' | 'osob'>('cnob');
 
   const [flowDetailSource, setFlowDetailSource] = useState<'segment' | 'flow'>('segment');
@@ -53,6 +55,11 @@ export default function App() {
   const handleSelectSegment = (segment: string) => {
     setSelectedSegment(segment);
     setView('third-detail');
+  };
+
+  const handleSelectProductFlow = (product: string) => {
+    setSelectedProduct(product);
+    setView('product-flow-detail');
   };
 
   const handleOpenFlowDetail = (type: 'cnob' | 'osob', metric: MetricType) => {
@@ -255,7 +262,7 @@ export default function App() {
                 region="本部"
               />
             </motion.div>
-          ) : (
+          ) : view === 'third-detail' ? (
             <motion.div
               key="third-detail"
               initial={{ opacity: 0, x: 20 }}
@@ -267,12 +274,30 @@ export default function App() {
               <ThirdDetailView 
                 onBack={() => setView('sub-detail')}
                 onClose={() => setView('dashboard')}
+                onSelectProductFlow={handleSelectProductFlow}
                 segment={selectedSegment}
                 activeMetric={activeMetric}
                 setActiveMetric={setActiveMetric}
               />
             </motion.div>
-          )}
+          ) : view === 'product-flow-detail' ? (
+            <motion.div
+              key="product-flow-detail"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.3 }}
+              className="relative min-h-screen bg-[#f4f7fc]"
+            >
+              <ProductFlowDetailView 
+                onBack={() => setView('third-detail')}
+                onClose={() => setView('dashboard')}
+                product={selectedProduct}
+                activeMetric={activeMetric}
+                setActiveMetric={setActiveMetric}
+              />
+            </motion.div>
+          ) : null}
         </AnimatePresence>
       </div>
     </div>

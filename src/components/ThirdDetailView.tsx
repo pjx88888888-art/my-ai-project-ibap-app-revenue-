@@ -5,7 +5,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronLeft, X, MoreHorizontal, TrendingUp, TrendingDown, Bell, ChevronDown, ChevronRight, LayoutList } from 'lucide-react';
+import { ChevronLeft, X, MoreHorizontal, TrendingUp, TrendingDown, Bell, ChevronDown, ChevronRight, LayoutList, ArrowUpDown } from 'lucide-react';
 import { MetricType } from '../types';
 import {
   ResponsiveContainer,
@@ -20,12 +20,13 @@ import {
 interface ThirdDetailViewProps {
   onBack: () => void;
   onClose: () => void;
+  onSelectProductFlow: (product: string) => void;
   segment: string;
   activeMetric: MetricType;
   setActiveMetric: (metric: MetricType) => void;
 }
 
-export default function ThirdDetailView({ onBack, onClose, segment, activeMetric, setActiveMetric }: ThirdDetailViewProps) {
+export default function ThirdDetailView({ onBack, onClose, onSelectProductFlow, segment, activeMetric, setActiveMetric }: ThirdDetailViewProps) {
   const [isTrendExpanded, setIsTrendExpanded] = useState(false);
   const [legendPage, setLegendPage] = useState(1);
 
@@ -272,17 +273,17 @@ export default function ThirdDetailView({ onBack, onClose, segment, activeMetric
                 <div className="w-1.5 h-1.5 bg-[#1b63d6] rounded-full" />
               </div>
             </div>
-            <div className="text-sm font-bold text-gray-800">业务结构</div>
+            <div className="text-sm font-bold text-gray-800">产品结构</div>
           </div>
 
           <div className="p-3">
-            <div className="overflow-x-auto -mx-3 px-3">
-              <table className="w-full text-left text-xs">
+            <div className="overflow-x-auto -mx-3 px-3 no-scrollbar">
+              <table className="w-full text-left text-xs border-separate border-spacing-0">
                 <thead>
                   <tr className="bg-[#f8f9fb]">
-                    <th className="px-3 py-2.5 text-gray-500 font-bold sticky left-0 bg-[#f8f9fb] z-10 w-24">业务板块</th>
-                    <th className="px-3 py-2.5 text-gray-500 font-bold text-center">组织</th>
-                    <th className="px-3 py-2.5 text-gray-500 font-bold text-right">
+                    <th className="px-3 py-2.5 text-gray-500 font-bold sticky left-0 bg-[#f8f9fb] z-10 w-24 whitespace-nowrap border-b border-gray-100">产品名称</th>
+                    <th className="px-3 py-2.5 text-gray-500 font-bold text-center whitespace-nowrap border-b border-gray-100">流向</th>
+                    <th className="px-3 py-2.5 text-gray-500 font-bold text-right whitespace-nowrap border-b border-gray-100">
                       <div className="flex items-center justify-end gap-1">
                         {metricLabels[activeMetric]}
                         <div className="flex flex-col -space-y-1 opacity-30">
@@ -293,16 +294,16 @@ export default function ThirdDetailView({ onBack, onClose, segment, activeMetric
                     </th>
                     {activeMetric === 'income' && (
                       <>
-                        <th className="px-3 py-2.5 text-gray-500 font-bold text-right">单票业务</th>
-                        <th className="px-3 py-2.5 text-gray-500 font-bold text-right">日均业务</th>
-                        <th className="px-3 py-2.5 text-gray-500 font-bold text-right">折让率</th>
+                        <th className="px-3 py-2.5 text-gray-500 font-bold text-right whitespace-nowrap border-b border-gray-100">单票业务</th>
+                        <th className="px-3 py-2.5 text-gray-500 font-bold text-right whitespace-nowrap border-b border-gray-100">日均业务</th>
+                        <th className="px-3 py-2.5 text-gray-500 font-bold text-right whitespace-nowrap border-b border-gray-100">折让率</th>
                       </>
                     )}
                     {activeMetric === 'volume' && (
-                      <th className="px-3 py-2.5 text-gray-500 font-bold text-right">日均件量</th>
+                      <th className="px-3 py-2.5 text-gray-500 font-bold text-right whitespace-nowrap border-b border-gray-100">日均件量</th>
                     )}
                     {activeMetric === 'weight' && (
-                      <th className="px-3 py-2.5 text-gray-500 font-bold text-right">单票重量</th>
+                      <th className="px-3 py-2.5 text-gray-500 font-bold text-right whitespace-nowrap border-b border-gray-100">单票重量</th>
                     )}
                   </tr>
                 </thead>
@@ -312,12 +313,15 @@ export default function ThirdDetailView({ onBack, onClose, segment, activeMetric
                       <td className="px-3 py-4 font-bold text-gray-800 sticky left-0 bg-white z-10">{row.product}</td>
                       <td className="px-3 py-4 text-center">
                         <div className="flex justify-center">
-                          <div className="w-5 h-5 rounded-md border border-blue-200 flex items-center justify-center bg-blue-50/50">
-                            <LayoutList size={12} className="text-[#1b63d6]" />
-                          </div>
+                          <button 
+                            onClick={() => onSelectProductFlow(row.product)}
+                            className="w-5 h-5 rounded-md border border-blue-200 flex items-center justify-center bg-blue-50/50 hover:scale-110 transition-transform active:scale-95"
+                          >
+                            <ArrowUpDown size={12} className="text-[#1b63d6]" />
+                          </button>
                         </div>
                       </td>
-                      <td className="px-3 py-4 text-right">
+                      <td className="px-3 py-4 text-right whitespace-nowrap">
                         <div className="font-bold text-gray-800">
                           {row.value}
                           <span className="text-[10px] text-gray-400 ml-0.5">
@@ -334,22 +338,22 @@ export default function ThirdDetailView({ onBack, onClose, segment, activeMetric
                       </td>
                       {activeMetric === 'income' && (
                         <>
-                          <td className="px-3 py-4 text-right font-medium text-gray-700">
+                          <td className="px-3 py-4 text-right font-medium text-gray-700 whitespace-nowrap">
                             {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
                           </td>
-                          <td className="px-3 py-4 text-right font-medium text-gray-700">
+                          <td className="px-3 py-4 text-right font-medium text-gray-700 whitespace-nowrap">
                             {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
                           </td>
-                          <td className="px-3 py-4 text-right font-medium text-gray-700">{row.discount}</td>
+                          <td className="px-3 py-4 text-right font-medium text-gray-700 whitespace-nowrap">{row.discount}</td>
                         </>
                       )}
                       {activeMetric === 'volume' && (
-                        <td className="px-3 py-4 text-right font-medium text-gray-700">
+                        <td className="px-3 py-4 text-right font-medium text-gray-700 whitespace-nowrap">
                           {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">票</span>
                         </td>
                       )}
                       {activeMetric === 'weight' && (
-                        <td className="px-3 py-4 text-right font-medium text-gray-700">
+                        <td className="px-3 py-4 text-right font-medium text-gray-700 whitespace-nowrap">
                           {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">KG</span>
                         </td>
                       )}
