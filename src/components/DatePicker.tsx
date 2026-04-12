@@ -41,7 +41,7 @@ export default function DatePicker({ selectedDate, setSelectedDate, timeDimensio
   return (
     <div className="px-4 pt-2 pb-1 relative z-20">
       {/* Dimension Switcher */}
-      <div className="relative mb-2">
+      <div className="relative mb-2 z-30">
         <button 
           onClick={() => setShowDimMenu(!showDimMenu)}
           className="flex items-center gap-1 text-white/80 text-xs font-medium hover:text-white transition-colors"
@@ -51,7 +51,7 @@ export default function DatePicker({ selectedDate, setSelectedDate, timeDimensio
         </button>
 
         {showDimMenu && (
-          <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-xl overflow-hidden min-w-[80px] py-1 animate-in fade-in slide-in-from-top-1 duration-200">
+          <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-xl overflow-hidden min-w-[80px] py-1 animate-in fade-in slide-in-from-top-1 duration-200 z-50">
             <button 
               onClick={() => { 
                 setTimeDimension('day'); 
