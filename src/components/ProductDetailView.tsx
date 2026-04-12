@@ -48,11 +48,11 @@ export default function ProductDetailView({
   ];
 
   const orgData = useMemo(() => [
-    { name: '深莞区', income: '1,234.56', volume: '23.4', weight: '123.5', perTicketIncome: '82.45', dailyAvgIncome: '15.23', discountRate: '12.5%', dailyAvgVolume: '1.2', perTicketWeight: '5.28', yoy: '+12.5%', achievement: '103%' },
-    { name: '广佛区', income: '1,095.23', volume: '18.9', weight: '98.4', perTicketIncome: '79.32', dailyAvgIncome: '12.97', discountRate: '11.8%', dailyAvgVolume: '0.9', perTicketWeight: '5.21', yoy: '+8.4%', achievement: '98%' },
-    { name: '沪苏区', income: '986.45', volume: '12.4', weight: '65.2', perTicketIncome: '85.67', dailyAvgIncome: '8.19', discountRate: '13.2%', dailyAvgVolume: '0.6', perTicketWeight: '5.26', yoy: '+10.2%', achievement: '101%' },
-    { name: '京津区', income: '876.12', volume: '34.5', weight: '156.7', perTicketIncome: '54.87', dailyAvgIncome: '6.31', discountRate: '10.5%', dailyAvgVolume: '1.5', perTicketWeight: '4.54', yoy: '+5.6%', achievement: '95%' },
-    { name: '浙皖区', income: '765.89', volume: '21.2', weight: '112.3', perTicketIncome: '72.15', dailyAvgIncome: '10.45', discountRate: '11.2%', dailyAvgVolume: '1.1', perTicketWeight: '5.30', yoy: '+7.2%', achievement: '99%' },
+    { name: '深莞区', income: '1,234.56', volume: '23.40', weight: '123.50', perTicketIncome: '82.45', dailyAvgIncome: '15.23', discountRate: '12.5%', dailyAvgVolume: '1.20', perTicketWeight: '5.28', yoy: '+12.5%', achievement: '103%' },
+    { name: '广佛区', income: '1,095.23', volume: '18.90', weight: '98.40', perTicketIncome: '79.32', dailyAvgIncome: '12.97', discountRate: '11.8%', dailyAvgVolume: '0.90', perTicketWeight: '5.21', yoy: '+8.4%', achievement: '98%' },
+    { name: '沪苏区', income: '986.45', volume: '12.40', weight: '65.20', perTicketIncome: '85.67', dailyAvgIncome: '8.19', discountRate: '13.2%', dailyAvgVolume: '0.60', perTicketWeight: '5.26', yoy: '+10.2%', achievement: '101%' },
+    { name: '京津区', income: '876.12', volume: '34.50', weight: '156.70', perTicketIncome: '54.87', dailyAvgIncome: '6.31', discountRate: '10.5%', dailyAvgVolume: '1.50', perTicketWeight: '4.54', yoy: '+5.6%', achievement: '95%' },
+    { name: '浙皖区', income: '765.89', volume: '21.20', weight: '112.30', perTicketIncome: '72.15', dailyAvgIncome: '10.45', discountRate: '11.2%', dailyAvgVolume: '1.10', perTicketWeight: '5.30', yoy: '+7.2%', achievement: '99%' },
   ], []);
 
   const trendData = useMemo(() => {
@@ -86,6 +86,24 @@ export default function ProductDetailView({
     if (id === 'income') return '元';
     if (id === 'volume') return '万票';
     return 'kg';
+  };
+
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-2 border border-gray-100 shadow-lg rounded-lg">
+          <p className="text-[10px] font-bold text-gray-800 mb-1">{label}</p>
+          <div className="space-y-1">
+            {payload.map((entry: any, index: number) => (
+              <p key={index} className="text-[9px] font-bold" style={{ color: entry.color }}>
+                {entry.name} : {entry.value}
+              </p>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -131,14 +149,16 @@ export default function ProductDetailView({
           </div>
         </div>
 
-        {/* Level 2 Tabs: Metric Types - Full Width Evenly Distributed */}
-        <div className="flex items-center bg-white/10 rounded-lg p-0.5 w-full">
+        {/* Level 2 Tabs: Metric Types - Left Aligned Small Buttons */}
+        <div className="flex items-center gap-2">
           {metrics.map((m) => (
             <button
               key={m.id}
               onClick={() => setActiveMetric(m.id)}
-              className={`flex-1 py-1.5 text-[11px] font-bold rounded-lg transition-all ${
-                activeMetric === m.id ? 'bg-white text-[#1b63d6] shadow-sm' : 'text-white/60'
+              className={`px-4 py-1.5 text-[11px] font-bold rounded-lg transition-all ${
+                activeMetric === m.id 
+                  ? 'bg-white text-[#1b63d6] shadow-sm' 
+                  : 'bg-white/10 text-white/70 hover:bg-white/20'
               }`}
             >
               {m.name}
@@ -175,10 +195,12 @@ export default function ProductDetailView({
                   <span className="text-[10px] text-gray-400">{getMetricLabel(activeMetric)}</span>
                   <span className="text-sm font-black text-gray-800">1,234 {getMetricUnit(activeMetric)}</span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-gray-400">{getSecondaryMetricLabel(activeMetric)}</span>
-                  <span className="text-sm font-black text-gray-800">2.18 {getSecondaryMetricUnit(activeMetric)}</span>
-                </div>
+                {activeMetric === 'income' && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-gray-400">{getSecondaryMetricLabel(activeMetric)}</span>
+                    <span className="text-sm font-black text-gray-800">2.18 {getSecondaryMetricUnit(activeMetric)}</span>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -193,10 +215,12 @@ export default function ProductDetailView({
                   <div className="border-t border-gray-100 pt-4 mt-2">
                     {/* Legend */}
                     <div className="flex items-center justify-end gap-4 mb-4">
-                      <div className="flex items-center gap-1.5">
-                        <div className="w-2 h-2 rounded-full bg-orange-400" />
-                        <span className="text-[9px] text-orange-400 font-bold">{getSecondaryMetricLabel(activeMetric)}({getSecondaryMetricUnit(activeMetric)})</span>
-                      </div>
+                      {activeMetric === 'income' && (
+                        <div className="flex items-center gap-1.5">
+                          <div className="w-2 h-2 rounded-full bg-orange-400" />
+                          <span className="text-[9px] text-orange-400 font-bold">{getSecondaryMetricLabel(activeMetric)}({getSecondaryMetricUnit(activeMetric)})</span>
+                        </div>
+                      )}
                       <div className="flex items-center gap-1.5">
                         <div className="w-2 h-2 rounded-full bg-[#1b63d6]" />
                         <span className="text-[9px] text-[#1b63d6] font-bold">{getMetricLabel(activeMetric)}({getMetricUnit(activeMetric)})</span>
@@ -219,33 +243,37 @@ export default function ProductDetailView({
                             tickLine={false} 
                             tick={{ fontSize: 9, fill: '#9ca3af' }} 
                           />
-                          <YAxis 
-                            yAxisId="right"
-                            orientation="right"
-                            axisLine={false} 
-                            tickLine={false} 
-                            tick={{ fontSize: 9, fill: '#9ca3af' }} 
-                            domain={['auto', 'auto']}
-                          />
-                          <Tooltip 
-                            contentStyle={{ borderRadius: '4px', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', fontSize: '10px' }}
-                          />
+                          {activeMetric === 'income' && (
+                            <YAxis 
+                              yAxisId="right"
+                              orientation="right"
+                              axisLine={false} 
+                              tickLine={false} 
+                              tick={{ fontSize: 9, fill: '#9ca3af' }} 
+                              domain={['auto', 'auto']}
+                            />
+                          )}
+                          <Tooltip content={<CustomTooltip />} />
                           <Bar
                             yAxisId="left"
                             dataKey="value"
+                            name={`${getMetricLabel(activeMetric)}(${getMetricUnit(activeMetric)})`}
                             fill="#1b63d6"
                             barSize={24}
                             radius={[4, 4, 0, 0]}
                           />
-                          <Line
-                            yAxisId="right"
-                            type="monotone"
-                            dataKey="secondary"
-                            stroke="#f59e0b"
-                            strokeWidth={2}
-                            dot={{ r: 3, fill: '#f59e0b', strokeWidth: 0 }}
-                            activeDot={{ r: 5 }}
-                          />
+                          {activeMetric === 'income' && (
+                            <Line
+                              yAxisId="right"
+                              type="monotone"
+                              dataKey="secondary"
+                              name={`${getSecondaryMetricLabel(activeMetric)}(${getSecondaryMetricUnit(activeMetric)})`}
+                              stroke="#f59e0b"
+                              strokeWidth={2}
+                              dot={{ r: 3, fill: '#f59e0b', strokeWidth: 0 }}
+                              activeDot={{ r: 5 }}
+                            />
+                          )}
                         </ComposedChart>
                       </ResponsiveContainer>
                     </div>

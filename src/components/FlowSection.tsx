@@ -52,10 +52,12 @@ function FlowCard({ title, icon, unit, daily, monthly, yearly, timeDimension, on
               <div className="flex items-baseline gap-1">
                 <span className="text-2xl font-black text-gray-800 tracking-tight">{daily.value}</span>
                 <span className="text-[10px] text-gray-400 font-medium">{unit}</span>
-                <div className={`flex items-center text-[10px] font-bold ml-auto ${daily.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                  同比:{daily.yoy}
-                  {daily.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                </div>
+                {timeDimension !== 'day' && (
+                  <div className={`flex items-center text-[10px] font-bold ml-auto ${daily.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                    同比:{daily.yoy}
+                    {daily.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -158,16 +160,16 @@ export default function FlowSection({
       icon: <CircleDollarSign size={16} />,
       unit: '万元',
       daily: { value: '892.45', yoy: '+5.2%', isUp: true },
-      monthly: { value: '2.45', yoy: '+3.1%', isUp: true },
-      yearly: { value: '8.56', yoy: '+4.2%', isUp: true },
+      monthly: { value: '2,456.78', yoy: '+3.1%', isUp: true },
+      yearly: { value: '8,567.89', yoy: '+4.2%', isUp: true },
     },
     volume: {
       title: '件量',
       icon: <Package size={16} />,
       unit: '万票',
       daily: { value: '456.12', yoy: '+4.8%', isUp: true },
-      monthly: { value: '1.23', yoy: '+2.5%', isUp: true },
-      yearly: { value: '4.12', yoy: '+3.8%', isUp: true },
+      monthly: { value: '1,234.56', yoy: '+2.5%', isUp: true },
+      yearly: { value: '4,123.45', yoy: '+3.8%', isUp: true },
     }
   };
 
@@ -357,19 +359,19 @@ export default function FlowSection({
             </thead>
             <tbody className="divide-y divide-gray-50">
               {(top10Dimension === 'country' ? [
-                { from: 'China', to: 'America', income: '1,234.5', incomeYoy: '5.2%', volume: '456.1', volumeYoy: '4.8%', weight: '2,345.6', weightYoy: '6.1%' },
-                { from: 'China', to: 'West Europe', income: '982.3', incomeYoy: '3.1%', volume: '345.2', volumeYoy: '2.5%', weight: '1,876.4', weightYoy: '4.2%' },
-                { from: 'China', to: 'Great Britain', income: '876.1', incomeYoy: '5.1%', volume: '312.4', volumeYoy: '5.2%', weight: '1,654.2', weightYoy: '5.8%' },
-                { from: 'China', to: 'Cross border_America', income: '543.2', incomeYoy: '2.4%', volume: '234.5', volumeYoy: '3.1%', weight: '1,234.5', weightYoy: '3.4%' },
-                { from: 'West Europe', to: 'West Europe', income: '432.1', incomeYoy: '1.2%', volume: '187.6', volumeYoy: '1.5%', weight: '987.6', weightYoy: '2.1%' },
-                { from: 'China', to: 'South Asia', income: '321.0', incomeYoy: '1.5%', volume: '154.2', volumeYoy: '1.8%', weight: '765.4', weightYoy: '2.5%' },
+                { from: 'China', to: 'America', income: '1,234.50', incomeYoy: '5.2%', volume: '456.10', volumeYoy: '4.8%', weight: '2,345.60', weightYoy: '6.1%' },
+                { from: 'China', to: 'West Europe', income: '982.30', incomeYoy: '3.1%', volume: '345.20', volumeYoy: '2.5%', weight: '1,876.40', weightYoy: '4.2%' },
+                { from: 'China', to: 'Great Britain', income: '876.10', incomeYoy: '5.1%', volume: '312.40', volumeYoy: '5.2%', weight: '1,654.20', weightYoy: '5.8%' },
+                { from: 'China', to: 'Cross border_America', income: '543.20', incomeYoy: '2.4%', volume: '234.50', volumeYoy: '3.1%', weight: '1,234.50', weightYoy: '3.4%' },
+                { from: 'West Europe', to: 'West Europe', income: '432.10', incomeYoy: '1.2%', volume: '187.60', volumeYoy: '1.5%', weight: '987.60', weightYoy: '2.1%' },
+                { from: 'China', to: 'South Asia', income: '321.00', incomeYoy: '1.5%', volume: '154.20', volumeYoy: '1.8%', weight: '765.40', weightYoy: '2.5%' },
               ] : [
-                { from: '深莞区', to: '西欧', income: '1,234.5', incomeYoy: '5.2%', volume: '456.1', volumeYoy: '4.8%', weight: '2,345.6', weightYoy: '6.1%' },
-                { from: '深莞区', to: '美洲', income: '982.3', incomeYoy: '3.1%', volume: '345.2', volumeYoy: '2.5%', weight: '1,876.4', weightYoy: '4.2%' },
-                { from: '西欧', to: '西欧', income: '876.1', incomeYoy: '5.1%', volume: '312.4', volumeYoy: '5.2%', weight: '1,654.2', weightYoy: '5.8%' },
-                { from: '上海区', to: '美洲', income: '543.2', incomeYoy: '2.4%', volume: '234.5', volumeYoy: '3.1%', weight: '1,234.5', weightYoy: '3.4%' },
-                { from: '福建区', to: '美洲', income: '432.1', incomeYoy: '1.2%', volume: '187.6', volumeYoy: '1.5%', weight: '987.6', weightYoy: '2.1%' },
-                { from: '广佛区', to: '英国', income: '321.0', incomeYoy: '1.5%', volume: '154.2', volumeYoy: '1.8%', weight: '765.4', weightYoy: '2.5%' },
+                { from: '深莞区', to: '西欧', income: '1,234.50', incomeYoy: '5.2%', volume: '456.10', volumeYoy: '4.8%', weight: '2,345.60', weightYoy: '6.1%' },
+                { from: '深莞区', to: '美洲', income: '982.30', incomeYoy: '3.1%', volume: '345.20', volumeYoy: '2.5%', weight: '1,876.40', weightYoy: '4.2%' },
+                { from: '西欧', to: '西欧', income: '876.10', incomeYoy: '5.1%', volume: '312.40', volumeYoy: '5.2%', weight: '1,654.20', weightYoy: '5.8%' },
+                { from: '上海区', to: '美洲', income: '543.20', incomeYoy: '2.4%', volume: '234.50', volumeYoy: '3.1%', weight: '1,234.50', weightYoy: '3.4%' },
+                { from: '福建区', to: '美洲', income: '432.10', incomeYoy: '1.2%', volume: '187.60', volumeYoy: '1.5%', weight: '987.60', weightYoy: '2.1%' },
+                { from: '广佛区', to: '英国', income: '321.00', incomeYoy: '1.5%', volume: '154.20', volumeYoy: '1.8%', weight: '765.40', weightYoy: '2.5%' },
               ]).map((item, i) => (
                 <tr key={i}>
                   <td className="px-2 py-4">

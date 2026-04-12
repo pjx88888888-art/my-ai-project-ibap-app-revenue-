@@ -336,7 +336,7 @@ export default function DetailModal({
                       {timeDimension === 'day' ? (
                         activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
                       ) : (
-                        activePeriod === 'monthly' ? '月-当月' : '月-年统计'
+                        activePeriod === 'monthly' ? '月-当月' : '月-年累计'
                       )}
                       <span className="text-[8px]">⇅</span>
                     </button>
@@ -440,10 +440,12 @@ export default function DetailModal({
                             >
                               <div className="flex items-center gap-2">
                                 {row.region}
-                                <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
-                                  row.status === 'green' ? 'bg-green-500' : 
-                                  row.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
-                                }`} />
+                                {timeDimension === 'day' && activePeriod === 'monthly' && (
+                                  <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                                    row.status === 'green' ? 'bg-green-500' : 
+                                    row.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
+                                  }`} />
+                                )}
                               </div>
                             </td>
                             <td className="px-3 py-4 text-right">

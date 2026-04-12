@@ -27,9 +27,9 @@ export default function ProductSection({ timeDimension, onOpenDetail }: ProductS
   const products = [
     { 
       name: '国际特快', 
-      income: { current: '456.7', yoy: '+5.2%', mom: '+1.2%', monthAccum: '1,234.5', monthYoy: '+8.4%', yearAccum: '12,345.6', yearYoy: '+12.5%' },
-      volume: { current: '23.4', yoy: '+3.1%', mom: '+0.8%', monthAccum: '65.2', monthYoy: '+5.2%', yearAccum: '789.4', yearYoy: '+10.2%' },
-      weight: { current: '123.5', yoy: '+4.2%', mom: '+1.5%', monthAccum: '345.6', monthYoy: '+6.8%', yearAccum: '4,567.8', yearYoy: '+15.4%' },
+      income: { current: '456.70', yoy: '+5.2%', mom: '+1.2%', monthAccum: '1,234.50', monthYoy: '+8.4%', yearAccum: '12,345.60', yearYoy: '+12.5%' },
+      volume: { current: '23.40', yoy: '+3.1%', mom: '+0.8%', monthAccum: '65.20', monthYoy: '+5.2%', yearAccum: '789.40', yearYoy: '+10.2%' },
+      weight: { current: '123.50', yoy: '+4.2%', mom: '+1.5%', monthAccum: '345.60', monthYoy: '+6.8%', yearAccum: '4,567.80', yearYoy: '+15.4%' },
       perTicketIncome: '82.45', perTicketIncomeYoy: '+2.1%', perTicketIncomeMom: '+0.5%', 
       dailyAvgIncome: '15.23', dailyAvgIncomeYoy: '+3.4%', dailyAvgIncomeMom: '+1.1%', 
       discountRate: '12.5%', discountRateYoyDiff: '-0.5%', discountRateMomDiff: '-0.2%', 
@@ -37,9 +37,9 @@ export default function ProductSection({ timeDimension, onOpenDetail }: ProductS
     },
     { 
       name: '国际标快', 
-      income: { current: '389.2', yoy: '+3.1%', mom: '-0.5%', monthAccum: '1,056.4', monthYoy: '+6.2%', yearAccum: '10,892.3', yearYoy: '+9.8%' },
-      volume: { current: '18.9', yoy: '+2.5%', mom: '-0.2%', monthAccum: '52.4', monthYoy: '+4.1%', yearAccum: '654.2', yearYoy: '+8.5%' },
-      weight: { current: '98.4', yoy: '+2.4%', mom: '-0.8%', monthAccum: '289.2', monthYoy: '+5.5%', yearAccum: '3,892.1', yearYoy: '+12.4%' },
+      income: { current: '389.20', yoy: '+3.1%', mom: '-0.5%', monthAccum: '1,056.40', monthYoy: '+6.2%', yearAccum: '10,892.30', yearYoy: '+9.8%' },
+      volume: { current: '18.90', yoy: '+2.5%', mom: '-0.2%', monthAccum: '52.40', monthYoy: '+4.1%', yearAccum: '654.20', yearYoy: '+8.5%' },
+      weight: { current: '98.40', yoy: '+2.4%', mom: '-0.8%', monthAccum: '289.20', monthYoy: '+5.5%', yearAccum: '3,892.10', yearYoy: '+12.4%' },
       perTicketIncome: '79.32', perTicketIncomeYoy: '+1.8%', perTicketIncomeMom: '+0.3%', 
       dailyAvgIncome: '12.97', dailyAvgIncomeYoy: '+2.1%', dailyAvgIncomeMom: '+0.5%', 
       discountRate: '11.8%', discountRateYoyDiff: '-0.3%', discountRateMomDiff: '-0.1%', 
@@ -47,9 +47,9 @@ export default function ProductSection({ timeDimension, onOpenDetail }: ProductS
     },
     { 
       name: '国际标快+', 
-      income: { current: '245.6', yoy: '+8.4%', mom: '+2.1%', monthAccum: '689.2', monthYoy: '+10.5%', yearAccum: '7,456.2', yearYoy: '+15.2%' },
-      volume: { current: '12.4', yoy: '+6.2%', mom: '+1.5%', monthAccum: '34.5', monthYoy: '+8.2%', yearAccum: '456.7', yearYoy: '+12.4%' },
-      weight: { current: '65.2', yoy: '+5.8%', mom: '+2.4%', monthAccum: '189.3', monthYoy: '+9.4%', yearAccum: '2,456.8', yearYoy: '+18.5%' },
+      income: { current: '245.60', yoy: '+8.4%', mom: '+2.1%', monthAccum: '689.20', monthYoy: '+10.5%', yearAccum: '7,456.20', yearYoy: '+15.2%' },
+      volume: { current: '12.40', yoy: '+6.2%', mom: '+1.5%', monthAccum: '34.50', monthYoy: '+8.2%', yearAccum: '456.70', yearYoy: '+12.4%' },
+      weight: { current: '65.20', yoy: '+5.8%', mom: '+2.4%', monthAccum: '189.30', monthYoy: '+9.4%', yearAccum: '2,456.80', yearYoy: '+18.5%' },
       perTicketIncome: '85.67', perTicketIncomeYoy: '+4.2%', perTicketIncomeMom: '+1.2%', 
       dailyAvgIncome: '8.19', dailyAvgIncomeYoy: '+5.6%', dailyAvgIncomeMom: '+2.1%', 
       discountRate: '13.2%', discountRateYoyDiff: '-0.8%', discountRateMomDiff: '-0.4%', 
@@ -57,9 +57,9 @@ export default function ProductSection({ timeDimension, onOpenDetail }: ProductS
     },
     { 
       name: '国际特惠', 
-      income: { current: '189.3', yoy: '-2.1%', mom: '-1.5%', monthAccum: '543.2', monthYoy: '+2.4%', yearAccum: '5,892.1', yearYoy: '+5.8%' },
-      volume: { current: '34.5', yoy: '+4.2%', mom: '+1.2%', monthAccum: '98.4', monthYoy: '+6.5%', yearAccum: '1,234.5', yearYoy: '+9.2%' },
-      weight: { current: '156.7', yoy: '+3.8%', mom: '+1.5%', monthAccum: '456.2', monthYoy: '+5.2%', yearAccum: '5,678.9', yearYoy: '+10.4%' },
+      income: { current: '189.30', yoy: '-2.1%', mom: '-1.5%', monthAccum: '543.20', monthYoy: '+2.4%', yearAccum: '5,892.10', yearYoy: '+5.8%' },
+      volume: { current: '34.50', yoy: '+4.2%', mom: '+1.2%', monthAccum: '98.40', monthYoy: '+6.5%', yearAccum: '1,234.50', yearYoy: '+9.2%' },
+      weight: { current: '156.70', yoy: '+3.8%', mom: '+1.5%', monthAccum: '456.20', monthYoy: '+5.2%', yearAccum: '5,678.90', yearYoy: '+10.4%' },
       perTicketIncome: '54.87', perTicketIncomeYoy: '-1.2%', perTicketIncomeMom: '-0.8%', 
       dailyAvgIncome: '6.31', dailyAvgIncomeYoy: '+2.4%', dailyAvgIncomeMom: '+0.8%', 
       discountRate: '10.5%', discountRateYoyDiff: '-0.2%', discountRateMomDiff: '-0.1%', 
@@ -67,9 +67,9 @@ export default function ProductSection({ timeDimension, onOpenDetail }: ProductS
     },
     { 
       name: '国际大件', 
-      income: { current: '156.4', yoy: '+4.5%', mom: '+0.8%', monthAccum: '432.1', monthYoy: '+6.8%', yearAccum: '4,567.2', yearYoy: '+10.5%' },
-      volume: { current: '8.2', yoy: '+2.1%', mom: '+0.4%', monthAccum: '24.5', monthYoy: '+4.2%', yearAccum: '345.6', yearYoy: '+7.8%' },
-      weight: { current: '245.6', yoy: '+6.2%', mom: '+1.2%', monthAccum: '789.4', monthYoy: '+8.5%', yearAccum: '8,923.4', yearYoy: '+14.2%' },
+      income: { current: '156.40', yoy: '+4.5%', mom: '+0.8%', monthAccum: '432.10', monthYoy: '+6.8%', yearAccum: '4,567.20', yearYoy: '+10.5%' },
+      volume: { current: '8.20', yoy: '+2.1%', mom: '+0.4%', monthAccum: '24.50', monthYoy: '+4.2%', yearAccum: '345.60', yearYoy: '+7.8%' },
+      weight: { current: '245.60', yoy: '+6.2%', mom: '+1.2%', monthAccum: '789.40', monthYoy: '+8.5%', yearAccum: '8,923.40', yearYoy: '+14.2%' },
       perTicketIncome: '190.73', perTicketIncomeYoy: '+2.4%', perTicketIncomeMom: '+0.6%', 
       dailyAvgIncome: '5.21', dailyAvgIncomeYoy: '+3.1%', dailyAvgIncomeMom: '+0.9%', 
       discountRate: '14.2%', discountRateYoyDiff: '-0.4%', discountRateMomDiff: '-0.2%', 
@@ -77,9 +77,9 @@ export default function ProductSection({ timeDimension, onOpenDetail }: ProductS
     },
     { 
       name: '国际集运', 
-      income: { current: '123.8', yoy: '+12.4%', mom: '+3.5%', monthAccum: '345.6', monthYoy: '+15.2%', yearAccum: '3,892.4', yearYoy: '+20.5%' },
-      volume: { current: '45.6', yoy: '+8.2%', mom: '+2.1%', monthAccum: '123.4', monthYoy: '+10.5%', yearAccum: '1,567.8', yearYoy: '+15.2%' },
-      weight: { current: '89.4', yoy: '+5.5%', mom: '+1.8%', monthAccum: '245.6', monthYoy: '+8.4%', yearAccum: '2,892.1', yearYoy: '+12.5%' },
+      income: { current: '123.80', yoy: '+12.4%', mom: '+3.5%', monthAccum: '345.60', monthYoy: '+15.2%', yearAccum: '3,892.40', yearYoy: '+20.5%' },
+      volume: { current: '45.60', yoy: '+8.2%', mom: '+2.1%', monthAccum: '123.40', monthYoy: '+10.5%', yearAccum: '1,567.80', yearYoy: '+15.2%' },
+      weight: { current: '89.40', yoy: '+5.5%', mom: '+1.8%', monthAccum: '245.60', monthYoy: '+8.4%', yearAccum: '2,892.10', yearYoy: '+12.5%' },
       perTicketIncome: '27.15', perTicketIncomeYoy: '+3.8%', perTicketIncomeMom: '+1.2%', 
       dailyAvgIncome: '4.12', dailyAvgIncomeYoy: '+6.4%', dailyAvgIncomeMom: '+2.5%', 
       discountRate: '9.8%', discountRateYoyDiff: '-0.6%', discountRateMomDiff: '-0.3%', 
@@ -87,9 +87,9 @@ export default function ProductSection({ timeDimension, onOpenDetail }: ProductS
     },
     { 
       name: '医药跨境', 
-      income: { current: '89.5', yoy: '+15.2%', mom: '+4.1%', monthAccum: '245.6', monthYoy: '+18.5%', yearAccum: '2,892.3', yearYoy: '+25.4%' },
-      volume: { current: '2.1', yoy: '+10.5%', mom: '+2.8%', monthAccum: '6.5', monthYoy: '+12.4%', yearAccum: '78.4', yearYoy: '+18.2%' },
-      weight: { current: '12.4', yoy: '+8.4%', mom: '+2.2%', monthAccum: '34.5', monthYoy: '+10.2%', yearAccum: '456.7', yearYoy: '+15.8%' },
+      income: { current: '89.50', yoy: '+15.2%', mom: '+4.1%', monthAccum: '245.60', monthYoy: '+18.5%', yearAccum: '2,892.30', yearYoy: '+25.4%' },
+      volume: { current: '2.10', yoy: '+10.5%', mom: '+2.8%', monthAccum: '6.50', monthYoy: '+12.4%', yearAccum: '78.40', yearYoy: '+18.2%' },
+      weight: { current: '12.40', yoy: '+8.4%', mom: '+2.2%', monthAccum: '34.50', monthYoy: '+10.2%', yearAccum: '456.70', yearYoy: '+15.8%' },
       perTicketIncome: '426.19', perTicketIncomeYoy: '+4.5%', perTicketIncomeMom: '+1.5%', 
       dailyAvgIncome: '2.98', dailyAvgIncomeYoy: '+12.1%', dailyAvgIncomeMom: '+3.8%', 
       discountRate: '15.5%', discountRateYoyDiff: '-0.8%', discountRateMomDiff: '-0.4%', 
@@ -97,9 +97,9 @@ export default function ProductSection({ timeDimension, onOpenDetail }: ProductS
     },
     { 
       name: '其他', 
-      income: { current: '45.2', yoy: '+2.1%', mom: '+0.5%', monthAccum: '123.4', monthYoy: '+4.2%', yearAccum: '1,567.8', yearYoy: '+6.5%' },
-      volume: { current: '12.4', yoy: '+1.2%', mom: '+0.3%', monthAccum: '34.5', monthYoy: '+2.5%', yearAccum: '456.7', yearYoy: '+4.8%' },
-      weight: { current: '34.5', yoy: '+1.5%', mom: '+0.4%', monthAccum: '98.4', monthYoy: '+3.2%', yearAccum: '1,234.5', yearYoy: '+5.5%' },
+      income: { current: '45.20', yoy: '+2.1%', mom: '+0.5%', monthAccum: '123.40', monthYoy: '+4.2%', yearAccum: '1,567.80', yearYoy: '+6.5%' },
+      volume: { current: '12.40', yoy: '+1.2%', mom: '+0.3%', monthAccum: '34.50', monthYoy: '+2.5%', yearAccum: '456.70', yearYoy: '+4.8%' },
+      weight: { current: '34.50', yoy: '+1.5%', mom: '+0.4%', monthAccum: '98.40', monthYoy: '+3.2%', yearAccum: '1,234.50', yearYoy: '+5.5%' },
       perTicketIncome: '36.45', perTicketIncomeYoy: '+0.8%', perTicketIncomeMom: '+0.2%', 
       dailyAvgIncome: '1.51', dailyAvgIncomeYoy: '+1.2%', dailyAvgIncomeMom: '+0.4%', 
       discountRate: '10.2%', discountRateYoyDiff: '-0.1%', discountRateMomDiff: '-0.1%', 
@@ -212,7 +212,7 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
   };
 
   const metricData = getMetricData();
-  const unit = activeMetricTab === 'weight' ? '吨' : '万';
+  const unit = activeMetricTab === 'income' ? '万元' : activeMetricTab === 'volume' ? '万票' : '吨';
   const showExpand = activeMetricTab === 'income' || activeMetricTab === 'weight';
 
   return (
@@ -231,11 +231,11 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
         </div>
       </div>
 
-      {/* Small Metrics Cards Grid - 3 Time Dimensions */}
-      <div className="grid grid-cols-3 gap-2 mb-1">
-        {/* Current Card */}
+      {/* Small Metrics Cards Grid - Time Dimensions */}
+      <div className={`grid ${timeDimension === 'day' ? 'grid-cols-3' : 'grid-cols-2'} gap-2 mb-1`}>
+        {/* Current Card (当日 or 当月) */}
         <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98]">
-          <div className="text-[10px] text-gray-400 mb-0.5 font-medium">当日</div>
+          <div className="text-[10px] text-gray-400 mb-0.5 font-medium">{timeDimension === 'day' ? '当日' : '当月'}</div>
           <div className="flex items-baseline gap-0.5 mb-0.5">
             <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metricData.current}</div>
             <div className="text-[9px] text-gray-400 font-medium">{unit}</div>
@@ -247,17 +247,19 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
           )}
         </div>
 
-        {/* Month Accum Card */}
-        <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98]">
-          <div className="text-[10px] text-gray-400 mb-0.5 font-medium">月累计</div>
-          <div className="flex items-baseline gap-0.5 mb-0.5">
-            <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metricData.monthAccum}</div>
-            <div className="text-[9px] text-gray-400 font-medium">{unit}</div>
+        {/* Month Accum Card (Only for Day Dimension) */}
+        {timeDimension === 'day' && (
+          <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98]">
+            <div className="text-[10px] text-gray-400 mb-0.5 font-medium">月累计</div>
+            <div className="flex items-baseline gap-0.5 mb-0.5">
+              <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metricData.monthAccum}</div>
+              <div className="text-[9px] text-gray-400 font-medium">{unit}</div>
+            </div>
+            <div className={`text-[9px] font-bold flex items-center ${metricData.monthYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+              {metricData.monthYoy.startsWith('+') ? '▲' : '▼'} {metricData.monthYoy}
+            </div>
           </div>
-          <div className={`text-[9px] font-bold flex items-center ${metricData.monthYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
-            {metricData.monthYoy.startsWith('+') ? '▲' : '▼'} {metricData.monthYoy}
-          </div>
-        </div>
+        )}
 
         {/* Year Accum Card */}
         <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98]">
@@ -291,10 +293,10 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
               {/* Metrics Table-like Layout */}
               <div className="bg-white rounded-lg border border-blue-50/50 overflow-hidden">
                 {/* Table Header */}
-                <div className="grid grid-cols-4 bg-gray-50/50 border-b border-gray-100 py-1.5 px-2 text-[9px] font-bold text-gray-400">
+                <div className={`grid ${timeDimension === 'day' ? 'grid-cols-4' : 'grid-cols-3'} bg-gray-50/50 border-b border-gray-100 py-1.5 px-2 text-[9px] font-bold text-gray-400`}>
                   <div className="col-span-1">指标</div>
-                  <div className="text-center">当日</div>
-                  <div className="text-center">月累计</div>
+                  <div className="text-center">{timeDimension === 'day' ? '当日' : '当月'}</div>
+                  {timeDimension === 'day' && <div className="text-center">月累计</div>}
                   <div className="text-center">年累计</div>
                 </div>
 
@@ -303,77 +305,126 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                   {activeMetricTab === 'income' && (
                     <>
                       {/* Per Ticket Income Row */}
-                      <div className="grid grid-cols-4 py-2 px-2 items-center">
+                      <div className={`grid ${timeDimension === 'day' ? 'grid-cols-4' : 'grid-cols-3'} py-2 px-2 items-center`}>
                         <div className="text-[10px] text-gray-500 font-medium">单票收入</div>
+                        {/* Column 1: 当日 or 当月 */}
                         <div className="text-center">
                           <div className="text-[10px] font-bold text-gray-800">{product.perTicketIncome}元</div>
-                          {timeDimension !== 'day' && (
-                            <div className="text-[8px] text-green-500 font-bold">{product.perTicketIncomeYoy}</div>
+                          {timeDimension === 'month' && (
+                            <div className="flex flex-col items-center mt-0.5">
+                              <div className="text-[8px] text-green-500 font-bold">同比:{product.perTicketIncomeYoy}</div>
+                              <div className="text-[8px] text-blue-500 font-bold">环比:{product.perTicketIncomeMom}</div>
+                            </div>
                           )}
                         </div>
-                        <div className="text-center">
-                          <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.perTicketIncome) * 1.02).toFixed(2)}元</div>
-                          <div className="text-[8px] text-green-500 font-bold">+2.1%</div>
-                        </div>
+                        {/* Column 2: 月累计 (Only for Day Dimension) */}
+                        {timeDimension === 'day' && (
+                          <div className="text-center">
+                            <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.perTicketIncome) * 1.02).toFixed(2)}元</div>
+                            <div className="flex flex-col items-center mt-0.5">
+                              <div className="text-[8px] text-green-500 font-bold">同比:+2.1%</div>
+                              <div className="text-[8px] text-blue-500 font-bold">环比:+0.8%</div>
+                            </div>
+                          </div>
+                        )}
+                        {/* Column 3: 年累计 */}
                         <div className="text-center">
                           <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.perTicketIncome) * 1.05).toFixed(2)}元</div>
-                          <div className="text-[8px] text-green-500 font-bold">+4.5%</div>
+                          <div className="flex flex-col items-center mt-0.5">
+                            <div className="text-[8px] text-green-500 font-bold">同比:+4.5%</div>
+                            <div className="text-[8px] text-blue-500 font-bold">环比:+1.5%</div>
+                          </div>
                         </div>
                       </div>
+
                       {/* Daily Avg Income Row */}
-                      <div className="grid grid-cols-4 py-2 px-2 items-center">
+                      <div className={`grid ${timeDimension === 'day' ? 'grid-cols-4' : 'grid-cols-3'} py-2 px-2 items-center`}>
                         <div className="text-[10px] text-gray-500 font-medium">日均收入</div>
+                        {/* Column 1: 当日 or 当月 */}
                         <div className="text-center">
                           <div className="text-[10px] font-bold text-gray-800">{product.dailyAvgIncome}万</div>
-                          {timeDimension !== 'day' && (
-                            <div className="text-[8px] text-green-500 font-bold">{product.dailyAvgIncomeYoy}</div>
+                          {timeDimension === 'month' && (
+                            <div className="flex flex-col items-center mt-0.5">
+                              <div className="text-[8px] text-green-500 font-bold">同比:{product.dailyAvgIncomeYoy}</div>
+                              <div className="text-[8px] text-blue-500 font-bold">环比:{product.dailyAvgIncomeMom}</div>
+                            </div>
                           )}
                         </div>
-                        <div className="text-center">
-                          <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.dailyAvgIncome) * 1.1).toFixed(2)}万</div>
-                          <div className="text-[8px] text-green-500 font-bold">+3.4%</div>
-                        </div>
+                        {/* Column 2: 月累计 (Only for Day Dimension) */}
+                        {timeDimension === 'day' && (
+                          <div className="text-center">
+                            <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.dailyAvgIncome) * 1.1).toFixed(2)}万</div>
+                            <div className="flex flex-col items-center mt-0.5">
+                              <div className="text-[8px] text-green-500 font-bold">同比:+3.4%</div>
+                              <div className="text-[8px] text-blue-500 font-bold">环比:+1.2%</div>
+                            </div>
+                          </div>
+                        )}
+                        {/* Column 3: 年累计 */}
                         <div className="text-center">
                           <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.dailyAvgIncome) * 1.2).toFixed(2)}万</div>
-                          <div className="text-[8px] text-green-500 font-bold">+5.6%</div>
+                          <div className="flex flex-col items-center mt-0.5">
+                            <div className="text-[8px] text-green-500 font-bold">同比:+5.6%</div>
+                            <div className="text-[8px] text-blue-500 font-bold">+2.1%</div>
+                          </div>
                         </div>
                       </div>
+
                       {/* Discount Rate Row */}
-                      <div className="grid grid-cols-4 py-2 px-2 items-center">
+                      <div className={`grid ${timeDimension === 'day' ? 'grid-cols-4' : 'grid-cols-3'} py-2 px-2 items-center`}>
                         <div className="text-[10px] text-gray-500 font-medium">折让率</div>
+                        {/* Column 1: 当日 or 当月 */}
                         <div className="text-center">
                           <div className="text-[10px] font-bold text-gray-800">{product.discountRate}</div>
-                          {timeDimension !== 'day' && (
-                            <div className="text-[8px] text-green-500 font-bold">{product.discountRateYoyDiff}</div>
+                          {timeDimension === 'month' && (
+                            <div className="flex flex-col items-center mt-0.5">
+                              <div className="text-[8px] text-green-500 font-bold">同比差:{product.discountRateYoyDiff}</div>
+                              <div className="text-[8px] text-blue-500 font-bold">环比差:{product.discountRateMomDiff}</div>
+                            </div>
                           )}
                         </div>
-                        <div className="text-center">
-                          <div className="text-[10px] font-bold text-gray-800">12.2%</div>
-                          <div className="text-[8px] text-green-500 font-bold">-0.3%</div>
-                        </div>
+                        {/* Column 2: 月累计 (Only for Day Dimension) */}
+                        {timeDimension === 'day' && (
+                          <div className="text-center">
+                            <div className="text-[10px] font-bold text-gray-800">12.2%</div>
+                            <div className="flex flex-col items-center mt-0.5">
+                              <div className="text-[8px] text-green-500 font-bold">同比差:-0.3%</div>
+                              <div className="text-[8px] text-blue-500 font-bold">环比差:-0.1%</div>
+                            </div>
+                          </div>
+                        )}
+                        {/* Column 3: 年累计 */}
                         <div className="text-center">
                           <div className="text-[10px] font-bold text-gray-800">11.8%</div>
-                          <div className="text-[8px] text-green-500 font-bold">-0.7%</div>
+                          <div className="flex flex-col items-center mt-0.5">
+                            <div className="text-[8px] text-green-500 font-bold">同比差:-0.7%</div>
+                            <div className="text-[8px] text-blue-500 font-bold">环比差:-0.3%</div>
+                          </div>
                         </div>
                       </div>
                     </>
                   )}
                   {activeMetricTab === 'weight' && (
-                    <div className="grid grid-cols-4 py-2 px-2 items-center">
+                    <div className={`grid ${timeDimension === 'day' ? 'grid-cols-4' : 'grid-cols-3'} py-2 px-2 items-center`}>
                       <div className="text-[10px] text-gray-500 font-medium">单票重量</div>
+                      {/* Column 1: 当日 or 当月 */}
                       <div className="text-center">
                         <div className="text-[10px] font-bold text-gray-800">{product.perTicketWeight}kg</div>
-                        {timeDimension !== 'day' && (
-                          <div className="text-[8px] text-green-500 font-bold">{product.perTicketWeightYoy}</div>
+                        {timeDimension === 'month' && (
+                          <div className="text-[8px] text-green-500 font-bold mt-0.5">同比:{product.perTicketWeightYoy}</div>
                         )}
                       </div>
-                      <div className="text-center">
-                        <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.perTicketWeight) * 1.01).toFixed(2)}kg</div>
-                        <div className="text-[8px] text-green-500 font-bold">+1.5%</div>
-                      </div>
+                      {/* Column 2: 月累计 (Only for Day Dimension) */}
+                      {timeDimension === 'day' && (
+                        <div className="text-center">
+                          <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.perTicketWeight) * 1.01).toFixed(2)}kg</div>
+                          <div className="text-[8px] text-green-500 font-bold mt-0.5">同比:+1.5%</div>
+                        </div>
+                      )}
+                      {/* Column 3: 年累计 */}
                       <div className="text-center">
                         <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.perTicketWeight) * 1.03).toFixed(2)}kg</div>
-                        <div className="text-[8px] text-green-500 font-bold">+3.2%</div>
+                        <div className="text-[8px] text-green-500 font-bold mt-0.5">同比:+3.2%</div>
                       </div>
                     </div>
                   )}
