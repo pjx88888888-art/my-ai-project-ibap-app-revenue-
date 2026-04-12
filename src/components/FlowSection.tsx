@@ -272,7 +272,7 @@ export default function FlowSection({
                           <TrendingUp size={8} />
                         </div>
                         {timeDimension === 'month' && (
-                          <div className="flex items-center gap-0.5 text-blue-500 font-bold scale-90">
+                          <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
                             <span className="text-[9px] text-gray-400 font-normal">环比:</span>
                             <span>{flow.incomeMom}</span>
                             <TrendingUp size={8} />
@@ -295,7 +295,7 @@ export default function FlowSection({
                           <TrendingUp size={8} />
                         </div>
                         {timeDimension === 'month' && (
-                          <div className="flex items-center gap-0.5 text-blue-500 font-bold scale-90">
+                          <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
                             <span className="text-[9px] text-gray-400 font-normal">环比:</span>
                             <span>{flow.volumeMom}</span>
                             <TrendingUp size={8} />
@@ -318,7 +318,7 @@ export default function FlowSection({
                           <TrendingUp size={8} />
                         </div>
                         {timeDimension === 'month' && (
-                          <div className="flex items-center gap-0.5 text-blue-500 font-bold scale-90">
+                          <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
                             <span className="text-[9px] text-gray-400 font-normal">环比:</span>
                             <span>{flow.weightMom}</span>
                             <TrendingUp size={8} />
@@ -403,7 +403,7 @@ export default function FlowSection({
                           <span>{item.incomeYoy}</span>
                           <TrendingUp size={8} />
                         </div>
-                        <div className="flex items-center justify-center gap-0.5 text-blue-500 font-bold scale-90">
+                        <div className="flex items-center justify-center gap-0.5 text-green-500 font-bold scale-90">
                           <span className="text-[9px] text-gray-400 font-normal">环比:</span>
                           <span>+1.2%</span>
                           <TrendingUp size={8} />
@@ -420,7 +420,7 @@ export default function FlowSection({
                           <span>{item.volumeYoy}</span>
                           <TrendingUp size={8} />
                         </div>
-                        <div className="flex items-center justify-center gap-0.5 text-blue-500 font-bold scale-90">
+                        <div className="flex items-center justify-center gap-0.5 text-green-500 font-bold scale-90">
                           <span className="text-[9px] text-gray-400 font-normal">环比:</span>
                           <span>+0.8%</span>
                           <TrendingUp size={8} />
@@ -437,7 +437,7 @@ export default function FlowSection({
                           <span>{item.weightYoy}</span>
                           <TrendingUp size={8} />
                         </div>
-                        <div className="flex items-center justify-center gap-0.5 text-blue-500 font-bold scale-90">
+                        <div className="flex items-center justify-center gap-0.5 text-green-500 font-bold scale-90">
                           <span className="text-[9px] text-gray-400 font-normal">环比:</span>
                           <span>+1.5%</span>
                           <TrendingUp size={8} />

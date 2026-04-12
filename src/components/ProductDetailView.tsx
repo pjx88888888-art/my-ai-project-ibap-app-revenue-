@@ -358,27 +358,90 @@ export default function ProductDetailView({
                       <>
                         <td className="py-3 text-right">
                           <div className="font-bold text-gray-800">{item.income}</div>
-                          <div className="text-green-500 font-bold scale-90 origin-right">同比 {item.yoy}</div>
+                          <div className="flex items-center justify-end gap-1 scale-90 origin-right">
+                            <span className="text-gray-400 font-normal">同比:</span>
+                            <span className={`flex items-center font-bold ${item.yoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                              {item.yoy}
+                              {item.yoy.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                            </span>
+                          </div>
                         </td>
-                        <td className="py-3 text-right font-bold text-gray-800">{item.perTicketIncome}</td>
-                        <td className="py-3 text-right font-bold text-gray-800">{item.dailyAvgIncome}</td>
-                        <td className="py-3 text-right font-bold text-gray-800">{item.discountRate}</td>
+                        <td className="py-3 text-right">
+                          <div className="font-bold text-gray-800">{item.perTicketIncome}</div>
+                          <div className="flex items-center justify-end gap-1 scale-90 origin-right">
+                            <span className="text-gray-400 font-normal">同比:</span>
+                            <span className={`flex items-center font-bold ${item.yoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                              {item.yoy}
+                              {item.yoy.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-3 text-right">
+                          <div className="font-bold text-gray-800">{item.dailyAvgIncome}</div>
+                          <div className="flex items-center justify-end gap-1 scale-90 origin-right">
+                            <span className="text-gray-400 font-normal">同比:</span>
+                            <span className={`flex items-center font-bold ${item.yoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                              {item.yoy}
+                              {item.yoy.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-3 text-right">
+                          <div className="font-bold text-gray-800">{item.discountRate}</div>
+                          <div className="flex items-center justify-end gap-1 scale-90 origin-right">
+                            <span className="text-gray-400 font-normal">同比:</span>
+                            <span className={`flex items-center font-bold ${item.yoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                              {item.yoy}
+                              {item.yoy.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                            </span>
+                          </div>
+                        </td>
                       </>
                     ) : activeMetric === 'volume' ? (
                       <>
                         <td className="py-3 text-right">
                           <div className="font-bold text-gray-800">{item.volume}</div>
-                          <div className="text-green-500 font-bold scale-90 origin-right">同比 {item.yoy}</div>
+                          <div className="flex items-center justify-end gap-1 scale-90 origin-right">
+                            <span className="text-gray-400 font-normal">同比:</span>
+                            <span className={`flex items-center font-bold ${item.yoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                              {item.yoy}
+                              {item.yoy.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                            </span>
+                          </div>
                         </td>
-                        <td className="py-3 text-right font-bold text-gray-800">{item.dailyAvgVolume}</td>
+                        <td className="py-3 text-right">
+                          <div className="font-bold text-gray-800">{item.dailyAvgVolume}</div>
+                          <div className="flex items-center justify-end gap-1 scale-90 origin-right">
+                            <span className="text-gray-400 font-normal">同比:</span>
+                            <span className={`flex items-center font-bold ${item.yoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                              {item.yoy}
+                              {item.yoy.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                            </span>
+                          </div>
+                        </td>
                       </>
                     ) : (
                       <>
                         <td className="py-3 text-right">
                           <div className="font-bold text-gray-800">{item.weight}</div>
-                          <div className="text-green-500 font-bold scale-90 origin-right">同比 {item.yoy}</div>
+                          <div className="flex items-center justify-end gap-1 scale-90 origin-right">
+                            <span className="text-gray-400 font-normal">同比:</span>
+                            <span className={`flex items-center font-bold ${item.yoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                              {item.yoy}
+                              {item.yoy.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                            </span>
+                          </div>
                         </td>
-                        <td className="py-3 text-right font-bold text-gray-800">{item.perTicketWeight}</td>
+                        <td className="py-3 text-right">
+                          <div className="font-bold text-gray-800">{item.perTicketWeight}</div>
+                          <div className="flex items-center justify-end gap-1 scale-90 origin-right">
+                            <span className="text-gray-400 font-normal">同比:</span>
+                            <span className={`flex items-center font-bold ${item.yoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                              {item.yoy}
+                              {item.yoy.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                            </span>
+                          </div>
+                        </td>
                       </>
                     )}
                   </tr>

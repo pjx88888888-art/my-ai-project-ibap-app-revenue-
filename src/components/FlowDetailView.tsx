@@ -351,27 +351,81 @@ export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: in
                         </td>
                         {activeMetric === 'income' && (
                           <>
-                            <td className="px-3 py-4 text-right font-medium text-gray-700">
-                              {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
+                            <td className="px-3 py-4 text-right">
+                              <div className="font-medium text-gray-700">
+                                {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
+                              </div>
+                              <div className="flex items-center justify-end gap-1 mt-1">
+                                <span className="text-[10px] text-gray-400">同比:</span>
+                                <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                  5.2%
+                                  {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                </span>
+                              </div>
                             </td>
-                            <td className="px-3 py-4 text-right font-medium text-gray-700">
-                              {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
+                            <td className="px-3 py-4 text-right">
+                              <div className="font-medium text-gray-700">
+                                {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
+                              </div>
+                              <div className="flex items-center justify-end gap-1 mt-1">
+                                <span className="text-[10px] text-gray-400">同比:</span>
+                                <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                  5.2%
+                                  {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                </span>
+                              </div>
                             </td>
-                            <td className="px-3 py-4 text-right font-medium text-gray-700">{row.discount}</td>
+                            <td className="px-3 py-4 text-right">
+                              <div className="font-medium text-gray-700">{row.discount}</div>
+                              <div className="flex items-center justify-end gap-1 mt-1">
+                                <span className="text-[10px] text-gray-400">同比:</span>
+                                <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                  5.2%
+                                  {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                </span>
+                              </div>
+                            </td>
                           </>
                         )}
                         {activeMetric === 'volume' && (
-                          <td className="px-3 py-4 text-right font-medium text-gray-700">
-                            {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">票</span>
+                          <td className="px-3 py-4 text-right">
+                            <div className="font-medium text-gray-700">
+                              {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">票</span>
+                            </div>
+                            <div className="flex items-center justify-end gap-1 mt-1">
+                              <span className="text-[10px] text-gray-400">同比:</span>
+                              <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                5.2%
+                                {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                              </span>
+                            </div>
                           </td>
                         )}
                         {activeMetric === 'weight' && (
-                          <td className="px-3 py-4 text-right font-medium text-gray-700">
-                            {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">KG</span>
+                          <td className="px-3 py-4 text-right">
+                            <div className="font-medium text-gray-700">
+                              {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">KG</span>
+                            </div>
+                            <div className="flex items-center justify-end gap-1 mt-1">
+                              <span className="text-[10px] text-gray-400">同比:</span>
+                              <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                5.2%
+                                {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                              </span>
+                            </div>
                           </td>
                         )}
                         {type === 'osob' && activeMetric === 'income' && (
-                          <td className="px-3 py-4 text-right font-bold text-gray-700">{row.achievement}</td>
+                          <td className="px-3 py-4 text-right">
+                            <div className="font-bold text-gray-700">{row.achievement}</div>
+                            <div className="flex items-center justify-end gap-1 mt-1">
+                              <span className="text-[10px] text-gray-400">同比:</span>
+                              <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                5.2%
+                                {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                              </span>
+                            </div>
+                          </td>
                         )}
                       </tr>
                     ))}

@@ -269,6 +269,7 @@ export default function App() {
                 onSelectFlow={handleSelectFlowList}
                 segment={selectedSegment}
                 type={flowDetailType}
+                timeDimension={timeDimension}
                 activeMetric={activeMetric as any}
                 setActiveMetric={setActiveMetric as any}
                 showTrend={flowDetailSource === 'segment'}
@@ -290,6 +291,7 @@ export default function App() {
               onClose={() => setView('dashboard')}
               segment={selectedSegment}
               type={flowDetailType}
+              timeDimension={timeDimension}
               tabs={flowDetailSource === 'flow' ? businessSegments : productNames}
               activeTab={activeFlowListTab}
               onTabChange={setActiveFlowListTab}

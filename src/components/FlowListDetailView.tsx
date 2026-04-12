@@ -3,15 +3,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, X, TrendingUp, TrendingDown, ArrowRightLeft, MoreHorizontal } from 'lucide-react';
 import { motion } from 'motion/react';
+
+import { TimeDimension } from '../types';
 
 interface FlowListDetailViewProps {
   onBack: () => void;
   onClose: () => void;
   type: 'cnob' | 'osob';
   segment: string;
+  timeDimension: TimeDimension;
   tabs?: string[];
   activeTab?: string;
   onTabChange?: (tab: string) => void;
@@ -22,10 +25,18 @@ export default function FlowListDetailView({
   onClose, 
   type: initialType, 
   segment,
+  timeDimension,
   tabs = [],
   activeTab,
   onTabChange
 }: FlowListDetailViewProps) {
+  const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>(
+    timeDimension === 'day' ? 'monthly' : 'monthly'
+  );
+
+  useEffect(() => {
+    setActivePeriod('monthly');
+  }, [timeDimension]);
   const flows = [
     { from: '深莞区', to: '美洲', income: '1,234.5', incomeYoy: '5.2%', volume: '567', volumeYoy: '3.1%', weight: '12.5', weightYoy: '1.2%', isUp: true },
     { from: '深莞区', to: '西欧', income: '982.3', incomeYoy: '3.1%', volume: '489', volumeYoy: '2.1%', weight: '10.2', weightYoy: '0.8%', isUp: true },
@@ -55,7 +66,25 @@ export default function FlowListDetailView({
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <MoreHorizontal size={20} />
+            <div className="relative">
+              <button
+                onClick={() => {
+                  if (timeDimension === 'day') {
+                    setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
+                  } else {
+                    setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
+                  }
+                }}
+                className="flex items-center gap-1 bg-white/20 text-white px-2 py-1 rounded-md text-[10px] font-bold backdrop-blur-sm"
+              >
+                {timeDimension === 'day' ? (
+                  activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
+                ) : (
+                  activePeriod === 'monthly' ? '月-当月' : '月-年累计'
+                )}
+                <span className="text-[8px]">⇅</span>
+              </button>
+            </div>
             <button onClick={onClose} className="p-1 hover:bg-white/10 rounded-full transition-colors">
               <X size={24} />
             </button>
@@ -114,9 +143,12 @@ export default function FlowListDetailView({
                   <div className="text-[11px] font-black text-gray-800">
                     {f.income}<span className="text-[9px] text-gray-400 ml-0.5">万元</span>
                   </div>
-                  <div className={`text-[8px] font-bold flex items-center justify-end ${f.incomeYoy.startsWith('-') ? 'text-red-500' : 'text-green-500'}`}>
-                    {f.incomeYoy}
-                    {f.incomeYoy.startsWith('-') ? <TrendingDown size={8} /> : <TrendingUp size={8} />}
+                  <div className="flex items-center justify-end gap-0.5 mt-0.5">
+                    <span className="text-[8px] text-gray-400 font-normal">同比:</span>
+                    <span className={`text-[8px] font-bold flex items-center ${f.incomeYoy.startsWith('-') ? 'text-red-500' : 'text-green-500'}`}>
+                      {f.incomeYoy}
+                      {f.incomeYoy.startsWith('-') ? <TrendingDown size={8} className="ml-0.5" /> : <TrendingUp size={8} className="ml-0.5" />}
+                    </span>
                   </div>
                 </div>
 
@@ -124,9 +156,12 @@ export default function FlowListDetailView({
                   <div className="text-[11px] font-black text-gray-800">
                     {f.volume}<span className="text-[9px] text-gray-400 ml-0.5">万票</span>
                   </div>
-                  <div className={`text-[8px] font-bold flex items-center justify-end ${f.volumeYoy.startsWith('-') ? 'text-red-500' : 'text-green-500'}`}>
-                    {f.volumeYoy}
-                    {f.volumeYoy.startsWith('-') ? <TrendingDown size={8} /> : <TrendingUp size={8} />}
+                  <div className="flex items-center justify-end gap-0.5 mt-0.5">
+                    <span className="text-[8px] text-gray-400 font-normal">同比:</span>
+                    <span className={`text-[8px] font-bold flex items-center ${f.volumeYoy.startsWith('-') ? 'text-red-500' : 'text-green-500'}`}>
+                      {f.volumeYoy}
+                      {f.volumeYoy.startsWith('-') ? <TrendingDown size={8} className="ml-0.5" /> : <TrendingUp size={8} className="ml-0.5" />}
+                    </span>
                   </div>
                 </div>
 
@@ -134,9 +169,12 @@ export default function FlowListDetailView({
                   <div className="text-[11px] font-black text-gray-800">
                     {f.weight}<span className="text-[9px] text-gray-400 ml-0.5">吨</span>
                   </div>
-                  <div className={`text-[8px] font-bold flex items-center justify-end ${f.weightYoy.startsWith('-') ? 'text-red-500' : 'text-green-500'}`}>
-                    {f.weightYoy}
-                    {f.weightYoy.startsWith('-') ? <TrendingDown size={8} /> : <TrendingUp size={8} />}
+                  <div className="flex items-center justify-end gap-0.5 mt-0.5">
+                    <span className="text-[8px] text-gray-400 font-normal">同比:</span>
+                    <span className={`text-[8px] font-bold flex items-center ${f.weightYoy.startsWith('-') ? 'text-red-500' : 'text-green-500'}`}>
+                      {f.weightYoy}
+                      {f.weightYoy.startsWith('-') ? <TrendingDown size={8} className="ml-0.5" /> : <TrendingUp size={8} className="ml-0.5" />}
+                    </span>
                   </div>
                 </div>
               </div>

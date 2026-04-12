@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { ChevronLeft, X, MoreHorizontal } from 'lucide-react';
+import { ChevronLeft, X, MoreHorizontal, TrendingUp, TrendingDown } from 'lucide-react';
 import { TimeDimension } from '../types';
 
 interface OrgDetailViewProps {
@@ -25,19 +25,21 @@ export default function OrgDetailView({
 }: OrgDetailViewProps) {
   const [activeTab, setActiveTab] = useState<'cn-sales' | 'cn-origin' | 'os-origin'>('cn-sales');
   const [activeSubFilter, setActiveSubFilter] = useState('all');
-  const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>('daily');
+  const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>(
+    timeDimension === 'month' ? 'monthly' : 'monthly'
+  );
 
   useEffect(() => {
     if (timeDimension === 'month') {
       setActivePeriod('monthly');
     } else {
-      setActivePeriod('daily');
+      setActivePeriod('monthly'); // Default to '日-月累计'
     }
   }, [timeDimension]);
 
   const getMetrics = () => {
     if (activeTab === 'os-origin') {
-      return ['国际收入占全网国际收入比', '国际收入占全网国际收入占比差', '单票收入', '单票重量'];
+      return ['国际收入占全网国际收入比', '国际收入占全网国际收入占比差', '单票收入', '单票重量', '收入达成率'];
     }
     return [
       '国际收入占全网国际收入比',
@@ -46,23 +48,24 @@ export default function OrgDetailView({
       '国际供应链收入占地区国际收入比',
       '国际供应链收入占地区国际收入占比差',
       '单票收入',
-      '单票重量'
+      '单票重量',
+      '收入达成率'
     ];
   };
 
   const metrics = getMetrics();
 
   const data = [
-    { name: '深莞区', values: ['12.5%', '0.5%', '1.2%', '10.2%', '0.8%', '81.96', '6.94'] },
-    { name: '广佛区', values: ['10.2%', '0.2%', '0.8%', '8.5%', '0.5%', '82.45', '7.12'] },
-    { name: '上海区', values: ['8.5%', '0.1%', '0.5%', '6.2%', '0.3%', '79.32', '6.85'] },
-    { name: '福建区', values: ['6.2%', '0.3%', '0.2%', '4.1%', '0.1%', '75.12', '6.50'] },
-    { name: '北京区', values: ['5.5%', '0.2%', '0.4%', '3.8%', '0.2%', '72.10', '6.20'] },
-    { name: '苏南区', values: ['4.8%', '0.1%', '0.3%', '3.5%', '0.1%', '70.50', '6.10'] },
-    { name: '湖南区', values: ['4.2%', '0.2%', '0.2%', '3.2%', '0.1%', '68.20', '5.90'] },
-    { name: '浙北区', values: ['3.9%', '0.1%', '0.1%', '2.8%', '0.1%', '67.50', '5.80'] },
-    { name: '湖北区', values: ['3.5%', '0.1%', '0.1%', '2.5%', '0.1%', '66.10', '5.70'] },
-    { name: '浙南区', values: ['3.2%', '0.1%', '0.1%', '2.2%', '0.1%', '65.20', '5.60'] },
+    { name: '深莞区', values: ['12.5%', '0.5%', '1.2%', '10.2%', '0.8%', '81.96', '6.94', '98.5%'], isUp: true },
+    { name: '广佛区', values: ['10.2%', '0.2%', '0.8%', '8.5%', '0.5%', '82.45', '7.12', '97.2%'], isUp: true },
+    { name: '上海区', values: ['8.5%', '0.1%', '0.5%', '6.2%', '0.3%', '79.32', '6.85', '96.8%'], isUp: true },
+    { name: '福建区', values: ['6.2%', '0.3%', '0.2%', '4.1%', '0.1%', '75.12', '6.50', '95.4%'], isUp: true },
+    { name: '北京区', values: ['5.5%', '0.2%', '0.4%', '3.8%', '0.2%', '72.10', '6.20', '94.8%'], isUp: true },
+    { name: '苏南区', values: ['4.8%', '0.1%', '0.3%', '3.5%', '0.1%', '70.50', '6.10', '93.2%'], isUp: true },
+    { name: '湖南区', values: ['4.2%', '0.2%', '0.2%', '3.2%', '0.1%', '68.20', '5.90', '92.5%'], isUp: true },
+    { name: '浙北区', values: ['3.9%', '0.1%', '0.1%', '2.8%', '0.1%', '67.50', '5.80', '91.8%'], isUp: true },
+    { name: '湖北区', values: ['3.5%', '0.1%', '0.1%', '2.5%', '0.1%', '66.10', '5.70', '90.5%'], isUp: true },
+    { name: '浙南区', values: ['3.2%', '0.1%', '0.1%', '2.2%', '0.1%', '65.20', '5.60', '89.2%'], isUp: true },
   ];
 
   return (
@@ -169,10 +172,22 @@ export default function OrgDetailView({
                         '国际供应链收入占地区国际收入比',
                         '国际供应链收入占地区国际收入占比差',
                         '单票收入',
-                        '单票重量'
+                        '单票重量',
+                        '收入达成率'
                       ].indexOf(m);
                       return (
-                        <td key={mIdx} className="px-4 py-4 text-right whitespace-nowrap">{row.values[metricIndex]}</td>
+                        <td key={mIdx} className="px-4 py-4 text-right whitespace-nowrap">
+                          <div className="font-bold text-gray-800">{row.values[metricIndex]}</div>
+                          {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                            <div className="flex items-center justify-end gap-1 mt-1">
+                              <span className="text-[10px] text-gray-400">同比:</span>
+                              <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                5.2%
+                                {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                              </span>
+                            </div>
+                          )}
+                        </td>
                       );
                     })}
                   </tr>
