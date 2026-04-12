@@ -47,7 +47,7 @@ export default function DetailModal({
     if (timeDimension === 'month') {
       setActivePeriod('monthly');
     } else {
-      setActivePeriod('daily');
+      setActivePeriod('monthly'); // Default to '日-月累计'
     }
   }, [timeDimension]);
 
@@ -448,20 +448,10 @@ export default function DetailModal({
                                 )}
                               </div>
                             </td>
-                            <td className="px-3 py-4 text-right">
-                              <div className="font-bold text-gray-800">{row.value}</div>
-                              <div className="flex items-center justify-end gap-1 mt-1">
-                                <span className="text-[10px] text-gray-400">同比:</span>
-                                <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                                  {row.yoy}
-                                  {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                                </span>
-                              </div>
-                            </td>
-                            {activeMetric === 'income' && (
-                              <>
-                                <td className="px-3 py-4 text-right">
-                                  <div className="font-bold text-gray-800">{row.perTicket}</div>
+                            <td className="px-3 py-4 text-right whitespace-nowrap">
+                              <div className="flex flex-col items-end">
+                                <div className="font-bold text-gray-800">{row.value}</div>
+                                {!(timeDimension === 'day' && activePeriod === 'daily') && (
                                   <div className="flex items-center justify-end gap-1 mt-1">
                                     <span className="text-[10px] text-gray-400">同比:</span>
                                     <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
@@ -469,9 +459,38 @@ export default function DetailModal({
                                       {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
                                     </span>
                                   </div>
+                                )}
+                              </div>
+                            </td>
+                            {activeMetric === 'income' && (
+                              <>
+                                <td className="px-3 py-4 text-right whitespace-nowrap">
+                                  <div className="flex flex-col items-end">
+                                    <div className="font-bold text-gray-800">{row.perTicket}</div>
+                                    {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                                      <div className="flex items-center justify-end gap-1 mt-1">
+                                        <span className="text-[10px] text-gray-400">同比:</span>
+                                        <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                          {row.yoy}
+                                          {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                        </span>
+                                      </div>
+                                    )}
+                                  </div>
                                 </td>
-                                <td className="px-3 py-4 text-right">
-                                  <div className="font-bold text-gray-800">{row.rate}</div>
+                                <td className="px-3 py-4 text-right whitespace-nowrap">
+                                  <div className="flex flex-col items-end">
+                                    <div className="font-bold text-gray-800">{row.rate}</div>
+                                    {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                                      <div className="flex items-center justify-end gap-1 mt-1">
+                                        <span className="text-[10px] text-gray-400">同比:</span>
+                                        <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                          {row.yoy}
+                                          {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                        </span>
+                                      </div>
+                                    )}
+                                  </div>
                                 </td>
                               </>
                             )}

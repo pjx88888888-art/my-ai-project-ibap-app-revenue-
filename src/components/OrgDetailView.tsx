@@ -38,10 +38,13 @@ export default function OrgDetailView({
   }, [timeDimension]);
 
   const getMetrics = () => {
+    const isMonthKeyMetrics = timeDimension === 'month' && detailSource === 'key-metrics';
+    
     if (activeTab === 'os-origin') {
-      return ['国际收入占全网国际收入比', '国际收入占全网国际收入占比差', '单票收入', '单票重量', '收入达成率'];
+      const baseMetrics = ['国际收入占全网国际收入比', '国际收入占全网国际收入占比差', '单票收入', '单票重量', '收入达成率'];
+      return isMonthKeyMetrics ? baseMetrics.filter(m => m !== '收入达成率') : baseMetrics;
     }
-    return [
+    const baseMetrics = [
       '国际收入占全网国际收入比',
       '国际收入占全网国际收入占比差',
       '国际标品收入同比',
@@ -51,6 +54,7 @@ export default function OrgDetailView({
       '单票重量',
       '收入达成率'
     ];
+    return isMonthKeyMetrics ? baseMetrics.filter(m => m !== '收入达成率') : baseMetrics;
   };
 
   const metrics = getMetrics();
@@ -177,16 +181,18 @@ export default function OrgDetailView({
                       ].indexOf(m);
                       return (
                         <td key={mIdx} className="px-4 py-4 text-right whitespace-nowrap">
-                          <div className="font-bold text-gray-800">{row.values[metricIndex]}</div>
-                          {!(timeDimension === 'day' && activePeriod === 'daily') && (
-                            <div className="flex items-center justify-end gap-1 mt-1">
-                              <span className="text-[10px] text-gray-400">同比:</span>
-                              <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                                5.2%
-                                {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                              </span>
-                            </div>
-                          )}
+                          <div className="flex flex-col items-end">
+                            <div className="font-bold text-gray-800">{row.values[metricIndex]}</div>
+                            {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                              <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
+                                <span className="text-[10px] text-gray-400">同比:</span>
+                                <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                  5.2%
+                                  {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                </span>
+                              </div>
+                            )}
+                          </div>
                         </td>
                       );
                     })}

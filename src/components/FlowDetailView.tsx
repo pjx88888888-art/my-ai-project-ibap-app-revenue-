@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, X, HelpCircle, ChevronDown, TrendingUp, TrendingDown, ArrowRightLeft, Bell, ChevronRight } from 'lucide-react';
+import { TimeDimension } from '../types';
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -27,13 +28,21 @@ interface FlowDetailViewProps {
   type: 'cnob' | 'osob';
   activeMetric: 'income' | 'volume' | 'weight';
   setActiveMetric: (metric: 'income' | 'volume' | 'weight') => void;
+  timeDimension: TimeDimension;
   hideFlowColumn?: boolean;
 }
 
-export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: initialType, activeMetric, setActiveMetric, hideFlowColumn = false }: FlowDetailViewProps) {
+export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: initialType, activeMetric, setActiveMetric, timeDimension, hideFlowColumn = false }: FlowDetailViewProps) {
   const [type, setType] = useState<'cnob' | 'osob'>(initialType);
   const [isTrendExpanded, setIsTrendExpanded] = useState(false);
   const [legendPage, setLegendPage] = useState(1);
+  const [activePeriod, setActivePeriod] = useState<'daily' | 'monthly' | 'yearly'>(
+    timeDimension === 'day' ? 'monthly' : 'monthly'
+  );
+
+  useEffect(() => {
+    setActivePeriod('monthly');
+  }, [timeDimension]);
 
   const trendSegments = [
     '国际快递',
@@ -108,9 +117,30 @@ export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: in
               </div>
             </div>
           </div>
-          <button onClick={onClose} className="p-1 hover:bg-white/10 rounded-full transition-colors">
-            <X size={24} />
-          </button>
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <button
+                onClick={() => {
+                  if (timeDimension === 'day') {
+                    setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
+                  } else {
+                    setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
+                  }
+                }}
+                className="flex items-center gap-1 bg-white/20 text-white px-2 py-1 rounded-md text-[10px] font-bold backdrop-blur-sm"
+              >
+                {timeDimension === 'day' ? (
+                  activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
+                ) : (
+                  activePeriod === 'monthly' ? '月-当月' : '月-年累计'
+                )}
+                <span className="text-[8px]">⇅</span>
+              </button>
+            </div>
+            <button onClick={onClose} className="p-1 hover:bg-white/10 rounded-full transition-colors">
+              <X size={24} />
+            </button>
+          </div>
         </div>
 
         {/* Metric Tabs */}
@@ -260,19 +290,40 @@ export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: in
               </div>
               <div className="text-sm font-bold text-gray-800">业务结构</div>
             </div>
-            <div className="flex items-center bg-gray-100 rounded-lg p-0.5 text-[10px] font-bold">
-              <button
-                onClick={() => setType('cnob')}
-                className={`px-3 py-1 rounded-md transition-all ${type === 'cnob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
-              >
-                CNOB
-              </button>
-              <button
-                onClick={() => setType('osob')}
-                className={`px-3 py-1 rounded-md transition-all ${type === 'osob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
-              >
-                OSOB
-              </button>
+            <div className="flex items-center gap-2">
+              <div className="relative z-50">
+                <button
+                  onClick={() => {
+                    if (timeDimension === 'day') {
+                      setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
+                    } else {
+                      setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
+                    }
+                  }}
+                  className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
+                >
+                  {timeDimension === 'day' ? (
+                    activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
+                  ) : (
+                    activePeriod === 'monthly' ? '月-当月' : '月-年累计'
+                  )}
+                  <span className="text-[8px]">⇅</span>
+                </button>
+              </div>
+              <div className="flex items-center bg-gray-100 rounded-lg p-0.5 text-[10px] font-bold">
+                <button
+                  onClick={() => setType('cnob')}
+                  className={`px-3 py-1 rounded-md transition-all ${type === 'cnob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
+                >
+                  CNOB
+                </button>
+                <button
+                  onClick={() => setType('osob')}
+                  className={`px-3 py-1 rounded-md transition-all ${type === 'osob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
+                >
+                  OSOB
+                </button>
+              </div>
             </div>
           </div>
 
@@ -334,96 +385,124 @@ export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: in
                             </div>
                           </td>
                         )}
-                        <td className="px-3 py-4 text-right">
-                          <div className="font-bold text-gray-800">
-                            {row.value}
-                            <span className="text-[10px] text-gray-400 ml-0.5">
-                              {activeMetric === 'income' ? '万元' : activeMetric === 'volume' ? '万票' : '吨'}
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-end gap-1 mt-1">
-                            <span className="text-[10px] text-gray-400">同比:</span>
-                            <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                              {row.yoy}
-                              {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                            </span>
+                        <td className="px-3 py-4 text-right whitespace-nowrap">
+                          <div className="flex flex-col items-end">
+                            <div className="font-bold text-gray-800">
+                              {row.value}
+                              <span className="text-[10px] text-gray-400 ml-0.5">
+                                {activeMetric === 'income' ? '万元' : activeMetric === 'volume' ? '万票' : '吨'}
+                              </span>
+                            </div>
+                            {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                              <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
+                                <span className="text-[10px] text-gray-400">同比:</span>
+                                <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                  {row.yoy}
+                                  {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                </span>
+                              </div>
+                            )}
                           </div>
                         </td>
                         {activeMetric === 'income' && (
                           <>
-                            <td className="px-3 py-4 text-right">
-                              <div className="font-medium text-gray-700">
-                                {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
-                              </div>
-                              <div className="flex items-center justify-end gap-1 mt-1">
-                                <span className="text-[10px] text-gray-400">同比:</span>
-                                <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                                  5.2%
-                                  {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                                </span>
-                              </div>
-                            </td>
-                            <td className="px-3 py-4 text-right">
-                              <div className="font-medium text-gray-700">
-                                {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
-                              </div>
-                              <div className="flex items-center justify-end gap-1 mt-1">
-                                <span className="text-[10px] text-gray-400">同比:</span>
-                                <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                                  5.2%
-                                  {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                                </span>
+                            <td className="px-3 py-4 text-right whitespace-nowrap">
+                              <div className="flex flex-col items-end">
+                                <div className="font-medium text-gray-700">
+                                  {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
+                                </div>
+                                {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                                  <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
+                                    <span className="text-[10px] text-gray-400">同比:</span>
+                                    <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                      {row.yoy}
+                                      {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                    </span>
+                                  </div>
+                                )}
                               </div>
                             </td>
-                            <td className="px-3 py-4 text-right">
-                              <div className="font-medium text-gray-700">{row.discount}</div>
-                              <div className="flex items-center justify-end gap-1 mt-1">
-                                <span className="text-[10px] text-gray-400">同比:</span>
-                                <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                                  5.2%
-                                  {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                                </span>
+                            <td className="px-3 py-4 text-right whitespace-nowrap">
+                              <div className="flex flex-col items-end">
+                                <div className="font-medium text-gray-700">
+                                  {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
+                                </div>
+                                {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                                  <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
+                                    <span className="text-[10px] text-gray-400">同比:</span>
+                                    <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                      {row.yoy}
+                                      {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            </td>
+                            <td className="px-3 py-4 text-right whitespace-nowrap">
+                              <div className="flex flex-col items-end">
+                                <div className="font-medium text-gray-700">{row.discount}</div>
+                                {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                                  <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
+                                    <span className="text-[10px] text-gray-400">同比:</span>
+                                    <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                      {row.yoy}
+                                      {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                    </span>
+                                  </div>
+                                )}
                               </div>
                             </td>
                           </>
                         )}
                         {activeMetric === 'volume' && (
-                          <td className="px-3 py-4 text-right">
-                            <div className="font-medium text-gray-700">
-                              {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">票</span>
-                            </div>
-                            <div className="flex items-center justify-end gap-1 mt-1">
-                              <span className="text-[10px] text-gray-400">同比:</span>
-                              <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                                5.2%
-                                {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                              </span>
+                          <td className="px-3 py-4 text-right whitespace-nowrap">
+                            <div className="flex flex-col items-end">
+                              <div className="font-medium text-gray-700">
+                                {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">票</span>
+                              </div>
+                              {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                                <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
+                                  <span className="text-[10px] text-gray-400">同比:</span>
+                                  <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                    {row.yoy}
+                                    {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                  </span>
+                                </div>
+                              )}
                             </div>
                           </td>
                         )}
                         {activeMetric === 'weight' && (
-                          <td className="px-3 py-4 text-right">
-                            <div className="font-medium text-gray-700">
-                              {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">KG</span>
-                            </div>
-                            <div className="flex items-center justify-end gap-1 mt-1">
-                              <span className="text-[10px] text-gray-400">同比:</span>
-                              <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                                5.2%
-                                {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                              </span>
+                          <td className="px-3 py-4 text-right whitespace-nowrap">
+                            <div className="flex flex-col items-end">
+                              <div className="font-medium text-gray-700">
+                                {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">KG</span>
+                              </div>
+                              {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                                <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
+                                  <span className="text-[10px] text-gray-400">同比:</span>
+                                  <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                    {row.yoy}
+                                    {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                  </span>
+                                </div>
+                              )}
                             </div>
                           </td>
                         )}
                         {type === 'osob' && activeMetric === 'income' && (
-                          <td className="px-3 py-4 text-right">
-                            <div className="font-bold text-gray-700">{row.achievement}</div>
-                            <div className="flex items-center justify-end gap-1 mt-1">
-                              <span className="text-[10px] text-gray-400">同比:</span>
-                              <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                                5.2%
-                                {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                              </span>
+                          <td className="px-3 py-4 text-right whitespace-nowrap">
+                            <div className="flex flex-col items-end">
+                              <div className="font-bold text-gray-700">{row.achievement}</div>
+                              {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                                <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
+                                  <span className="text-[10px] text-gray-400">同比:</span>
+                                  <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                    {row.yoy}
+                                    {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                  </span>
+                                </div>
+                              )}
                             </div>
                           </td>
                         )}

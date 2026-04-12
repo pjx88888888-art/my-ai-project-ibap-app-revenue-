@@ -121,64 +121,102 @@ export default function FlowListDetailView({
       <div className="flex-1 overflow-y-auto px-3 py-4 space-y-4">
         {/* Flow Detail List */}
         <div className="bg-white rounded-2xl shadow-sm border border-white/50 overflow-hidden">
-          <div className="bg-gray-50/50 px-4 py-2 border-b border-gray-100 grid grid-cols-4 text-[10px] font-bold text-gray-400">
-            <div className="col-span-1">流向</div>
-            <div className="text-right">收入</div>
-            <div className="text-right">件量</div>
-            <div className="text-right">重量</div>
+          <div className="px-4 py-3 flex items-center justify-between border-b border-gray-50">
+            <div className="flex items-center gap-2">
+              <div className="w-1 h-4 bg-[#1b63d6] rounded-full" />
+              <span className="text-sm font-bold text-gray-800">流向明细</span>
+            </div>
+            <div className="relative z-50">
+              <button
+                onClick={() => {
+                  if (timeDimension === 'day') {
+                    setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
+                  } else {
+                    setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
+                  }
+                }}
+                className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
+              >
+                {timeDimension === 'day' ? (
+                  activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
+                ) : (
+                  activePeriod === 'monthly' ? '月-当月' : '月-年累计'
+                )}
+                <span className="text-[8px]">⇅</span>
+              </button>
+            </div>
           </div>
-
-          <div className="divide-y divide-gray-50">
-            {flows.map((f, i) => (
-              <div key={i} className="p-4 grid grid-cols-4 items-center gap-2">
-                <div className="col-span-1">
-                  <div className="text-[11px] font-bold text-gray-800">{f.from}</div>
-                  <div className="my-1 text-[#1b63d6]">
-                    <ArrowRightLeft size={12} className="rotate-90" />
-                  </div>
-                  <div className="text-[11px] font-bold text-gray-800">{f.to}</div>
-                </div>
-                
-                <div className="text-right">
-                  <div className="text-[11px] font-black text-gray-800">
-                    {f.income}<span className="text-[9px] text-gray-400 ml-0.5">万元</span>
-                  </div>
-                  <div className="flex items-center justify-end gap-0.5 mt-0.5">
-                    <span className="text-[8px] text-gray-400 font-normal">同比:</span>
-                    <span className={`text-[8px] font-bold flex items-center ${f.incomeYoy.startsWith('-') ? 'text-red-500' : 'text-green-500'}`}>
-                      {f.incomeYoy}
-                      {f.incomeYoy.startsWith('-') ? <TrendingDown size={8} className="ml-0.5" /> : <TrendingUp size={8} className="ml-0.5" />}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="text-right">
-                  <div className="text-[11px] font-black text-gray-800">
-                    {f.volume}<span className="text-[9px] text-gray-400 ml-0.5">万票</span>
-                  </div>
-                  <div className="flex items-center justify-end gap-0.5 mt-0.5">
-                    <span className="text-[8px] text-gray-400 font-normal">同比:</span>
-                    <span className={`text-[8px] font-bold flex items-center ${f.volumeYoy.startsWith('-') ? 'text-red-500' : 'text-green-500'}`}>
-                      {f.volumeYoy}
-                      {f.volumeYoy.startsWith('-') ? <TrendingDown size={8} className="ml-0.5" /> : <TrendingUp size={8} className="ml-0.5" />}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="text-right">
-                  <div className="text-[11px] font-black text-gray-800">
-                    {f.weight}<span className="text-[9px] text-gray-400 ml-0.5">吨</span>
-                  </div>
-                  <div className="flex items-center justify-end gap-0.5 mt-0.5">
-                    <span className="text-[8px] text-gray-400 font-normal">同比:</span>
-                    <span className={`text-[8px] font-bold flex items-center ${f.weightYoy.startsWith('-') ? 'text-red-500' : 'text-green-500'}`}>
-                      {f.weightYoy}
-                      {f.weightYoy.startsWith('-') ? <TrendingDown size={8} className="ml-0.5" /> : <TrendingUp size={8} className="ml-0.5" />}
-                    </span>
-                  </div>
-                </div>
+          <div className="overflow-x-auto no-scrollbar">
+            <div className="min-w-[400px]">
+              <div className="bg-gray-50/50 px-4 py-2 border-b border-gray-100 grid grid-cols-4 text-[10px] font-bold text-gray-400">
+                <div className="col-span-1">流向</div>
+                <div className="text-right">收入</div>
+                <div className="text-right">件量</div>
+                <div className="text-right">重量</div>
               </div>
-            ))}
+
+              <div className="divide-y divide-gray-50">
+                {flows.map((f, i) => (
+                  <div key={i} className="p-4 grid grid-cols-4 items-center gap-2">
+                    <div className="col-span-1">
+                      <div className="text-[11px] font-bold text-gray-800">{f.from}</div>
+                      <div className="my-1 text-[#1b63d6]">
+                        <ArrowRightLeft size={12} className="rotate-90" />
+                      </div>
+                      <div className="text-[11px] font-bold text-gray-800">{f.to}</div>
+                    </div>
+                    
+                    <div className="text-right">
+                      <div className="flex flex-col items-end">
+                        <div className="text-[11px] font-black text-gray-800">
+                          {f.income}<span className="text-[9px] text-gray-400 ml-0.5">万元</span>
+                        </div>
+                        {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                          <div className="flex items-center gap-0.5 mt-0.5">
+                            <span className="text-[9px] text-gray-400">同:</span>
+                            <span className={`text-[9px] font-bold ${f.incomeYoy.startsWith('-') ? 'text-red-500' : 'text-green-500'}`}>
+                              {f.incomeYoy}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="text-right">
+                      <div className="flex flex-col items-end">
+                        <div className="text-[11px] font-black text-gray-800">
+                          {f.volume}<span className="text-[9px] text-gray-400 ml-0.5">万票</span>
+                        </div>
+                        {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                          <div className="flex items-center gap-0.5 mt-0.5">
+                            <span className="text-[9px] text-gray-400">同:</span>
+                            <span className={`text-[9px] font-bold ${f.volumeYoy.startsWith('-') ? 'text-red-500' : 'text-green-500'}`}>
+                              {f.volumeYoy}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="text-right">
+                      <div className="flex flex-col items-end">
+                        <div className="text-[11px] font-black text-gray-800">
+                          {f.weight}<span className="text-[9px] text-gray-400 ml-0.5">吨</span>
+                        </div>
+                        {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                          <div className="flex items-center gap-0.5 mt-0.5">
+                            <span className="text-[9px] text-gray-400">同:</span>
+                            <span className={`text-[9px] font-bold ${f.weightYoy.startsWith('-') ? 'text-red-500' : 'text-green-500'}`}>
+                              {f.weightYoy}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

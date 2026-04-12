@@ -318,8 +318,8 @@ export default function SubDetailView({
           </div>
 
           <div className="p-3">
-            <div className="overflow-x-auto -mx-3 px-3">
-              <table className="w-full text-left text-xs">
+            <div className="overflow-x-auto -mx-3 px-3 no-scrollbar">
+              <table className="w-full text-left text-xs table-auto min-w-max">
                 <thead>
                   <tr className="bg-[#f8f9fb]">
                     <th className="px-3 py-2.5 text-gray-500 font-bold sticky left-0 bg-[#f8f9fb] z-10 w-24">业务板块</th>
@@ -356,90 +356,108 @@ export default function SubDetailView({
                       >
                         {row.segment}
                       </td>
-                      <td className="px-3 py-4 text-right">
-                        <div className="font-bold text-gray-800">
-                          {row.value}
-                          <span className="text-[10px] text-gray-400 ml-0.5">
-                            {activeMetric === 'income' ? '万元' : activeMetric === 'volume' ? '万票' : '吨'}
-                          </span>
-                        </div>
-                        {!(timeDimension === 'day' && activePeriod === 'daily') && (
-                          <div className="flex items-center justify-end gap-1 mt-1">
-                            <span className="text-[10px] text-gray-400">同比:</span>
-                            <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                              5.2%
-                              {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                      <td className="px-3 py-4 text-right whitespace-nowrap">
+                        <div className="flex flex-col items-end">
+                          <div className="font-bold text-gray-800">
+                            {row.value}
+                            <span className="text-[10px] text-gray-400 ml-0.5">
+                              {activeMetric === 'income' ? '万元' : activeMetric === 'volume' ? '万票' : '吨'}
                             </span>
                           </div>
-                        )}
-                      </td>
-                      {activeMetric === 'income' && (
-                        <>
-                          <td className="px-3 py-4 text-right">
-                            <div className="font-medium text-gray-700">
-                              {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
-                            </div>
-                            {!(timeDimension === 'day' && activePeriod === 'daily') && (
-                              <div className="flex items-center justify-end gap-1 mt-1">
-                                <span className="text-[10px] text-gray-400">同比:</span>
-                                <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                                  5.2%
-                                  {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                                </span>
-                              </div>
-                            )}
-                          </td>
-                          <td className="px-3 py-4 text-right">
-                            <div className="font-medium text-gray-700">
-                              {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
-                            </div>
-                            {!(timeDimension === 'day' && activePeriod === 'daily') && (
-                              <div className="flex items-center justify-end gap-1 mt-1">
-                                <span className="text-[10px] text-gray-400">同比:</span>
-                                <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                                  5.2%
-                                  {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                                </span>
-                              </div>
-                            )}
-                          </td>
-                          <td className="px-3 py-4 text-right">
-                            <div className="font-medium text-gray-700">{row.discount}</div>
-                            <div className="flex items-center justify-end gap-1 mt-1">
+                          {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                            <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                               <span className="text-[10px] text-gray-400">同比:</span>
                               <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
                                 5.2%
                                 {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
                               </span>
                             </div>
+                          )}
+                        </div>
+                      </td>
+                      {activeMetric === 'income' && (
+                        <>
+                          <td className="px-3 py-4 text-right whitespace-nowrap">
+                            <div className="flex flex-col items-end">
+                              <div className="font-medium text-gray-700">
+                                {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
+                              </div>
+                              {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                                <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
+                                  <span className="text-[10px] text-gray-400">同比:</span>
+                                  <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                    5.2%
+                                    {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-3 py-4 text-right whitespace-nowrap">
+                            <div className="flex flex-col items-end">
+                              <div className="font-medium text-gray-700">
+                                {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
+                              </div>
+                              {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                                <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
+                                  <span className="text-[10px] text-gray-400">同比:</span>
+                                  <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                    5.2%
+                                    {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-3 py-4 text-right whitespace-nowrap">
+                            <div className="flex flex-col items-end">
+                              <div className="font-medium text-gray-700">{row.discount}</div>
+                              {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                                <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
+                                  <span className="text-[10px] text-gray-400">同比:</span>
+                                  <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                    5.2%
+                                    {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
                           </td>
                         </>
                       )}
                       {activeMetric === 'volume' && (
-                        <td className="px-3 py-4 text-right">
-                          <div className="font-medium text-gray-700">
-                            {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">票</span>
-                          </div>
-                          <div className="flex items-center justify-end gap-1 mt-1">
-                            <span className="text-[10px] text-gray-400">同比:</span>
-                            <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                              5.2%
-                              {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                            </span>
+                        <td className="px-3 py-4 text-right whitespace-nowrap">
+                          <div className="flex flex-col items-end">
+                            <div className="font-medium text-gray-700">
+                              {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">票</span>
+                            </div>
+                            {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                              <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
+                                <span className="text-[10px] text-gray-400">同比:</span>
+                                <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                  5.2%
+                                  {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                </span>
+                              </div>
+                            )}
                           </div>
                         </td>
                       )}
                       {activeMetric === 'weight' && (
-                        <td className="px-3 py-4 text-right">
-                          <div className="font-medium text-gray-700">
-                            {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">KG</span>
-                          </div>
-                          <div className="flex items-center justify-end gap-1 mt-1">
-                            <span className="text-[10px] text-gray-400">同比:</span>
-                            <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                              5.2%
-                              {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                            </span>
+                        <td className="px-3 py-4 text-right whitespace-nowrap">
+                          <div className="flex flex-col items-end">
+                            <div className="font-medium text-gray-700">
+                              {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">KG</span>
+                            </div>
+                            {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                              <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
+                                <span className="text-[10px] text-gray-400">同比:</span>
+                                <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                  5.2%
+                                  {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                </span>
+                              </div>
+                            )}
                           </div>
                         </td>
                       )}

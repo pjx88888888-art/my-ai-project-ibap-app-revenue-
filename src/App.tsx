@@ -252,6 +252,7 @@ export default function App() {
                 activeMetric={activeMetric as any}
                 setActiveMetric={setActiveMetric as any}
                 hideFlowColumn={hideFlowColumn}
+                timeDimension={timeDimension}
               />
             </motion.div>
           ) : view === 'flow-third-detail' ? (
