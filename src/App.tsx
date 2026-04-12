@@ -62,8 +62,9 @@ export default function App() {
     setView('org-detail');
   };
 
-  const handleOpenProductDetail = (segment: string) => {
+  const handleOpenProductDetail = (segment: string, metric: MetricType) => {
     setSelectedSegment(segment);
+    setActiveMetric(metric);
     setView('product-detail');
   };
 

@@ -137,7 +137,7 @@ export default function ProductDetailView({
             <button
               key={m.id}
               onClick={() => setActiveMetric(m.id)}
-              className={`flex-1 py-1.5 text-[11px] font-bold rounded-md transition-all ${
+              className={`flex-1 py-1.5 text-[11px] font-bold rounded-lg transition-all ${
                 activeMetric === m.id ? 'bg-white text-[#1b63d6] shadow-sm' : 'text-white/60'
               }`}
             >
@@ -312,7 +312,6 @@ export default function ProductDetailView({
                       <th className="text-right py-2 font-medium">单票重量</th>
                     </>
                   )}
-                  <th className="text-right py-2 font-medium">达成率</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
@@ -354,7 +353,6 @@ export default function ProductDetailView({
                         <td className="py-3 text-right font-bold text-gray-800">{item.perTicketWeight}</td>
                       </>
                     )}
-                    <td className="py-3 text-right font-bold text-gray-800">{item.achievement}</td>
                   </tr>
                 ))}
               </tbody>
