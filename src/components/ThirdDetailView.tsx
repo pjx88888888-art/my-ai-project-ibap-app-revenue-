@@ -404,7 +404,7 @@ export default function ThirdDetailView({
                           <td className="px-3 py-4 text-right whitespace-nowrap">
                             <div className="flex flex-col items-end">
                               <div className="font-medium text-gray-700">
-                                {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
+                                {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">万元</span>
                               </div>
                               {!(timeDimension === 'day' && activePeriod === 'daily') && (
                                 <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">

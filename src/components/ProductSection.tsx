@@ -396,7 +396,7 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                         <div className="text-[10px] text-gray-500 font-medium">日均收入</div>
                         {/* Column 1: 当日 or 当月 */}
                         <div className="text-center">
-                          <div className="text-[10px] font-bold text-gray-800">{product.dailyAvgIncome}万</div>
+                          <div className="text-[10px] font-bold text-gray-800">{product.dailyAvgIncome}万元</div>
                           {!(timeDimension === 'day') && (
                             <div className="flex flex-col items-center mt-0.5">
                               <div className="flex items-center gap-0.5 scale-90">
@@ -419,7 +419,7 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                         {/* Column 2: 月累计 (Only for Day Dimension) */}
                         {timeDimension === 'day' && (
                           <div className="text-center">
-                            <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.dailyAvgIncome) * 1.1).toFixed(2)}万</div>
+                            <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.dailyAvgIncome) * 1.1).toFixed(2)}万元</div>
                             <div className="flex flex-col items-center mt-0.5">
                               <div className="flex items-center gap-0.5 scale-90">
                                 <span className="text-[8px] text-gray-400 font-normal">同比:</span>
@@ -440,7 +440,7 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                         )}
                         {/* Column 3: 年累计 */}
                         <div className="text-center">
-                          <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.dailyAvgIncome) * 1.2).toFixed(2)}万</div>
+                          <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.dailyAvgIncome) * 1.2).toFixed(2)}万元</div>
                           <div className="flex flex-col items-center mt-0.5">
                             <div className="flex items-center gap-0.5 scale-90">
                               <span className="text-[8px] text-gray-400 font-normal">同比:</span>
