@@ -126,25 +126,6 @@ export default function ProductDetailView({
             <span className="bg-white/20 px-2 py-0.5 rounded text-[10px]">本部</span>
           </div>
           <div className="flex items-center gap-4">
-            <div className="relative">
-              <button
-                onClick={() => {
-                  if (timeDimension === 'day') {
-                    setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
-                  } else {
-                    setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
-                  }
-                }}
-                className="flex items-center gap-1 bg-white/20 text-white px-2 py-1 rounded-md text-[10px] font-bold backdrop-blur-sm"
-              >
-                {timeDimension === 'day' ? (
-                  activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
-                ) : (
-                  activePeriod === 'monthly' ? '月-当月' : '月-年累计'
-                )}
-                <span className="text-[8px]">⇅</span>
-              </button>
-            </div>
             <button className="opacity-80">...</button>
             <button onClick={onClose} className="p-1 hover:bg-white/10 rounded-full transition-colors">
               <X size={20} />
@@ -328,6 +309,25 @@ export default function ProductDetailView({
               </div>
               <span className="text-sm font-bold text-gray-800">组织详情</span>
             </div>
+            <div className="relative z-50">
+              <button
+                onClick={() => {
+                  if (timeDimension === 'day') {
+                    setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
+                  } else {
+                    setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
+                  }
+                }}
+                className="flex items-center gap-1 bg-blue-50 text-[#1b63d6] px-2 py-1 rounded-md text-[10px] font-bold"
+              >
+                {timeDimension === 'day' ? (
+                  activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
+                ) : (
+                  activePeriod === 'monthly' ? '月-当月' : '月-年累计'
+                )}
+                <span className="text-[8px]">⇅</span>
+              </button>
+            </div>
           </div>
 
           <div className="flex gap-2 mb-4 overflow-x-auto no-scrollbar">
@@ -384,7 +384,7 @@ export default function ProductDetailView({
                       <>
                         <td className="py-3 text-right whitespace-nowrap">
                           <div className="flex flex-col items-end">
-                            <div className="font-bold text-gray-800">{item.income}</div>
+                            <div className="font-bold text-gray-800">{item.income}<span className="text-[9px] text-gray-400 ml-0.5 font-normal">万元</span></div>
                             {!(timeDimension === 'day' && activePeriod === 'daily') && (
                               <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                                 <span className="text-[9px] text-gray-400">同比:</span>
@@ -395,7 +395,7 @@ export default function ProductDetailView({
                         </td>
                         <td className="py-3 text-right whitespace-nowrap">
                           <div className="flex flex-col items-end">
-                            <div className="font-bold text-gray-800">{item.perTicketIncome}</div>
+                            <div className="font-bold text-gray-800">{item.perTicketIncome}<span className="text-[9px] text-gray-400 ml-0.5 font-normal">元</span></div>
                             {!(timeDimension === 'day' && activePeriod === 'daily') && (
                               <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                                 <span className="text-[9px] text-gray-400">同比:</span>
@@ -406,7 +406,7 @@ export default function ProductDetailView({
                         </td>
                         <td className="py-3 text-right whitespace-nowrap">
                           <div className="flex flex-col items-end">
-                            <div className="font-bold text-gray-800">{item.dailyAvgIncome}</div>
+                            <div className="font-bold text-gray-800">{item.dailyAvgIncome}<span className="text-[9px] text-gray-400 ml-0.5 font-normal">万元</span></div>
                             {!(timeDimension === 'day' && activePeriod === 'daily') && (
                               <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                                 <span className="text-[9px] text-gray-400">同比:</span>
@@ -431,7 +431,7 @@ export default function ProductDetailView({
                       <>
                         <td className="py-3 text-right whitespace-nowrap">
                           <div className="flex flex-col items-end">
-                            <div className="font-bold text-gray-800">{item.volume}</div>
+                            <div className="font-bold text-gray-800">{item.volume}<span className="text-[9px] text-gray-400 ml-0.5 font-normal">万票</span></div>
                             {!(timeDimension === 'day' && activePeriod === 'daily') && (
                               <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                                 <span className="text-[9px] text-gray-400">同比:</span>
@@ -442,7 +442,7 @@ export default function ProductDetailView({
                         </td>
                         <td className="py-3 text-right whitespace-nowrap">
                           <div className="flex flex-col items-end">
-                            <div className="font-bold text-gray-800">{item.dailyAvgVolume}</div>
+                            <div className="font-bold text-gray-800">{item.dailyAvgVolume}<span className="text-[9px] text-gray-400 ml-0.5 font-normal">万票</span></div>
                             {!(timeDimension === 'day' && activePeriod === 'daily') && (
                               <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                                 <span className="text-[9px] text-gray-400">同比:</span>
@@ -456,7 +456,7 @@ export default function ProductDetailView({
                       <>
                         <td className="py-3 text-right whitespace-nowrap">
                           <div className="flex flex-col items-end">
-                            <div className="font-bold text-gray-800">{item.weight}</div>
+                            <div className="font-bold text-gray-800">{item.weight}<span className="text-[9px] text-gray-400 ml-0.5 font-normal">吨</span></div>
                             {!(timeDimension === 'day' && activePeriod === 'daily') && (
                               <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                                 <span className="text-[9px] text-gray-400">同比:</span>
@@ -467,7 +467,7 @@ export default function ProductDetailView({
                         </td>
                         <td className="py-3 text-right whitespace-nowrap">
                           <div className="flex flex-col items-end">
-                            <div className="font-bold text-gray-800">{item.perTicketWeight}</div>
+                            <div className="font-bold text-gray-800">{item.perTicketWeight}<span className="text-[9px] text-gray-400 ml-0.5 font-normal">kg</span></div>
                             {!(timeDimension === 'day' && activePeriod === 'daily') && (
                               <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                                 <span className="text-[9px] text-gray-400">同比:</span>

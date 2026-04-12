@@ -66,25 +66,6 @@ export default function FlowListDetailView({
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="relative">
-              <button
-                onClick={() => {
-                  if (timeDimension === 'day') {
-                    setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
-                  } else {
-                    setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
-                  }
-                }}
-                className="flex items-center gap-1 bg-white/20 text-white px-2 py-1 rounded-md text-[10px] font-bold backdrop-blur-sm"
-              >
-                {timeDimension === 'day' ? (
-                  activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
-                ) : (
-                  activePeriod === 'monthly' ? '月-当月' : '月-年累计'
-                )}
-                <span className="text-[8px]">⇅</span>
-              </button>
-            </div>
             <button onClick={onClose} className="p-1 hover:bg-white/10 rounded-full transition-colors">
               <X size={24} />
             </button>

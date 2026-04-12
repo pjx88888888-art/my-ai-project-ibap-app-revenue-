@@ -138,25 +138,6 @@ export default function FlowThirdDetailView({
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="relative">
-              <button
-                onClick={() => {
-                  if (timeDimension === 'day') {
-                    setActivePeriod(activePeriod === 'daily' ? 'monthly' : activePeriod === 'monthly' ? 'yearly' : 'daily');
-                  } else {
-                    setActivePeriod(activePeriod === 'monthly' ? 'yearly' : 'monthly');
-                  }
-                }}
-                className="flex items-center gap-1 bg-white/20 text-white px-2 py-1 rounded-md text-[10px] font-bold backdrop-blur-sm"
-              >
-                {timeDimension === 'day' ? (
-                  activePeriod === 'daily' ? '日-当日' : activePeriod === 'monthly' ? '日-月累计' : '日-年累计'
-                ) : (
-                  activePeriod === 'monthly' ? '月-当月' : '月-年累计'
-                )}
-                <span className="text-[8px]">⇅</span>
-              </button>
-            </div>
             <button onClick={onClose} className="p-1 hover:bg-white/10 rounded-full transition-colors">
               <X size={24} />
             </button>
@@ -308,11 +289,25 @@ export default function FlowThirdDetailView({
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <div className="w-1 h-4 bg-[#1b63d6] rounded-full" />
-              <span className="text-sm font-bold text-gray-800">流向明细</span>
+              <span className="text-sm font-bold text-gray-800">{showTrend ? '产品结构' : '流向明细'}</span>
               <HelpCircle size={14} className="text-gray-300" />
             </div>
-            <div className="flex items-center gap-3">
-              <div className="relative">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center bg-gray-100 rounded-lg p-0.5 text-[10px] font-bold">
+                <button
+                  onClick={() => setType('cnob')}
+                  className={`px-3 py-1 rounded-md transition-all ${type === 'cnob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
+                >
+                  CNOB
+                </button>
+                <button
+                  onClick={() => setType('osob')}
+                  className={`px-3 py-1 rounded-md transition-all ${type === 'osob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
+                >
+                  OSOB
+                </button>
+              </div>
+              <div className="relative z-50">
                 <button
                   onClick={() => {
                     if (timeDimension === 'day') {
@@ -329,20 +324,6 @@ export default function FlowThirdDetailView({
                     activePeriod === 'monthly' ? '月-当月' : '月-年累计'
                   )}
                   <span className="text-[8px]">⇅</span>
-                </button>
-              </div>
-              <div className="flex items-center bg-gray-100 rounded-lg p-0.5 text-[10px] font-bold">
-                <button
-                  onClick={() => setType('cnob')}
-                  className={`px-3 py-1 rounded-md transition-all ${type === 'cnob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
-                >
-                  CNOB
-                </button>
-                <button
-                  onClick={() => setType('osob')}
-                  className={`px-3 py-1 rounded-md transition-all ${type === 'osob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
-                >
-                  OSOB
                 </button>
               </div>
             </div>
@@ -407,7 +388,9 @@ export default function FlowThirdDetailView({
                       )}
                       <td className="px-3 py-4 text-right whitespace-nowrap">
                         <div className="flex flex-col items-end">
-                          <div className="font-bold text-gray-800">{row.value}</div>
+                          <div className="font-bold text-gray-800">
+                            {row.value}<span className="text-[10px] text-gray-400 ml-0.5">{activeMetric === 'income' ? '万元' : activeMetric === 'volume' ? '万票' : '吨'}</span>
+                          </div>
                           {!(timeDimension === 'day' && activePeriod === 'daily') && (
                             <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                               <span className="text-[10px] text-gray-400">同比:</span>
@@ -423,7 +406,9 @@ export default function FlowThirdDetailView({
                         <>
                           <td className="px-3 py-4 text-right whitespace-nowrap">
                             <div className="flex flex-col items-end">
-                              <div className="font-medium text-gray-700">{row.perTicket}</div>
+                              <div className="font-medium text-gray-700">
+                                {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
+                              </div>
                               {!(timeDimension === 'day' && activePeriod === 'daily') && (
                                 <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                                   <span className="text-[10px] text-gray-400">同比:</span>
@@ -437,7 +422,9 @@ export default function FlowThirdDetailView({
                           </td>
                           <td className="px-3 py-4 text-right whitespace-nowrap">
                             <div className="flex flex-col items-end">
-                              <div className="font-medium text-gray-700">{row.dailyAvg}</div>
+                              <div className="font-medium text-gray-700">
+                                {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">万元</span>
+                              </div>
                               {!(timeDimension === 'day' && activePeriod === 'daily') && (
                                 <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                                   <span className="text-[10px] text-gray-400">同比:</span>
@@ -468,7 +455,9 @@ export default function FlowThirdDetailView({
                       {activeMetric === 'volume' && (
                         <td className="px-3 py-4 text-right whitespace-nowrap">
                           <div className="flex flex-col items-end">
-                            <div className="font-medium text-gray-700">{row.dailyAvg}</div>
+                            <div className="font-medium text-gray-700">
+                              {row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">万票</span>
+                            </div>
                             {!(timeDimension === 'day' && activePeriod === 'daily') && (
                               <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                                 <span className="text-[10px] text-gray-400">同比:</span>
@@ -484,7 +473,9 @@ export default function FlowThirdDetailView({
                       {activeMetric === 'weight' && (
                         <td className="px-3 py-4 text-right whitespace-nowrap">
                           <div className="flex flex-col items-end">
-                            <div className="font-medium text-gray-700">{row.perTicket}</div>
+                            <div className="font-medium text-gray-700">
+                              {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">kg</span>
+                            </div>
                             {!(timeDimension === 'day' && activePeriod === 'daily') && (
                               <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                                 <span className="text-[10px] text-gray-400">同比:</span>

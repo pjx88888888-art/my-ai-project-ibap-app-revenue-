@@ -179,10 +179,13 @@ export default function OrgDetailView({
                         '单票重量',
                         '收入达成率'
                       ].indexOf(m);
+                      const unit = m === '单票收入' ? '元' : m === '单票重量' ? 'kg' : '';
                       return (
                         <td key={mIdx} className="px-4 py-4 text-right whitespace-nowrap">
                           <div className="flex flex-col items-end">
-                            <div className="font-bold text-gray-800">{row.values[metricIndex]}</div>
+                            <div className="font-bold text-gray-800">
+                              {row.values[metricIndex]}{unit && <span className="text-[10px] text-gray-400 ml-0.5">{unit}</span>}
+                            </div>
                             {!(timeDimension === 'day' && activePeriod === 'daily') && (
                               <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                                 <span className="text-[10px] text-gray-400">同比:</span>

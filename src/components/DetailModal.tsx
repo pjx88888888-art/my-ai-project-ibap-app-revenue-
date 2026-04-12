@@ -450,7 +450,9 @@ export default function DetailModal({
                             </td>
                             <td className="px-3 py-4 text-right whitespace-nowrap">
                               <div className="flex flex-col items-end">
-                                <div className="font-bold text-gray-800">{row.value}</div>
+                                <div className="font-bold text-gray-800">
+                                  {row.value}<span className="text-[10px] text-gray-400 ml-0.5">{activeMetric === 'income' ? '万元' : activeMetric === 'volume' ? '万票' : '吨'}</span>
+                                </div>
                                 {!(timeDimension === 'day' && activePeriod === 'daily') && (
                                   <div className="flex items-center justify-end gap-1 mt-1">
                                     <span className="text-[10px] text-gray-400">同比:</span>
@@ -466,7 +468,9 @@ export default function DetailModal({
                               <>
                                 <td className="px-3 py-4 text-right whitespace-nowrap">
                                   <div className="flex flex-col items-end">
-                                    <div className="font-bold text-gray-800">{row.perTicket}</div>
+                                    <div className="font-bold text-gray-800">
+                                      {row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">元</span>
+                                    </div>
                                     {!(timeDimension === 'day' && activePeriod === 'daily') && (
                                       <div className="flex items-center justify-end gap-1 mt-1">
                                         <span className="text-[10px] text-gray-400">同比:</span>
