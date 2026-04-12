@@ -209,6 +209,7 @@ export default function KeyMetricsSection({ timeDimension, onOpenDetail }: KeyMe
                         <span className="text-[8px] text-gray-400 font-medium">{metric.unit}</span>
                       </div>
                       <div className={`text-[8px] font-bold flex items-center justify-center gap-0.5 ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                        <span className="text-gray-400 font-normal">同比:</span>
                         {metric.monthly.yoy}
                         {metric.monthly.isUp ? <TrendingUp size={8} /> : <TrendingDown size={8} />}
                       </div>
@@ -219,6 +220,7 @@ export default function KeyMetricsSection({ timeDimension, onOpenDetail }: KeyMe
                         <span className="text-[8px] text-gray-400 font-medium">{metric.unit}</span>
                       </div>
                       <div className={`text-[8px] font-bold flex items-center justify-center gap-0.5 ${metric.yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                        <span className="text-gray-400 font-normal">同比:</span>
                         {metric.yearly.yoy}
                         {metric.yearly.isUp ? <TrendingUp size={8} /> : <TrendingDown size={8} />}
                       </div>
@@ -232,6 +234,7 @@ export default function KeyMetricsSection({ timeDimension, onOpenDetail }: KeyMe
                         <span className="text-[8px] text-gray-400 font-medium">{metric.unit}</span>
                       </div>
                       <div className={`text-[8px] font-bold flex items-center justify-center gap-0.5 ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                        <span className="text-gray-400 font-normal">同比:</span>
                         {metric.monthly.yoy}
                         {metric.monthly.isUp ? <TrendingUp size={8} /> : <TrendingDown size={8} />}
                       </div>
@@ -242,6 +245,7 @@ export default function KeyMetricsSection({ timeDimension, onOpenDetail }: KeyMe
                         <span className="text-[8px] text-gray-400 font-medium">{metric.unit}</span>
                       </div>
                       <div className={`text-[8px] font-bold flex items-center justify-center gap-0.5 ${metric.yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                        <span className="text-gray-400 font-normal">同比:</span>
                         {metric.yearly.yoy}
                         {metric.yearly.isUp ? <TrendingUp size={8} /> : <TrendingDown size={8} />}
                       </div>

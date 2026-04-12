@@ -240,11 +240,13 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
             <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metricData.current}</div>
             <div className="text-[9px] text-gray-400 font-medium">{unit}</div>
           </div>
-          {timeDimension !== 'day' && (
-            <div className={`text-[9px] font-bold flex items-center ${metricData.yoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
-              {metricData.yoy.startsWith('+') ? '▲' : '▼'} {metricData.yoy}
-            </div>
-          )}
+          <div className="text-[9px] text-gray-400 flex items-center gap-1">
+            <span className="text-gray-400 font-normal">同比:</span>
+            <span className={`flex items-center font-semibold ${metricData.yoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+              {metricData.yoy}
+              {metricData.yoy.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+            </span>
+          </div>
         </div>
 
         {/* Month Accum Card (Only for Day Dimension) */}
@@ -255,8 +257,12 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
               <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metricData.monthAccum}</div>
               <div className="text-[9px] text-gray-400 font-medium">{unit}</div>
             </div>
-            <div className={`text-[9px] font-bold flex items-center ${metricData.monthYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
-              {metricData.monthYoy.startsWith('+') ? '▲' : '▼'} {metricData.monthYoy}
+            <div className="text-[9px] text-gray-400 flex items-center gap-1">
+              <span className="text-gray-400 font-normal">同比:</span>
+              <span className={`flex items-center font-semibold ${metricData.monthYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                {metricData.monthYoy}
+                {metricData.monthYoy.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+              </span>
             </div>
           </div>
         )}
@@ -268,8 +274,12 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
             <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metricData.yearAccum}</div>
             <div className="text-[9px] text-gray-400 font-medium">{unit}</div>
           </div>
-          <div className={`text-[9px] font-bold flex items-center ${metricData.yearYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
-            {metricData.yearYoy.startsWith('+') ? '▲' : '▼'} {metricData.yearYoy}
+          <div className="text-[9px] text-gray-400 flex items-center gap-1">
+            <span className="text-gray-400 font-normal">同比:</span>
+            <span className={`flex items-center font-semibold ${metricData.yearYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+              {metricData.yearYoy}
+              {metricData.yearYoy.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+            </span>
           </div>
         </div>
       </div>
@@ -310,10 +320,22 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                         {/* Column 1: 当日 or 当月 */}
                         <div className="text-center">
                           <div className="text-[10px] font-bold text-gray-800">{product.perTicketIncome}元</div>
-                          {timeDimension === 'month' && (
+                          {!(timeDimension === 'day') && (
                             <div className="flex flex-col items-center mt-0.5">
-                              <div className="text-[8px] text-green-500 font-bold">同比:{product.perTicketIncomeYoy}</div>
-                              <div className="text-[8px] text-blue-500 font-bold">环比:{product.perTicketIncomeMom}</div>
+                              <div className="flex items-center gap-0.5 scale-90">
+                                <span className="text-[8px] text-gray-400 font-normal">同比:</span>
+                                <span className={`flex items-center font-bold text-[8px] ${product.perTicketIncomeYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                                  {product.perTicketIncomeYoy}
+                                  {product.perTicketIncomeYoy.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-0.5 scale-90">
+                                <span className="text-[8px] text-gray-400 font-normal">环比:</span>
+                                <span className={`flex items-center font-bold text-[8px] ${product.perTicketIncomeMom.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                                  {product.perTicketIncomeMom}
+                                  {product.perTicketIncomeMom.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                                </span>
+                              </div>
                             </div>
                           )}
                         </div>
@@ -322,8 +344,20 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                           <div className="text-center">
                             <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.perTicketIncome) * 1.02).toFixed(2)}元</div>
                             <div className="flex flex-col items-center mt-0.5">
-                              <div className="text-[8px] text-green-500 font-bold">同比:+2.1%</div>
-                              <div className="text-[8px] text-blue-500 font-bold">环比:+0.8%</div>
+                              <div className="flex items-center gap-0.5 scale-90">
+                                <span className="text-[8px] text-gray-400 font-normal">同比:</span>
+                                <span className="text-[8px] font-bold text-green-500 flex items-center">
+                                  +2.1%
+                                  <TrendingUp size={8} className="ml-0.5" />
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-0.5 scale-90">
+                                <span className="text-[8px] text-gray-400 font-normal">环比:</span>
+                                <span className="text-[8px] font-bold text-blue-500 flex items-center">
+                                  +0.8%
+                                  <TrendingUp size={8} className="ml-0.5" />
+                                </span>
+                              </div>
                             </div>
                           </div>
                         )}
@@ -331,8 +365,20 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                         <div className="text-center">
                           <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.perTicketIncome) * 1.05).toFixed(2)}元</div>
                           <div className="flex flex-col items-center mt-0.5">
-                            <div className="text-[8px] text-green-500 font-bold">同比:+4.5%</div>
-                            <div className="text-[8px] text-blue-500 font-bold">环比:+1.5%</div>
+                            <div className="flex items-center gap-0.5 scale-90">
+                              <span className="text-[8px] text-gray-400 font-normal">同比:</span>
+                              <span className="text-[8px] font-bold text-green-500 flex items-center">
+                                +4.5%
+                                <TrendingUp size={8} className="ml-0.5" />
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-0.5 scale-90">
+                              <span className="text-[8px] text-gray-400 font-normal">环比:</span>
+                              <span className="text-[8px] font-bold text-blue-500 flex items-center">
+                                +1.5%
+                                <TrendingUp size={8} className="ml-0.5" />
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -343,10 +389,22 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                         {/* Column 1: 当日 or 当月 */}
                         <div className="text-center">
                           <div className="text-[10px] font-bold text-gray-800">{product.dailyAvgIncome}万</div>
-                          {timeDimension === 'month' && (
+                          {!(timeDimension === 'day') && (
                             <div className="flex flex-col items-center mt-0.5">
-                              <div className="text-[8px] text-green-500 font-bold">同比:{product.dailyAvgIncomeYoy}</div>
-                              <div className="text-[8px] text-blue-500 font-bold">环比:{product.dailyAvgIncomeMom}</div>
+                              <div className="flex items-center gap-0.5 scale-90">
+                                <span className="text-[8px] text-gray-400 font-normal">同比:</span>
+                                <span className={`flex items-center font-bold text-[8px] ${product.dailyAvgIncomeYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                                  {product.dailyAvgIncomeYoy}
+                                  {product.dailyAvgIncomeYoy.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-0.5 scale-90">
+                                <span className="text-[8px] text-gray-400 font-normal">环比:</span>
+                                <span className={`flex items-center font-bold text-[8px] ${product.dailyAvgIncomeMom.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                                  {product.dailyAvgIncomeMom}
+                                  {product.dailyAvgIncomeMom.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                                </span>
+                              </div>
                             </div>
                           )}
                         </div>
@@ -355,8 +413,20 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                           <div className="text-center">
                             <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.dailyAvgIncome) * 1.1).toFixed(2)}万</div>
                             <div className="flex flex-col items-center mt-0.5">
-                              <div className="text-[8px] text-green-500 font-bold">同比:+3.4%</div>
-                              <div className="text-[8px] text-blue-500 font-bold">环比:+1.2%</div>
+                              <div className="flex items-center gap-0.5 scale-90">
+                                <span className="text-[8px] text-gray-400 font-normal">同比:</span>
+                                <span className="text-[8px] font-bold text-green-500 flex items-center">
+                                  +3.4%
+                                  <TrendingUp size={8} className="ml-0.5" />
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-0.5 scale-90">
+                                <span className="text-[8px] text-gray-400 font-normal">环比:</span>
+                                <span className="text-[8px] font-bold text-blue-500 flex items-center">
+                                  +1.2%
+                                  <TrendingUp size={8} className="ml-0.5" />
+                                </span>
+                              </div>
                             </div>
                           </div>
                         )}
@@ -364,8 +434,20 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                         <div className="text-center">
                           <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.dailyAvgIncome) * 1.2).toFixed(2)}万</div>
                           <div className="flex flex-col items-center mt-0.5">
-                            <div className="text-[8px] text-green-500 font-bold">同比:+5.6%</div>
-                            <div className="text-[8px] text-blue-500 font-bold">+2.1%</div>
+                            <div className="flex items-center gap-0.5 scale-90">
+                              <span className="text-[8px] text-gray-400 font-normal">同比:</span>
+                              <span className="text-[8px] font-bold text-green-500 flex items-center">
+                                +5.6%
+                                <TrendingUp size={8} className="ml-0.5" />
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-0.5 scale-90">
+                              <span className="text-[8px] text-gray-400 font-normal">环比:</span>
+                              <span className="text-[8px] font-bold text-blue-500 flex items-center">
+                                +2.1%
+                                <TrendingUp size={8} className="ml-0.5" />
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -376,10 +458,22 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                         {/* Column 1: 当日 or 当月 */}
                         <div className="text-center">
                           <div className="text-[10px] font-bold text-gray-800">{product.discountRate}</div>
-                          {timeDimension === 'month' && (
+                          {!(timeDimension === 'day') && (
                             <div className="flex flex-col items-center mt-0.5">
-                              <div className="text-[8px] text-green-500 font-bold">同比差:{product.discountRateYoyDiff}</div>
-                              <div className="text-[8px] text-blue-500 font-bold">环比差:{product.discountRateMomDiff}</div>
+                              <div className="flex items-center gap-0.5 scale-90">
+                                <span className="text-[8px] text-gray-400 font-normal">同比差:</span>
+                                <span className={`flex items-center font-bold text-[8px] ${product.discountRateYoyDiff.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                                  {product.discountRateYoyDiff}
+                                  {product.discountRateYoyDiff.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-0.5 scale-90">
+                                <span className="text-[8px] text-gray-400 font-normal">环比差:</span>
+                                <span className={`flex items-center font-bold text-[8px] ${product.discountRateMomDiff.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                                  {product.discountRateMomDiff}
+                                  {product.discountRateMomDiff.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                                </span>
+                              </div>
                             </div>
                           )}
                         </div>
@@ -388,8 +482,20 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                           <div className="text-center">
                             <div className="text-[10px] font-bold text-gray-800">12.2%</div>
                             <div className="flex flex-col items-center mt-0.5">
-                              <div className="text-[8px] text-green-500 font-bold">同比差:-0.3%</div>
-                              <div className="text-[8px] text-blue-500 font-bold">环比差:-0.1%</div>
+                              <div className="flex items-center gap-0.5 scale-90">
+                                <span className="text-[8px] text-gray-400 font-normal">同比差:</span>
+                                <span className="text-[8px] font-bold text-red-500 flex items-center">
+                                  -0.3%
+                                  <TrendingDown size={8} className="ml-0.5" />
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-0.5 scale-90">
+                                <span className="text-[8px] text-gray-400 font-normal">环比差:</span>
+                                <span className="text-[8px] font-bold text-red-500 flex items-center">
+                                  -0.1%
+                                  <TrendingDown size={8} className="ml-0.5" />
+                                </span>
+                              </div>
                             </div>
                           </div>
                         )}
@@ -397,8 +503,20 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                         <div className="text-center">
                           <div className="text-[10px] font-bold text-gray-800">11.8%</div>
                           <div className="flex flex-col items-center mt-0.5">
-                            <div className="text-[8px] text-green-500 font-bold">同比差:-0.7%</div>
-                            <div className="text-[8px] text-blue-500 font-bold">环比差:-0.3%</div>
+                            <div className="flex items-center gap-0.5 scale-90">
+                              <span className="text-[8px] text-gray-400 font-normal">同比差:</span>
+                              <span className="text-[8px] font-bold text-red-500 flex items-center">
+                                -0.7%
+                                <TrendingDown size={8} className="ml-0.5" />
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-0.5 scale-90">
+                              <span className="text-[8px] text-gray-400 font-normal">环比差:</span>
+                              <span className="text-[8px] font-bold text-red-500 flex items-center">
+                                -0.3%
+                                <TrendingDown size={8} className="ml-0.5" />
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -410,21 +528,39 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                       {/* Column 1: 当日 or 当月 */}
                       <div className="text-center">
                         <div className="text-[10px] font-bold text-gray-800">{product.perTicketWeight}kg</div>
-                        {timeDimension === 'month' && (
-                          <div className="text-[8px] text-green-500 font-bold mt-0.5">同比:{product.perTicketWeightYoy}</div>
+                        {!(timeDimension === 'day') && (
+                          <div className="flex items-center justify-center gap-0.5 scale-90 mt-0.5">
+                            <span className="text-[8px] text-gray-400 font-normal">同比:</span>
+                            <span className={`flex items-center font-bold text-[8px] ${product.perTicketWeightYoy.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
+                              {product.perTicketWeightYoy}
+                              {product.perTicketWeightYoy.startsWith('+') ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                            </span>
+                          </div>
                         )}
                       </div>
                       {/* Column 2: 月累计 (Only for Day Dimension) */}
                       {timeDimension === 'day' && (
                         <div className="text-center">
                           <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.perTicketWeight) * 1.01).toFixed(2)}kg</div>
-                          <div className="text-[8px] text-green-500 font-bold mt-0.5">同比:+1.5%</div>
+                          <div className="flex items-center justify-center gap-0.5 scale-90 mt-0.5">
+                            <span className="text-[8px] text-gray-400 font-normal">同比:</span>
+                            <span className="text-[8px] font-bold text-green-500 flex items-center">
+                              +1.5%
+                              <TrendingUp size={8} className="ml-0.5" />
+                            </span>
+                          </div>
                         </div>
                       )}
                       {/* Column 3: 年累计 */}
                       <div className="text-center">
                         <div className="text-[10px] font-bold text-gray-800">{(parseFloat(product.perTicketWeight) * 1.03).toFixed(2)}kg</div>
-                        <div className="text-[8px] text-green-500 font-bold mt-0.5">同比:+3.2%</div>
+                        <div className="flex items-center justify-center gap-0.5 scale-90 mt-0.5">
+                          <span className="text-[8px] text-gray-400 font-normal">同比:</span>
+                          <span className="text-[8px] font-bold text-green-500 flex items-center">
+                            +3.2%
+                            <TrendingUp size={8} className="ml-0.5" />
+                          </span>
+                        </div>
                       </div>
                     </div>
                   )}

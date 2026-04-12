@@ -4,7 +4,7 @@
  */
 
 import { BUSINESS_UNITS } from '../constants';
-import { TrendingUp, HelpCircle, ChevronRight } from 'lucide-react';
+import { TrendingUp, TrendingDown, HelpCircle, ChevronRight } from 'lucide-react';
 import { MetricType, TimeDimension } from '../types';
 
 interface BusinessSectionProps {
@@ -72,10 +72,14 @@ export default function BusinessSection({ activeMetric, timeDimension, onOpenDet
                             <div className="text-[9px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
                           </div>
                           <div className="flex justify-between items-center text-[9px] text-gray-500">
-                            <span className={`flex items-center font-bold ${metric.daily.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                              {metric.daily.isUp ? '▲' : '▼'} {metric.daily.yoy}
-                            </span>
-                            <span className="opacity-60">占比 {metric.daily.ratio}</span>
+                            <div className="flex items-center gap-1">
+                              <span className="text-gray-400 font-normal">同比:</span>
+                              <span className={`flex items-center font-semibold ${metric.daily.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                {metric.daily.yoy}
+                                {metric.daily.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                              </span>
+                            </div>
+                            <span className="opacity-60"><span className="text-gray-400 font-normal">占比</span> {metric.daily.ratio}</span>
                           </div>
                         </div>
 
@@ -86,10 +90,14 @@ export default function BusinessSection({ activeMetric, timeDimension, onOpenDet
                             <div className="text-[9px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
                           </div>
                           <div className="flex justify-between items-center text-[9px] text-gray-500">
-                            <span className={`flex items-center font-bold ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                              {metric.monthly.isUp ? '▲' : '▼'} {metric.monthly.yoy}
-                            </span>
-                            <span className="opacity-60">占比 {metric.monthly.ratio}</span>
+                            <div className="flex items-center gap-1">
+                              <span className="text-gray-400 font-normal">同比:</span>
+                              <span className={`flex items-center font-semibold ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                {metric.monthly.yoy}
+                                {metric.monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                              </span>
+                            </div>
+                            <span className="opacity-60"><span className="text-gray-400 font-normal">占比</span> {metric.monthly.ratio}</span>
                           </div>
                           {metric.monthly.status && (
                             <div className={`absolute top-3 right-3 w-2 h-2 rounded-full ${
@@ -108,10 +116,14 @@ export default function BusinessSection({ activeMetric, timeDimension, onOpenDet
                             <div className="text-[9px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
                           </div>
                           <div className="flex justify-between items-center text-[9px] text-gray-500">
-                            <span className={`flex items-center font-bold ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                              {metric.monthly.isUp ? '▲' : '▼'} {metric.monthly.yoy}
-                            </span>
-                            <span className="opacity-60">占比 {metric.monthly.ratio}</span>
+                            <div className="flex items-center gap-1">
+                              <span className="text-gray-400 font-normal">同比:</span>
+                              <span className={`flex items-center font-semibold ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                {metric.monthly.yoy}
+                                {metric.monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                              </span>
+                            </div>
+                            <span className="opacity-60"><span className="text-gray-400 font-normal">占比</span> {metric.monthly.ratio}</span>
                           </div>
                         </div>
 
@@ -122,10 +134,14 @@ export default function BusinessSection({ activeMetric, timeDimension, onOpenDet
                             <div className="text-[9px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
                           </div>
                           <div className="flex justify-between items-center text-[9px] text-gray-500">
-                            <span className={`flex items-center font-bold ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                              {metric.monthly.isUp ? '▲' : '▼'} {metric.monthly.yoy}
-                            </span>
-                            <span className="opacity-60">占比 {metric.monthly.ratio}</span>
+                            <div className="flex items-center gap-1">
+                              <span className="text-gray-400 font-normal">同比:</span>
+                              <span className={`flex items-center font-semibold ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                {metric.monthly.yoy}
+                                {metric.monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                              </span>
+                            </div>
+                            <span className="opacity-60"><span className="text-gray-400 font-normal">占比</span> {metric.monthly.ratio}</span>
                           </div>
                         </div>
                       </>

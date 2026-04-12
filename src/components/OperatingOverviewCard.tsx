@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { useState } from 'react';
 import { MetricType, TimeDimension } from '../types';
-import { ChevronRight, TrendingUp, TrendingDown, HelpCircle, BarChart3 } from 'lucide-react';
+import { ChevronRight, TrendingUp, TrendingDown, HelpCircle, BarChart3, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface OperatingOverviewCardProps {
@@ -14,6 +15,7 @@ interface OperatingOverviewCardProps {
 }
 
 export default function OperatingOverviewCard({ activeMetric, timeDimension, onOpenDetail }: OperatingOverviewCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const data: Record<MetricType, {
     daily: { value: string; unit: string; yoy: string; isUp: boolean };
     monthly: { value: string; unit: string; yoy: string; isUp: boolean; status: 'green' | 'yellow' | 'red' | 'none' };
@@ -78,7 +80,7 @@ export default function OperatingOverviewCard({ activeMetric, timeDimension, onO
               </div>
 
               {/* Grid Metrics */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3 pt-1">
                 <div className="bg-[#f8fbff] p-3 rounded-xl relative border border-blue-50/50">
                   <div className="text-[11px] text-gray-700 mb-2 font-medium">
                     月累计 <span className="text-[9px] text-gray-400 ml-1 font-normal">3.1-29日</span>
@@ -88,7 +90,7 @@ export default function OperatingOverviewCard({ activeMetric, timeDimension, onO
                     <span className="text-[10px] text-gray-500 font-medium">{currentData.monthly.unit}</span>
                   </div>
                   <div className="text-[9px] text-gray-400 flex items-center gap-1">
-                    同比: 
+                    <span className="text-gray-400 font-normal">同比:</span>
                     <span className={`flex items-center font-semibold ${currentData.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
                       {currentData.monthly.yoy}
                       {currentData.monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
@@ -111,7 +113,7 @@ export default function OperatingOverviewCard({ activeMetric, timeDimension, onO
                     <span className="text-[10px] text-gray-500 font-medium">{currentData.yearly.unit}</span>
                   </div>
                   <div className="text-[9px] text-gray-400 flex items-center gap-1">
-                    同比: 
+                    <span className="text-gray-400 font-normal">同比:</span>
                     <span className={`flex items-center font-semibold ${currentData.yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
                       {currentData.yearly.yoy}
                       {currentData.yearly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
@@ -127,7 +129,7 @@ export default function OperatingOverviewCard({ activeMetric, timeDimension, onO
               </div>
             </>
           ) : (
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3 pt-1">
               {/* Monthly Metric */}
               <div className="bg-[#f8fbff] p-3 rounded-xl border border-blue-50/50">
                 <div className="text-[11px] text-gray-700 mb-2 flex items-center font-medium">
@@ -138,7 +140,7 @@ export default function OperatingOverviewCard({ activeMetric, timeDimension, onO
                   <span className="text-[10px] text-gray-500 font-medium">{currentData.monthly.unit}</span>
                 </div>
                 <div className="text-[9px] text-gray-400 flex items-center gap-1">
-                  同比: 
+                  <span className="text-gray-400 font-normal">同比:</span>
                   <span className={`flex items-center font-semibold ${currentData.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
                     {currentData.monthly.yoy}
                     {currentData.monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
@@ -156,7 +158,7 @@ export default function OperatingOverviewCard({ activeMetric, timeDimension, onO
                   <span className="text-[10px] text-gray-500 font-medium">{currentData.yearly.unit}</span>
                 </div>
                 <div className="text-[9px] text-gray-400 flex items-center gap-1">
-                  同比: 
+                  <span className="text-gray-400 font-normal">同比:</span>
                   <span className={`flex items-center font-semibold ${currentData.yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
                     {currentData.yearly.yoy}
                     {currentData.yearly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
@@ -167,6 +169,15 @@ export default function OperatingOverviewCard({ activeMetric, timeDimension, onO
           )}
         </motion.div>
       </AnimatePresence>
+
+      <div className="flex justify-center mt-3">
+        <button 
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          {isExpanded ? '收起' : '展开'} <ChevronDown size={12} className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+        </button>
+      </div>
     </div>
   );
 }

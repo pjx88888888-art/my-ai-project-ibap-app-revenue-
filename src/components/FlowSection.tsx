@@ -17,9 +17,10 @@ interface FlowCardProps {
   yearly: { value: string; yoy: string; isUp: boolean };
   timeDimension: TimeDimension;
   onOpenDetail?: () => void;
+  isExpandable?: boolean;
 }
 
-function FlowCard({ title, icon, unit, daily, monthly, yearly, timeDimension, onOpenDetail }: FlowCardProps) {
+function FlowCard({ title, icon, unit, daily, monthly, yearly, timeDimension, onOpenDetail, isExpandable = true }: FlowCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -52,12 +53,6 @@ function FlowCard({ title, icon, unit, daily, monthly, yearly, timeDimension, on
               <div className="flex items-baseline gap-1">
                 <span className="text-2xl font-black text-gray-800 tracking-tight">{daily.value}</span>
                 <span className="text-[10px] text-gray-400 font-medium">{unit}</span>
-                {timeDimension !== 'day' && (
-                  <div className={`flex items-center text-[10px] font-bold ml-auto ${daily.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                    同比:{daily.yoy}
-                    {daily.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
-                  </div>
-                )}
               </div>
             </div>
 
@@ -72,9 +67,12 @@ function FlowCard({ title, icon, unit, daily, monthly, yearly, timeDimension, on
                   <span className="text-lg font-black text-gray-800">{monthly.value}</span>
                   <span className="text-[8px] text-gray-400">{unit}</span>
                 </div>
-                <div className={`flex items-center text-[9px] font-bold mt-1 ${monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                  同比:{monthly.yoy}
-                  {monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                <div className="text-[9px] text-gray-400 flex items-center gap-1 mt-1">
+                  <span className="text-gray-400 font-normal">同比:</span>
+                  <span className={`flex items-center font-semibold ${monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                    {monthly.yoy}
+                    {monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                  </span>
                 </div>
               </div>
               <div className="bg-[#f8fbff] rounded-xl p-3">
@@ -86,9 +84,12 @@ function FlowCard({ title, icon, unit, daily, monthly, yearly, timeDimension, on
                   <span className="text-lg font-black text-gray-800">{yearly.value}</span>
                   <span className="text-[8px] text-gray-400">{unit}</span>
                 </div>
-                <div className={`flex items-center text-[9px] font-bold mt-1 ${yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                  同比:{yearly.yoy}
-                  {yearly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                <div className="text-[9px] text-gray-400 flex items-center gap-1 mt-1">
+                  <span className="text-gray-400 font-normal">同比:</span>
+                  <span className={`flex items-center font-semibold ${yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                    {yearly.yoy}
+                    {yearly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                  </span>
                 </div>
               </div>
             </div>
@@ -105,9 +106,12 @@ function FlowCard({ title, icon, unit, daily, monthly, yearly, timeDimension, on
                 <span className="text-xl font-black text-gray-800 tracking-tight">{monthly.value}</span>
                 <span className="text-[10px] text-gray-400 font-medium">{unit}</span>
               </div>
-              <div className={`flex items-center text-[10px] font-bold mt-1 ${monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                同比:{monthly.yoy}
-                {monthly.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+              <div className="text-[9px] text-gray-400 flex items-center gap-1 mt-1">
+                <span className="text-gray-400 font-normal">同比:</span>
+                <span className={`flex items-center font-semibold ${monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                  {monthly.yoy}
+                  {monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                </span>
               </div>
             </div>
 
@@ -121,23 +125,28 @@ function FlowCard({ title, icon, unit, daily, monthly, yearly, timeDimension, on
                 <span className="text-xl font-black text-gray-800">{yearly.value}</span>
                 <span className="text-[8px] text-gray-400">{unit}</span>
               </div>
-              <div className={`flex items-center text-[10px] font-bold mt-1 ${yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
-                同比:{yearly.yoy}
-                {yearly.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+              <div className="text-[9px] text-gray-400 flex items-center gap-1 mt-1">
+                <span className="text-gray-400 font-normal">同比:</span>
+                <span className={`flex items-center font-semibold ${yearly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                  {yearly.yoy}
+                  {yearly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                </span>
               </div>
             </div>
           </div>
         )}
       </div>
 
-      <div className="flex justify-center mt-3">
-        <button 
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-gray-600 transition-colors"
-        >
-          展开 <ChevronDown size={12} className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-        </button>
-      </div>
+      {isExpandable && (
+        <div className="flex justify-center mt-3">
+          <button 
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            展开 <ChevronDown size={12} className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -224,6 +233,7 @@ export default function FlowSection({
         {...flowData.volume}
         timeDimension={timeDimension}
         onOpenDetail={() => onOpenDetail(flowType, 'volume')}
+        isExpandable={false}
       />
 
       {/* Key Flows Section */}
@@ -257,19 +267,19 @@ export default function FlowSection({
                       <div className="font-black text-gray-800 mb-1">{flow.income}</div>
                       <div className="flex flex-col items-center gap-0.5">
                         <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
-                          <span className="text-[9px]">同:</span>
+                          <span className="text-[9px] text-gray-400 font-normal">同比:</span>
                           <span>{flow.incomeYoy}</span>
                           <TrendingUp size={8} />
                         </div>
                         {timeDimension === 'month' && (
-                          <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
-                            <span className="text-[9px]">环:</span>
+                          <div className="flex items-center gap-0.5 text-blue-500 font-bold scale-90">
+                            <span className="text-[9px] text-gray-400 font-normal">环比:</span>
                             <span>{flow.incomeMom}</span>
                             <TrendingUp size={8} />
                           </div>
                         )}
                         <div className="text-gray-400 scale-90">
-                          <span className="text-[9px]">占:</span>
+                          <span className="text-[9px] text-gray-400 font-normal">占比:</span>
                           <span>{flow.incomeRatio}</span>
                         </div>
                       </div>
@@ -280,19 +290,19 @@ export default function FlowSection({
                       <div className="font-black text-gray-800 mb-1">{flow.volume}</div>
                       <div className="flex flex-col items-center gap-0.5">
                         <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
-                          <span className="text-[9px]">同:</span>
+                          <span className="text-[9px] text-gray-400 font-normal">同比:</span>
                           <span>{flow.volumeYoy}</span>
                           <TrendingUp size={8} />
                         </div>
                         {timeDimension === 'month' && (
-                          <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
-                            <span className="text-[9px]">环:</span>
+                          <div className="flex items-center gap-0.5 text-blue-500 font-bold scale-90">
+                            <span className="text-[9px] text-gray-400 font-normal">环比:</span>
                             <span>{flow.volumeMom}</span>
                             <TrendingUp size={8} />
                           </div>
                         )}
                         <div className="text-gray-400 scale-90">
-                          <span className="text-[9px]">占:</span>
+                          <span className="text-[9px] text-gray-400 font-normal">占比:</span>
                           <span>{flow.volumeRatio}</span>
                         </div>
                       </div>
@@ -303,19 +313,19 @@ export default function FlowSection({
                       <div className="font-black text-gray-800 mb-1">{flow.weight}</div>
                       <div className="flex flex-col items-center gap-0.5">
                         <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
-                          <span className="text-[9px]">同:</span>
+                          <span className="text-[9px] text-gray-400 font-normal">同比:</span>
                           <span>{flow.weightYoy}</span>
                           <TrendingUp size={8} />
                         </div>
                         {timeDimension === 'month' && (
-                          <div className="flex items-center gap-0.5 text-green-500 font-bold scale-90">
-                            <span className="text-[9px]">环:</span>
+                          <div className="flex items-center gap-0.5 text-blue-500 font-bold scale-90">
+                            <span className="text-[9px] text-gray-400 font-normal">环比:</span>
                             <span>{flow.weightMom}</span>
                             <TrendingUp size={8} />
                           </div>
                         )}
                         <div className="text-gray-400 scale-90">
-                          <span className="text-[9px]">占:</span>
+                          <span className="text-[9px] text-gray-400 font-normal">占比:</span>
                           <span>{flow.weightRatio}</span>
                         </div>
                       </div>
@@ -387,30 +397,51 @@ export default function FlowSection({
                   <td className="px-2 py-4">
                     <div className="text-center">
                       <div className="font-black text-gray-800 mb-1">{item.income}</div>
-                      <div className="flex items-center justify-center gap-0.5 text-green-500 font-bold scale-90">
-                        <span className="text-[9px]">同:</span>
-                        <span>{item.incomeYoy}</span>
-                        <TrendingUp size={8} />
+                      <div className="flex flex-col items-center">
+                        <div className="flex items-center justify-center gap-0.5 text-green-500 font-bold scale-90">
+                          <span className="text-[9px] text-gray-400 font-normal">同比:</span>
+                          <span>{item.incomeYoy}</span>
+                          <TrendingUp size={8} />
+                        </div>
+                        <div className="flex items-center justify-center gap-0.5 text-blue-500 font-bold scale-90">
+                          <span className="text-[9px] text-gray-400 font-normal">环比:</span>
+                          <span>+1.2%</span>
+                          <TrendingUp size={8} />
+                        </div>
                       </div>
                     </div>
                   </td>
                   <td className="px-2 py-4">
                     <div className="text-center">
                       <div className="font-black text-gray-800 mb-1">{item.volume}</div>
-                      <div className="flex items-center justify-center gap-0.5 text-green-500 font-bold scale-90">
-                        <span className="text-[9px]">同:</span>
-                        <span>{item.volumeYoy}</span>
-                        <TrendingUp size={8} />
+                      <div className="flex flex-col items-center">
+                        <div className="flex items-center justify-center gap-0.5 text-green-500 font-bold scale-90">
+                          <span className="text-[9px] text-gray-400 font-normal">同比:</span>
+                          <span>{item.volumeYoy}</span>
+                          <TrendingUp size={8} />
+                        </div>
+                        <div className="flex items-center justify-center gap-0.5 text-blue-500 font-bold scale-90">
+                          <span className="text-[9px] text-gray-400 font-normal">环比:</span>
+                          <span>+0.8%</span>
+                          <TrendingUp size={8} />
+                        </div>
                       </div>
                     </div>
                   </td>
                   <td className="px-2 py-4">
                     <div className="text-center">
                       <div className="font-black text-gray-800 mb-1">{item.weight}</div>
-                      <div className="flex items-center justify-center gap-0.5 text-green-500 font-bold scale-90">
-                        <span className="text-[9px]">同:</span>
-                        <span>{item.weightYoy}</span>
-                        <TrendingUp size={8} />
+                      <div className="flex flex-col items-center">
+                        <div className="flex items-center justify-center gap-0.5 text-green-500 font-bold scale-90">
+                          <span className="text-[9px] text-gray-400 font-normal">同比:</span>
+                          <span>{item.weightYoy}</span>
+                          <TrendingUp size={8} />
+                        </div>
+                        <div className="flex items-center justify-center gap-0.5 text-blue-500 font-bold scale-90">
+                          <span className="text-[9px] text-gray-400 font-normal">环比:</span>
+                          <span>+1.5%</span>
+                          <TrendingUp size={8} />
+                        </div>
                       </div>
                     </div>
                   </td>
