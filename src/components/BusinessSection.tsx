@@ -62,45 +62,69 @@ export default function BusinessSection({ activeMetric, timeDimension, onOpenDet
                              (activeMetric === 'weight' && m.name.includes('重量')))
                 .map((metric, idx) => (
                 <div key={idx} className="flex flex-col gap-2">
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className={`grid ${timeDimension === 'day' ? 'grid-cols-3 gap-1.5' : 'grid-cols-2 gap-2'}`}>
                     {timeDimension === 'day' ? (
                       <>
-                        <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98]">
-                          <div className="text-[10px] text-gray-400 mb-0.5 font-medium">当日</div>
+                        <div className="bg-white border border-blue-50/30 rounded-lg p-1.5 transition-all active:scale-[0.98]">
+                          <div className="text-[9px] text-gray-400 mb-0.5 font-medium">当日</div>
                           <div className="flex items-baseline gap-0.5 mb-0.5">
-                            <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metric.daily.value}</div>
-                            <div className="text-[9px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
+                            <div className="text-xs font-extrabold text-gray-800 tracking-tight">{metric.daily.value}</div>
+                            <div className="text-[8px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
                           </div>
-                          <div className="flex justify-between items-center text-[9px] text-gray-500">
-                            <div className="flex items-center gap-1">
-                              <span className="text-gray-400 font-normal">同比:</span>
+                          <div className="flex justify-between items-center text-[8px] text-gray-500">
+                            <div className="flex items-center gap-0.5">
+                              <span className="text-gray-400 font-normal">同:</span>
                               <span className={`flex items-center font-semibold ${metric.daily.isUp ? 'text-green-500' : 'text-red-500'}`}>
                                 {metric.daily.yoy}
-                                {metric.daily.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                                {metric.daily.isUp ? <TrendingUp size={6} className="ml-0.5" /> : <TrendingDown size={6} className="ml-0.5" />}
                               </span>
                             </div>
-                            <span className="opacity-60"><span className="text-gray-400 font-normal">占比</span> {metric.daily.ratio}</span>
+                            <span className="opacity-60"><span className="text-gray-400 font-normal">占</span> {metric.daily.ratio}</span>
                           </div>
                         </div>
 
-                        <div className="bg-white border border-blue-50/30 rounded-lg p-2 transition-all active:scale-[0.98] relative">
-                          <div className="text-[10px] text-gray-400 mb-0.5 font-medium">月累计</div>
+                        <div className="bg-white border border-blue-50/30 rounded-lg p-1.5 transition-all active:scale-[0.98] relative">
+                          <div className="text-[9px] text-gray-400 mb-0.5 font-medium">月累计</div>
                           <div className="flex items-baseline gap-0.5 mb-0.5">
-                            <div className="text-sm font-extrabold text-gray-800 tracking-tight">{metric.monthly.value}</div>
-                            <div className="text-[9px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
+                            <div className="text-xs font-extrabold text-gray-800 tracking-tight">{metric.monthly.value}</div>
+                            <div className="text-[8px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
                           </div>
-                          <div className="flex justify-between items-center text-[9px] text-gray-500">
-                            <div className="flex items-center gap-1">
-                              <span className="text-gray-400 font-normal">同比:</span>
+                          <div className="flex justify-between items-center text-[8px] text-gray-500">
+                            <div className="flex items-center gap-0.5">
+                              <span className="text-gray-400 font-normal">同:</span>
                               <span className={`flex items-center font-semibold ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
                                 {metric.monthly.yoy}
-                                {metric.monthly.isUp ? <TrendingUp size={8} className="ml-0.5" /> : <TrendingDown size={8} className="ml-0.5" />}
+                                {metric.monthly.isUp ? <TrendingUp size={6} className="ml-0.5" /> : <TrendingDown size={6} className="ml-0.5" />}
                               </span>
                             </div>
-                            <span className="opacity-60"><span className="text-gray-400 font-normal">占比</span> {metric.monthly.ratio}</span>
+                            <span className="opacity-60"><span className="text-gray-400 font-normal">占</span> {metric.monthly.ratio}</span>
                           </div>
                           {metric.monthly.status && (
-                            <div className={`absolute top-3 right-3 w-2 h-2 rounded-full ${
+                            <div className={`absolute top-2 right-2 w-1.5 h-1.5 rounded-full ${
+                              metric.monthly.status === 'green' ? 'bg-green-500' : 
+                              metric.monthly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
+                            }`} />
+                          )}
+                        </div>
+
+                        <div className="bg-white border border-blue-50/30 rounded-lg p-1.5 transition-all active:scale-[0.98] relative">
+                          <div className="text-[9px] text-gray-400 mb-0.5 font-medium">年累计</div>
+                          <div className="flex items-baseline gap-0.5 mb-0.5">
+                            <div className="text-xs font-extrabold text-gray-800 tracking-tight">{(parseFloat(metric.monthly.value.replace(/,/g, '')) * 3.5).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                            <div className="text-[8px] text-gray-400 font-medium">{getUnit(metric.name)}</div>
+                          </div>
+                          <div className="flex justify-between items-center text-[8px] text-gray-500">
+                            <div className="flex items-center gap-0.5">
+                              <span className="text-gray-400 font-normal">同:</span>
+                              <span className={`flex items-center font-semibold ${metric.monthly.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                {metric.monthly.yoy}
+                                {metric.monthly.isUp ? <TrendingUp size={6} className="ml-0.5" /> : <TrendingDown size={6} className="ml-0.5" />}
+                              </span>
+                            </div>
+                            <span className="opacity-60"><span className="text-gray-400 font-normal">占</span> {metric.monthly.ratio}</span>
+                          </div>
+                          {metric.monthly.status && (
+                            <div className={`absolute top-2 right-2 w-1.5 h-1.5 rounded-full ${
                               metric.monthly.status === 'green' ? 'bg-green-500' : 
                               metric.monthly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
                             }`} />

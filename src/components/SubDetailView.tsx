@@ -96,6 +96,7 @@ export default function SubDetailView({
     const data: Record<MetricType, any[]> = {
       income: segments.map(segment => ({
         segment,
+        status: ['green', 'yellow', 'red'][Math.floor(Math.random() * 3)],
         value: (Math.random() * 500 + 100).toFixed(2),
         perTicket: (Math.random() * 2 + 1).toFixed(2),
         dailyAvg: (Math.random() * 20 + 5).toFixed(2),
@@ -104,12 +105,14 @@ export default function SubDetailView({
       })),
       volume: segments.map(segment => ({
         segment,
+        status: ['green', 'yellow', 'red'][Math.floor(Math.random() * 3)],
         value: (Math.random() * 300 + 50).toFixed(2),
         dailyAvg: (Math.random() * 10 + 2).toFixed(2),
         isUp: Math.random() > 0.3
       })),
       weight: segments.map(segment => ({
         segment,
+        status: ['green', 'yellow', 'red'][Math.floor(Math.random() * 3)],
         value: (Math.random() * 200 + 30).toFixed(2),
         perTicket: (Math.random() * 1 + 0.2).toFixed(2),
         isUp: Math.random() > 0.3
@@ -354,7 +357,15 @@ export default function SubDetailView({
                         className="px-3 py-4 font-bold text-[#1b63d6] sticky left-0 bg-white z-10 cursor-pointer active:opacity-60"
                         onClick={() => onSelectSegment(row.segment)}
                       >
-                        {row.segment}
+                        <div className="flex items-center gap-2">
+                          {row.segment}
+                          {timeDimension === 'day' && (activePeriod === 'monthly' || activePeriod === 'yearly') && (
+                            <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                              row.status === 'green' ? 'bg-green-500' : 
+                              row.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
+                            }`} />
+                          )}
+                        </div>
                       </td>
                       <td className="px-3 py-4 text-right whitespace-nowrap">
                         <div className="flex flex-col items-end">
