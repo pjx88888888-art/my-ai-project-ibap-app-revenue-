@@ -99,7 +99,7 @@ export default function BusinessSection({ activeMetric, timeDimension, onOpenDet
                             </div>
                             <span className="opacity-60"><span className="text-gray-400 font-normal">占</span> {metric.monthly.ratio}</span>
                           </div>
-                          {metric.monthly.status && (
+                          {activeMetric === 'income' && metric.monthly.status && (
                             <div className={`absolute top-2 right-2 w-1.5 h-1.5 rounded-full ${
                               metric.monthly.status === 'green' ? 'bg-green-500' : 
                               metric.monthly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
@@ -123,7 +123,7 @@ export default function BusinessSection({ activeMetric, timeDimension, onOpenDet
                             </div>
                             <span className="opacity-60"><span className="text-gray-400 font-normal">占</span> {metric.monthly.ratio}</span>
                           </div>
-                          {metric.monthly.status && (
+                          {activeMetric === 'income' && metric.monthly.status && (
                             <div className={`absolute top-2 right-2 w-1.5 h-1.5 rounded-full ${
                               metric.monthly.status === 'green' ? 'bg-green-500' : 
                               metric.monthly.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'

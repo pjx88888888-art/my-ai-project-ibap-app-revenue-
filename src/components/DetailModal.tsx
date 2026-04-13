@@ -93,14 +93,14 @@ export default function DetailModal({
       { region: '上海区', status: 'yellow', value: '852.12', perTicket: '2.25', rate: '105.7%', yoy: '2.1%', isUp: false },
     ],
     volume: [
-      { region: '深莞区', status: 'green', value: '567.89', rate: '102.1%', yoy: '8.3%', isUp: true },
-      { region: '广佛区', status: 'yellow', value: '489.23', rate: '99.5%', yoy: '2.1%', isUp: false },
-      { region: '福建区', status: 'red', value: '456.78', rate: '101.8%', yoy: '5.2%', isUp: true },
+      { region: '深莞区', status: 'green', value: '567.89', dailyAvg: '18.93', yoy: '8.3%', isUp: true },
+      { region: '广佛区', status: 'yellow', value: '489.23', dailyAvg: '16.31', yoy: '2.1%', isUp: false },
+      { region: '福建区', status: 'red', value: '456.78', dailyAvg: '15.23', yoy: '5.2%', isUp: true },
     ],
     weight: [
-      { region: '深莞区', status: 'green', value: '234.56', rate: '105.3%', yoy: '12.1%', isUp: true },
-      { region: '广佛区', status: 'yellow', value: '195.67', rate: '101.2%', yoy: '3.8%', isUp: true },
-      { region: '福建区', status: 'red', value: '178.90', rate: '98.5%', yoy: '1.2%', isUp: false },
+      { region: '深莞区', status: 'green', value: '234.56', perTicket: '0.41', yoy: '12.1%', isUp: true },
+      { region: '广佛区', status: 'yellow', value: '195.67', perTicket: '0.40', yoy: '3.8%', isUp: true },
+      { region: '福建区', status: 'red', value: '178.90', perTicket: '0.39', yoy: '1.2%', isUp: false },
     ],
   };
 
@@ -418,10 +418,21 @@ export default function DetailModal({
                               </th>
                             </>
                           )}
-                          {activeMetric !== 'income' && (
+                          {activeMetric === 'volume' && (
                             <th className="px-3 py-2.5 text-gray-500 font-bold text-right">
                               <div className="flex items-center justify-end gap-1">
-                                达成率
+                                日均件量
+                                <div className="flex flex-col -space-y-1 opacity-30">
+                                  <ChevronDown size={8} className="rotate-180" />
+                                  <ChevronDown size={8} />
+                                </div>
+                              </div>
+                            </th>
+                          )}
+                          {activeMetric === 'weight' && (
+                            <th className="px-3 py-2.5 text-gray-500 font-bold text-right">
+                              <div className="flex items-center justify-end gap-1">
+                                单票重量
                                 <div className="flex flex-col -space-y-1 opacity-30">
                                   <ChevronDown size={8} className="rotate-180" />
                                   <ChevronDown size={8} />
@@ -440,7 +451,7 @@ export default function DetailModal({
                             >
                               <div className="flex items-center gap-2">
                                 {row.region}
-                                {timeDimension === 'day' && (activePeriod === 'monthly' || activePeriod === 'yearly') && (
+                                {activeMetric === 'income' && timeDimension === 'day' && (activePeriod === 'monthly' || activePeriod === 'yearly') && (
                                   <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
                                     row.status === 'green' ? 'bg-green-500' : 
                                     row.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
@@ -498,9 +509,36 @@ export default function DetailModal({
                                 </td>
                               </>
                             )}
-                            {activeMetric !== 'income' && (
-                              <td className="px-3 py-4 text-right">
-                                <div className="font-bold text-gray-800">{row.rate}</div>
+                            {activeMetric === 'volume' && (
+                              <td className="px-3 py-4 text-right whitespace-nowrap">
+                                <div className="flex flex-col items-end">
+                                  <div className="font-bold text-gray-800">{row.dailyAvg}<span className="text-[10px] text-gray-400 ml-0.5">万票</span></div>
+                                  {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                                    <div className="flex items-center justify-end gap-1 mt-1">
+                                      <span className="text-[10px] text-gray-400">同比:</span>
+                                      <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                        {row.yoy}
+                                        {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              </td>
+                            )}
+                            {activeMetric === 'weight' && (
+                              <td className="px-3 py-4 text-right whitespace-nowrap">
+                                <div className="flex flex-col items-end">
+                                  <div className="font-bold text-gray-800">{row.perTicket}<span className="text-[10px] text-gray-400 ml-0.5">kg</span></div>
+                                  {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                                    <div className="flex items-center justify-end gap-1 mt-1">
+                                      <span className="text-[10px] text-gray-400">同比:</span>
+                                      <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
+                                        {row.yoy}
+                                        {row.isUp ? <TrendingUp size={10} className="ml-0.5" /> : <TrendingDown size={10} className="ml-0.5" />}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
                               </td>
                             )}
                           </tr>

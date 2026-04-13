@@ -297,7 +297,7 @@ export default function SubDetailView({
                   <div className="w-1.5 h-1.5 bg-[#1b63d6] rounded-full" />
                 </div>
               </div>
-              <div className="text-sm font-bold text-gray-800">业务结构</div>
+              <div className="text-sm font-bold text-gray-800">机构明细</div>
             </div>
             <div className="relative z-50">
               <button
@@ -359,7 +359,7 @@ export default function SubDetailView({
                       >
                         <div className="flex items-center gap-2">
                           {row.segment}
-                          {detailSource === 'business' && timeDimension === 'day' && (activePeriod === 'monthly' || activePeriod === 'yearly') && (
+                          {activeMetric === 'income' && detailSource === 'business' && timeDimension === 'day' && (activePeriod === 'monthly' || activePeriod === 'yearly') && (
                             <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
                               row.status === 'green' ? 'bg-green-500' : 
                               row.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
