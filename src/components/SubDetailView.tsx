@@ -359,7 +359,7 @@ export default function SubDetailView({
                       >
                         <div className="flex items-center gap-2">
                           {row.segment}
-                          {timeDimension === 'day' && (activePeriod === 'monthly' || activePeriod === 'yearly') && (
+                          {detailSource === 'business' && timeDimension === 'day' && (activePeriod === 'monthly' || activePeriod === 'yearly') && (
                             <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
                               row.status === 'green' ? 'bg-green-500' : 
                               row.status === 'yellow' ? 'bg-yellow-500' : 'bg-red-500'
