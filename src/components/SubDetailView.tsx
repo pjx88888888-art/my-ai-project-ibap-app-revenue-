@@ -297,7 +297,7 @@ export default function SubDetailView({
                   <div className="w-1.5 h-1.5 bg-[#1b63d6] rounded-full" />
                 </div>
               </div>
-              <div className="text-sm font-bold text-gray-800">机构明细</div>
+              <div className="text-sm font-bold text-gray-800">业务结构</div>
             </div>
             <div className="relative z-50">
               <button
