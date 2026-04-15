@@ -243,7 +243,9 @@ export default function FlowSection({
             <div className="bg-blue-50 p-1.5 rounded-lg text-[#1b63d6]">
               <ArrowRightLeft size={16} />
             </div>
-            <span className="text-sm font-bold text-gray-800">重点流向</span>
+            <span className="text-sm font-bold text-gray-800">
+              {flowType === 'cnob' ? '重点流向（国际电商）' : '重点流向'}
+            </span>
             <HelpCircle size={14} className="text-gray-300" />
           </div>
         </div>

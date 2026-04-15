@@ -193,7 +193,11 @@ export default function KeyMetricsSection({ timeDimension, onOpenDetail }: KeyMe
             {filteredMetrics.map((metric, idx) => (
               <tr key={idx} className="group hover:bg-blue-50/20 transition-colors">
                 <td className="py-4 px-2">
-                  <div className="text-[11px] font-bold text-gray-700 leading-tight">{metric.name}</div>
+                  <div className="text-[11px] font-bold text-gray-700 leading-tight">
+                    {timeDimension === 'month' && activeTab === 'all' && metric.name === '国际收入占全网国际收入比' 
+                      ? '国际收入占全网收入比' 
+                      : metric.name}
+                  </div>
                 </td>
                 {timeDimension === 'day' ? (
                   <>

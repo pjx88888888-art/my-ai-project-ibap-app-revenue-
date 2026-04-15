@@ -14,7 +14,7 @@ interface ProductSectionProps {
 }
 
 export default function ProductSection({ timeDimension, onOpenDetail }: ProductSectionProps) {
-  const businessSegments = ['国际快递', '国际电商', '海外仓配', '本地运配', '国际运输', '国际航线', '国际大宗'];
+  const businessSegments = ['国际快递', '国际电商', '海外仓配', '国际运输', '国际航线', '国际大宗'];
   const [activeSegment, setActiveSegment] = useState(businessSegments[0]);
   
   const metricTabs: { id: 'income' | 'volume' | 'weight'; name: string }[] = [

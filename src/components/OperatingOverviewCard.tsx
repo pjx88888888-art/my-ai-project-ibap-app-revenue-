@@ -170,14 +170,16 @@ export default function OperatingOverviewCard({ activeMetric, timeDimension, onO
         </motion.div>
       </AnimatePresence>
 
-      <div className="flex justify-center mt-3">
-        <button 
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-gray-600 transition-colors"
-        >
-          {isExpanded ? '收起' : '展开'} <ChevronDown size={12} className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-        </button>
-      </div>
+      {activeMetric === 'income' && (
+        <div className="flex justify-center mt-3">
+          <button 
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            {isExpanded ? '收起' : '展开'} <ChevronDown size={12} className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
