@@ -380,13 +380,6 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                                 <TrendingUp size={8} className="ml-0.5" />
                               </span>
                             </div>
-                            <div className="flex items-center gap-0.5 scale-90">
-                              <span className="text-[8px] text-gray-400 font-normal">环比:</span>
-                              <span className="text-[8px] font-bold text-green-500 flex items-center">
-                                +1.5%
-                                <TrendingUp size={8} className="ml-0.5" />
-                              </span>
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -449,13 +442,6 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                                 <TrendingUp size={8} className="ml-0.5" />
                               </span>
                             </div>
-                            <div className="flex items-center gap-0.5 scale-90">
-                              <span className="text-[8px] text-gray-400 font-normal">环比:</span>
-                              <span className="text-[8px] font-bold text-green-500 flex items-center">
-                                +2.1%
-                                <TrendingUp size={8} className="ml-0.5" />
-                              </span>
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -515,13 +501,6 @@ function ProductCard({ product, idx, activeMetricTab, timeDimension }: ProductCa
                               <span className="text-[8px] text-gray-400 font-normal">同比差:</span>
                               <span className="text-[8px] font-bold text-red-500 flex items-center">
                                 -0.7%
-                                <TrendingDown size={8} className="ml-0.5" />
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-0.5 scale-90">
-                              <span className="text-[8px] text-gray-400 font-normal">环比差:</span>
-                              <span className="text-[8px] font-bold text-red-500 flex items-center">
-                                -0.3%
                                 <TrendingDown size={8} className="ml-0.5" />
                               </span>
                             </div>
