@@ -95,11 +95,17 @@ export default function OrgDetailView({
 
       <div className="p-3 space-y-3">
         <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
-          {[
-            { id: 'cn-sales', label: '国内-销售口径' },
-            { id: 'cn-origin', label: '国内-始发口径' },
-            { id: 'os-origin', label: '海外-始发口径' },
-          ].map((tab) => (
+          {(timeDimension === 'month' && detailSource === 'key-metrics'
+            ? [
+                { id: 'cn-sales', label: '国内-销售口径' },
+                { id: 'os-origin', label: '海外-始发口径' },
+              ]
+            : [
+                { id: 'cn-sales', label: '国内-销售口径' },
+                { id: 'cn-origin', label: '国内-始发口径' },
+                { id: 'os-origin', label: '海外-始发口径' },
+              ]
+          ).map((tab) => (
             <button 
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
