@@ -186,7 +186,7 @@ export default function OrgDetailView({
                             <div className="font-bold text-gray-800">
                               {row.values[metricIndex]}{unit && <span className="text-[10px] text-gray-400 ml-0.5">{unit}</span>}
                             </div>
-                            {!(timeDimension === 'day' && activePeriod === 'daily') && (
+                            {!(timeDimension === 'day' && activePeriod === 'daily') && (timeDimension !== 'month' || ['单票收入', '单票重量'].includes(m)) && (
                               <div className="flex items-center gap-1 whitespace-nowrap mt-0.5">
                                 <span className="text-[10px] text-gray-400">同比:</span>
                                 <span className={`text-[10px] font-bold flex items-center ${row.isUp ? 'text-green-500' : 'text-red-500'}`}>
