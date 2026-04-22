@@ -111,9 +111,11 @@ export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: in
               <ChevronLeft size={24} />
             </button>
             <div className="flex items-center gap-2">
-              <span className="text-lg font-bold">指标详情</span>
+              <span className="text-lg font-bold">
+                {hideFlowColumn ? '流向明细指标详情' : '指标详情'}
+              </span>
               <div className="px-2 py-0.5 border border-white/50 rounded text-xs font-bold uppercase">
-                {type}
+                本部
               </div>
             </div>
           </div>
@@ -272,20 +274,22 @@ export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: in
               <div className="text-sm font-bold text-gray-800">业务结构</div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="flex items-center bg-gray-100 rounded-lg p-0.5 text-[10px] font-bold">
-                <button
-                  onClick={() => setType('cnob')}
-                  className={`px-3 py-1 rounded-md transition-all ${type === 'cnob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
-                >
-                  CNOB
-                </button>
-                <button
-                  onClick={() => setType('osob')}
-                  className={`px-3 py-1 rounded-md transition-all ${type === 'osob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
-                >
-                  OSOB
-                </button>
-              </div>
+              {!hideFlowColumn && (
+                <div className="flex items-center bg-gray-100 rounded-lg p-0.5 text-[10px] font-bold">
+                  <button
+                    onClick={() => setType('cnob')}
+                    className={`px-3 py-1 rounded-md transition-all ${type === 'cnob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
+                  >
+                    CNOB
+                  </button>
+                  <button
+                    onClick={() => setType('osob')}
+                    className={`px-3 py-1 rounded-md transition-all ${type === 'osob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
+                  >
+                    OSOB
+                  </button>
+                </div>
+              )}
               <div className="relative z-50">
                 <button
                   onClick={() => {
@@ -315,9 +319,7 @@ export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: in
                   <thead>
                     <tr className="bg-[#f8f9fb]">
                       <th className={`px-3 py-2.5 text-gray-500 font-bold sticky left-0 bg-[#f8f9fb] z-20 w-24 ${activeMetric === 'income' ? 'z-20' : ''}`}>业务板块</th>
-                      {!hideFlowColumn && (
-                        <th className={`px-3 py-2.5 text-gray-500 font-bold text-center ${activeMetric === 'income' ? 'sticky left-24 bg-[#f8f9fb] z-20 w-16' : ''}`}>流向</th>
-                      )}
+                      <th className={`px-3 py-2.5 text-gray-500 font-bold text-center ${activeMetric === 'income' ? 'sticky left-24 bg-[#f8f9fb] z-20 w-16' : ''}`}>流向</th>
                       <th className="px-3 py-2.5 text-gray-500 font-bold text-right">
                         <div className="flex items-center justify-end gap-1">
                           {getMetricLabel()}
@@ -354,18 +356,22 @@ export default function FlowDetailView({ onBack, onClose, onSelectFlow, type: in
                         >
                           {row.name}
                         </td>
-                        {!hideFlowColumn && (
-                          <td className={`px-3 py-4 text-center bg-white ${activeMetric === 'income' ? 'sticky left-24 z-10' : ''}`}>
-                            <div className="flex justify-center">
+                        <td className={`px-3 py-4 text-center bg-white ${activeMetric === 'income' ? 'sticky left-24 z-10' : ''}`}>
+                          <div className="flex justify-center">
+                            {hideFlowColumn ? (
+                              <div className="w-5 h-5 rounded-md border border-gray-100 flex items-center justify-center bg-gray-50/50 text-gray-300">
+                                <ArrowRightLeft size={12} />
+                              </div>
+                            ) : (
                               <button 
                                 onClick={() => onSelectFlow(row.name, 'flow')}
                                 className="w-5 h-5 rounded-md border border-blue-200 flex items-center justify-center bg-blue-50/50 text-[#1b63d6] hover:scale-110 transition-transform"
                               >
                                 <ArrowRightLeft size={12} />
                               </button>
-                            </div>
-                          </td>
-                        )}
+                            )}
+                          </div>
+                        </td>
                         <td className="px-3 py-4 text-right whitespace-nowrap">
                           <div className="flex flex-col items-end">
                             <div className="font-bold text-gray-800">

@@ -130,9 +130,11 @@ export default function FlowThirdDetailView({
             </button>
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <span className="text-lg font-bold">{segment}指标详情</span>
-                <div className="bg-white/20 px-2 py-0.5 rounded text-[10px] font-medium">
-                  深莞区
+                <span className="text-lg font-bold">
+                  {hideFlowColumn ? '流向明细指标详情' : `${segment}指标详情`}
+                </span>
+                <div className="bg-white/20 px-2 py-0.5 rounded text-[10px] font-medium uppercase">
+                  {hideFlowColumn ? '本部' : '深莞区'}
                 </div>
               </div>
             </div>
@@ -293,20 +295,22 @@ export default function FlowThirdDetailView({
               <HelpCircle size={14} className="text-gray-300" />
             </div>
             <div className="flex items-center gap-2">
-              <div className="flex items-center bg-gray-100 rounded-lg p-0.5 text-[10px] font-bold">
-                <button
-                  onClick={() => setType('cnob')}
-                  className={`px-3 py-1 rounded-md transition-all ${type === 'cnob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
-                >
-                  CNOB
-                </button>
-                <button
-                  onClick={() => setType('osob')}
-                  className={`px-3 py-1 rounded-md transition-all ${type === 'osob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
-                >
-                  OSOB
-                </button>
-              </div>
+              {!hideFlowColumn && (
+                <div className="flex items-center bg-gray-100 rounded-lg p-0.5 text-[10px] font-bold">
+                  <button
+                    onClick={() => setType('cnob')}
+                    className={`px-3 py-1 rounded-md transition-all ${type === 'cnob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
+                  >
+                    CNOB
+                  </button>
+                  <button
+                    onClick={() => setType('osob')}
+                    className={`px-3 py-1 rounded-md transition-all ${type === 'osob' ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500'}`}
+                  >
+                    OSOB
+                  </button>
+                </div>
+              )}
               <div className="relative z-50">
                 <button
                   onClick={() => {
@@ -335,9 +339,7 @@ export default function FlowThirdDetailView({
                 <thead>
                   <tr className="bg-[#f8f9fb]">
                     <th className="px-3 py-2.5 text-gray-500 font-bold sticky left-0 bg-[#f8f9fb] z-10 w-24">产品名称</th>
-                    {!hideFlowColumn && (
-                      <th className="px-3 py-2.5 text-gray-500 font-bold text-center">流向</th>
-                    )}
+                    <th className="px-3 py-2.5 text-gray-500 font-bold text-center">流向</th>
                     <th className="px-3 py-2.5 text-gray-500 font-bold text-right">
                       <div className="flex items-center justify-end gap-1">
                         {getMetricLabel()}
@@ -369,23 +371,27 @@ export default function FlowThirdDetailView({
                   {subProducts.map((row, idx) => (
                     <tr key={idx} className="hover:bg-blue-50/30 transition-colors">
                       <td 
-                        className="px-3 py-4 font-bold text-[#1b63d6] sticky left-0 bg-white z-10 cursor-pointer active:opacity-60"
-                        onClick={() => onSelectFlow(row.name)}
+                        className={`px-3 py-4 font-bold sticky left-0 bg-white z-10 ${hideFlowColumn ? 'text-gray-800' : 'text-[#1b63d6] cursor-pointer active:opacity-60'}`}
+                        onClick={hideFlowColumn ? undefined : () => onSelectFlow(row.name)}
                       >
                         {row.name}
                       </td>
-                      {!hideFlowColumn && (
-                        <td className="px-3 py-4 text-center">
-                          <div className="flex justify-center">
+                      <td className="px-3 py-4 text-center">
+                        <div className="flex justify-center">
+                          {hideFlowColumn ? (
+                            <div className="w-5 h-5 rounded-md border border-gray-200 flex items-center justify-center bg-gray-50/50 text-gray-400">
+                              <ArrowRightLeft size={12} />
+                            </div>
+                          ) : (
                             <button 
                               onClick={() => onSelectFlow(row.name)}
                               className="w-5 h-5 rounded-md border border-blue-200 flex items-center justify-center bg-blue-50/50 text-[#1b63d6] hover:scale-110 transition-transform"
                             >
                               <ArrowRightLeft size={12} />
                             </button>
-                          </div>
-                        </td>
-                      )}
+                          )}
+                        </div>
+                      </td>
                       <td className="px-3 py-4 text-right whitespace-nowrap">
                         <div className="flex flex-col items-end">
                           <div className="font-bold text-gray-800">
