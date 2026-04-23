@@ -134,7 +134,7 @@ export default function FlowThirdDetailView({
                   {hideFlowColumn ? '流向明细指标详情' : `${segment}指标详情`}
                 </span>
                 <div className="bg-white/20 px-2 py-0.5 rounded text-[10px] font-medium uppercase">
-                  {hideFlowColumn ? '本部' : '深莞区'}
+                  本部
                 </div>
               </div>
             </div>
